@@ -1,11 +1,18 @@
 .pokemon-card {
   position: relative;
   overflow: hidden;
-  width: 250px;
-  height: 300px;
+  width: 100%;
+  min-width: 0;
 
   background-color: rgb(223, 223, 255);
   border: solid 5px rgb(143, 139, 255);
+}
+
+.pokemon-card img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
 }
 
 .pokemon-card__artwork {
