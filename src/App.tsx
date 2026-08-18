@@ -1,7 +1,6 @@
 import PokemonCard from "./components/PokemonCard/PokemonCard";
 
 function App() {
-
   return (
     <div>
       <PokemonCard
@@ -11,7 +10,7 @@ function App() {
         types={["electric"]}
       />
     </div>
-  )
+  );
 }
 
 export default App;

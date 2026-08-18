@@ -10,7 +10,9 @@ describe("PokemonCard", () => {
     types: ["electric"],
   };
 
-  afterEach(() => {  cleanup(); });
+  afterEach(() => {
+    cleanup();
+  });
 
   it("displays the Pokémon name", () => {
     render(<PokemonCard {...pokemon} />);
@@ -29,9 +31,7 @@ describe("PokemonCard", () => {
 
     const image = screen.getByRole("img", { name: "Pikachu" });
 
-    expect(image.getAttribute("src")).toBe(
-      "https://example.com/pikachu.png",
-    );
+    expect(image.getAttribute("src")).toBe("https://example.com/pikachu.png");
   });
 
   it("displays the Pokémon types", () => {
