@@ -20,16 +20,18 @@ type PokemonApiResponse = {
 type PokemonListItem = {
   name: string;
   url: string;
-}
+};
 
 type pokemonListResponse = {
   count: number;
   next: string | null;
   previous: string | null;
   results: PokemonListItem[];
-}
+};
 
-export async function getPokemon(nameOrId: string | number): Promise<PokemonApiResponse> {
+export async function getPokemon(
+  nameOrId: string | number,
+): Promise<PokemonApiResponse> {
   const response = await fetch(`${POKEAPI_BASE_URL}/pokemon/${nameOrId}`);
 
   if (!response.ok) {
@@ -41,10 +43,15 @@ export async function getPokemon(nameOrId: string | number): Promise<PokemonApiR
   return data;
 }
 
-export async function getPokemonList(limit: number, offset: number) : Promise<pokemonListResponse>{
-  const response = await fetch(`${POKEAPI_BASE_URL}/pokemon?limit${limit}&offset=${offset}`)
+export async function getPokemonList(
+  limit: number,
+  offset: number,
+): Promise<pokemonListResponse> {
+  const response = await fetch(
+    `${POKEAPI_BASE_URL}/pokemon?limit${limit}&offset=${offset}`,
+  );
 
-  if (!response.ok){
+  if (!response.ok) {
     throw new Error("Failed to fetch Pokémon list");
   }
 

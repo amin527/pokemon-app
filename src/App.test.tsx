@@ -3,7 +3,6 @@ import { describe, expect, it, vi } from "vitest";
 import App from "./App";
 import { getPokemon, getPokemonList } from "./api/pokemonApi";
 
-
 vi.mock("./api/pokemonApi", () => ({
   getPokemonList: vi.fn(),
   getPokemon: vi.fn(),
