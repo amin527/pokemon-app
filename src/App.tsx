@@ -26,9 +26,7 @@ function App() {
   ];
   return (
     <div>
-      <PokemonGrid
-        pokemon={ pokemon }
-      />
+      <PokemonGrid pokemon={pokemon} />
     </div>
   );
 }
