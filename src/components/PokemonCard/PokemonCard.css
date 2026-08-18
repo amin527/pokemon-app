@@ -32,6 +32,10 @@
   transition: transform 0.3s ease;
 }
 
+.pokemon-card:hover {
+  border-color: rgb(168, 98, 196);
+}
+
 .pokemon-card:hover .pokemon-card__info {
   transform: translateY(0);
 }
