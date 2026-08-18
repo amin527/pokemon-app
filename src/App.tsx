@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import { getPokemon } from "./api/pokemonApi";
 import PokemonCard from "./components/PokemonCard/PokemonCard";
 
 function App() {
