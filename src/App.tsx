@@ -1,29 +1,33 @@
 import PokemonGrid from "./components/PokemonGrid/PokemonGrid";
+import { useEffect, useState } from "react";
+import { getPokemonList, getPokemon } from "./api/pokemonApi";
+import type { Pokemon } from "./types/pokemon";
 
 function App() {
-  const pokemon = [
-    {
-      id: 1,
-      name: "bulbasaur",
-      image:
-        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
-      types: ["grass", "poison"],
-    },
-    {
-      id: 4,
-      name: "charmander",
-      image:
-        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
-      types: ["fire"],
-    },
-    {
-      id: 7,
-      name: "squirtle",
-      image:
-        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png",
-      types: ["water"],
-    },
-  ];
+  const [pokemon, setPokemon] = useState<Pokemon[]>([]);
+
+  useEffect(() => {
+    async function loadPokemon() {
+      const pokemonListBasic = await getPokemonList(20, 0);
+      const pokemonListDetailed = await Promise.all(
+        pokemonListBasic.results.map((pokemonBasic) =>
+          getPokemon(pokemonBasic.name),
+        ),
+      );
+      const pokemonListFormatted = pokemonListDetailed.map(
+        (pokemonDetailed) => ({
+          id: pokemonDetailed.id,
+          name: pokemonDetailed.name,
+          image:
+            pokemonDetailed.sprites.other["official-artwork"].front_default,
+          types: pokemonDetailed.types.map((type) => type.type.name),
+        }),
+      );
+      setPokemon(pokemonListFormatted);
+    }
+    loadPokemon();
+  }, []);
+
   return (
     <div>
       <PokemonGrid pokemon={pokemon} />

@@ -1,12 +1,6 @@
 import PokemonCard from "../PokemonCard/PokemonCard";
 import "./PokemonGrid.css";
-
-type Pokemon = {
-  id: number;
-  name: string;
-  image: string;
-  types: string[];
-};
+import type { Pokemon } from "../../types/pokemon";
 
 type PokemonGridProps = {
   pokemon: Pokemon[];
