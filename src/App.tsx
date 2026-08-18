@@ -1,14 +1,16 @@
-import { useEffect } from "react";
-import { getPokemon } from "./api/pokemonApi";
+import PokemonCard from "./components/PokemonCard/PokemonCard";
 
 function App() {
-  useEffect(() => {
-    getPokemon("pikachu").then((pokemon) => {
-      console.log(pokemon);
-    });
-  }, []);
-
-  return <h1>Pokémon App</h1>;
+  return (
+    <div>
+      <PokemonCard
+        id={25}
+        name="Pikachu"
+        artwork="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png"
+        types={["electric"]}
+      />
+    </div>
+  );
 }
 
 export default App;
