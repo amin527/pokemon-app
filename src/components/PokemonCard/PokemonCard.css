@@ -3,6 +3,7 @@
   overflow: hidden;
   width: 100%;
   min-width: 0;
+  box-sizing: border-box;
 
   background-color: rgb(223, 223, 255);
   border: solid 5px rgb(143, 139, 255);

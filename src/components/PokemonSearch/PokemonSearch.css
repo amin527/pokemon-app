@@ -1,0 +1,9 @@
+.pokemon-search {
+  padding-bottom: 10px;
+}
+
+.pokemon-search__input-field {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 5px;
+}
