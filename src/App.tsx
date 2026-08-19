@@ -2,13 +2,17 @@ import PokemonGrid from "./components/PokemonGrid/PokemonGrid";
 import { useEffect, useState } from "react";
 import { getPokemonList, getPokemon } from "./api/pokemonApi";
 import type { Pokemon } from "./types/pokemon";
+import Pagination from "./components/Pagination/Pagination";
 
 function App() {
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const PAGE_SIZE = 20;
 
   useEffect(() => {
-    async function loadPokemon() {
-      const pokemonListBasic = await getPokemonList(20, 0);
+    async function fetchPokemon() {
+      const offset = (currentPage - 1) * PAGE_SIZE;
+      const pokemonListBasic = await getPokemonList(PAGE_SIZE, offset);
       const pokemonListDetailed = await Promise.all(
         pokemonListBasic.results.map((pokemonBasic) =>
           getPokemon(pokemonBasic.name),
@@ -25,12 +29,18 @@ function App() {
       );
       setPokemon(pokemonListFormatted);
     }
-    loadPokemon();
-  }, []);
+    fetchPokemon();
+  }, [currentPage]);
 
   return (
     <div>
       <PokemonGrid pokemon={pokemon} />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={10}
+        onPrevious={() => setCurrentPage((page) => page - 1)}
+        onNext={() => setCurrentPage((page) => page + 1)}
+      />
     </div>
   );
 }

@@ -1,0 +1,37 @@
+.pagination {
+  display: flex;
+  justify-self: center;
+  margin-top: 20px;
+}
+/* ----------------------------------- */
+.pagination__button {
+  all: unset;
+  display: flex;
+  border-radius: 15px;
+  background-color: rgb(143, 139, 255);
+  padding: 0px 6px;
+}
+.pagination__button:hover {
+  background-color: rgb(115, 110, 255);
+  cursor: pointer;
+}
+.pagination__button--next {
+  margin-left: 10px;
+}
+.pagination__button--previous {
+  margin-right: 10px;
+}
+/* ----------------------------------- */
+.pagination__icon {
+  border-radius: 50%;
+}
+.pagination__icon--previous {
+  padding-right: 2px;
+}
+.pagination__icon--next {
+  padding-left: 2px;
+}
+
+.pagination__text {
+  padding-top: 1px;
+}
