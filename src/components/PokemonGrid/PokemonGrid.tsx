@@ -7,8 +7,13 @@ type PokemonGridProps = {
 };
 
 function PokemonGrid({ pokemon }: PokemonGridProps) {
+  const gridClassName =
+    pokemon.length >= 3
+      ? "pokemon-grid pokemon-grid--multiple"
+      : "pokemon-grid pokemon-grid--limited";
+
   return (
-    <div className="pokemon-grid">
+    <div className={gridClassName}>
       {pokemon.map((pokemon) => (
         <PokemonCard
           id={pokemon.id}
