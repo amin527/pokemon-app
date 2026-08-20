@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { getPokemon } from "./pokemonApi";
+import { getPokemon } from "./getPokemon";
 
 describe("getPokemon", () => {
   afterEach(() => {
@@ -16,10 +16,7 @@ describe("getPokemon", () => {
 
     vi.stubGlobal(
       "fetch",
-      vi.fn().mockResolvedValue({
-        ok: true,
-        json: async () => fakePokemon,
-      }),
+      vi.fn().mockResolvedValue({ ok: true, json: async () => fakePokemon }),
     );
 
     const result = await getPokemon("pikachu");
@@ -28,12 +25,7 @@ describe("getPokemon", () => {
   });
 
   it("throws an error when the request fails", async () => {
-    vi.stubGlobal(
-      "fetch",
-      vi.fn().mockResolvedValue({
-        ok: false,
-      }),
-    );
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false }));
 
     await expect(getPokemon("invalid-pokemon")).rejects.toThrow(
       "Failed to fetch Pokémon",
