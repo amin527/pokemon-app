@@ -5,6 +5,6 @@ import App from "./App";
 describe("App", () => {
   it("Loads the content of the App component", () => {
     render(<App />);
-    expect(screen.getByTestId("app-component-content")).toBeInTheDocument;
+    expect(screen.getByTestId("app-component-content")).toBeInTheDocument();
   });
 });
