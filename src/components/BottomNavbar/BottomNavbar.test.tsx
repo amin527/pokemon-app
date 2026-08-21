@@ -3,13 +3,13 @@ import { describe, expect, it } from "vitest";
 import BottomNavbar from "./BottomNavbar";
 
 describe("BottomNavbar", () => {
-    it("renders childComponent", () => {
-        render(
-            <BottomNavbar>
-                <div>Child Component</div>
-            </BottomNavbar>
-        );
+  it("renders childComponent", () => {
+    render(
+      <BottomNavbar>
+        <div>Child Component</div>
+      </BottomNavbar>,
+    );
 
-        expect(screen.getByText("Child Component")).toBeInTheDocument();
-    });
+    expect(screen.getByText("Child Component")).toBeInTheDocument();
+  });
 });

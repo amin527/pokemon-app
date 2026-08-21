@@ -42,7 +42,9 @@ function LandingDisplay() {
   useEffect(() => {
     const query = searchTerm.trim().toLowerCase();
 
-    if (!query) { return }
+    if (!query) {
+      return;
+    }
 
     // Forced timeout added to make the fetch look longer
     const timeout = setTimeout(() => {
