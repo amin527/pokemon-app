@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
 import PokemonGrid from "../PokemonGrid/PokemonGrid";
 import Pagination from "../Pagination/Pagination";
 import PokemonSearch from "../PokemonSearch/PokemonSearch";
 import PokemonGridSkeleton from "../PokemonGridSkeleton/PokemonGridSkeleton";
-import type { Pokemon } from "../../types/pokemon";
+import { useEffect, useState } from "react";
 import { searchPokemon } from "../../Functions/searchPokemon";
 import { loadPokemon } from "../../Functions/loadPokemon";
+import type { Pokemon } from "../../types/pokemon";
+import BottomNavbar from "../BottomNavbar/BottomNavbar";
 
 function LandingDisplay() {
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
-
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResult, setSearchResult] = useState<Pokemon | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -42,9 +42,7 @@ function LandingDisplay() {
   useEffect(() => {
     const query = searchTerm.trim().toLowerCase();
 
-    if (!query) {
-      return;
-    }
+    if (!query) { return }
 
     // Forced timeout added to make the fetch look longer
     const timeout = setTimeout(() => {
@@ -68,12 +66,14 @@ function LandingDisplay() {
         <PokemonGrid pokemon={searchResult ? [searchResult] : pokemon} />
       )}
       {!searchResult && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={10}
-          onPrevious={handlePrevious}
-          onNext={handleNext}
-        />
+        <BottomNavbar>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={10}
+            onPrevious={handlePrevious}
+            onNext={handleNext}
+          />
+        </BottomNavbar>
       )}
     </div>
   );
