@@ -1,6 +1,7 @@
 .pokemon-grid {
   display: grid;
   gap: 20px;
+  margin: 10px 30px 23px;
 }
 
 .pokemon-grid--multiple {

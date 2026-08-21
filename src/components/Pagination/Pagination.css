@@ -1,4 +1,10 @@
 .pagination {
+  position: absolute;
+  bottom: 15px;
+
+  background-color: rgb(215, 236, 255);
+  border-radius: 15px;
+
   display: flex;
   justify-self: center;
   margin-top: 20px;
@@ -8,11 +14,11 @@
   all: unset;
   display: flex;
   border-radius: 15px;
-  background-color: rgb(143, 139, 255);
-  padding: 0px 6px;
+  background-color: rgb(164, 213, 255);
+  padding: 2px 6px;
 }
 .pagination__button:hover {
-  background-color: rgb(115, 110, 255);
+  background-color: rgb(167, 164, 255);
   cursor: pointer;
 }
 .pagination__button--next {
@@ -31,7 +37,7 @@
 .pagination__icon--next {
   padding-left: 2px;
 }
-
+/* ----------------------------------- */
 .pagination__text {
-  padding-top: 1px;
+  padding-top: 3px;
 }
