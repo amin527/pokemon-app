@@ -8,7 +8,7 @@ afterEach(() => {
 
 describe("PokemonGridSkeleton", () => {
   it("renders 20 skeleton cards", () => {
-    const { container } = render(<PokemonGridSkeleton />);
+    const { container } = render(<PokemonGridSkeleton pokemonFetchSize={20} />);
 
     const skeletonCards = container.querySelectorAll(".pokemon-card-skeleton");
 
