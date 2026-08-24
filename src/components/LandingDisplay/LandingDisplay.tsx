@@ -4,11 +4,11 @@ import Pagination from "../Pagination/Pagination";
 import PokemonSearch from "../PokemonSearch/PokemonSearch";
 import PokemonGridSkeleton from "../PokemonGridSkeleton/PokemonGridSkeleton";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { searchPokemon } from "../../functions-temp/searchPokemon";
-import { loadPokemon } from "../../functions-temp/loadPokemon";
+import { searchPokemon } from "../../functions/searchPokemon";
+import { loadPokemon } from "../../functions/loadPokemon";
 import type { Pokemon } from "../../types/pokemon";
 import BottomNavbar from "../BottomNavbar/BottomNavbar";
-import { calculatePokemonFetchSize } from "../../functions-temp/calculatePokemonFetchSize";
+import { calculatePokemonFetchSize } from "../../functions/calculatePokemonFetchSize";
 import { useComponentWidth } from "../../hooks/useComponentWidth";
 import { POKEMON_GRID_HORIZONTAL_MARGIN } from "../../constants/PokemonGridConstants";
 
