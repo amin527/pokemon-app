@@ -19,7 +19,7 @@ describe("PokemonGrid", () => {
   ];
 
   it("renders all Pokémon provided to the grid", () => {
-    render(<PokemonGrid pokemon={pokemon} />);
+    render(<PokemonGrid pokemonGridWidth={1000} pokemon={pokemon} />);
 
     expect(screen.getByText("Name: bulbasaur")).toBeInTheDocument();
     expect(screen.getByText("Name: charmander")).toBeInTheDocument();
