@@ -1,9 +1,11 @@
 import PokemonCard from "../PokemonCard/PokemonCard";
 import "./PokemonGrid.css";
 import type { Pokemon } from "../../types/pokemon";
+import { POKEMON_GRID_CARD_GAP, POKEMON_GRID_HORIZONTAL_MARGIN, POKEMON_GRID_STANDARD_CARD_WIDTH } from "../../constants/PokemonGridConstants";
 
 type PokemonGridProps = {
   pokemon: Pokemon[];
+  pokemonGridWidth: number;
 };
 
 function PokemonGrid({ pokemon }: PokemonGridProps) {

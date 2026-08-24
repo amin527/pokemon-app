@@ -1,11 +1,12 @@
 import type { Pokemon } from "../types/pokemon";
-import { fetchPokemonSet } from "./fetchPokemonSet";
+import { fetchPokemon } from "./fetchPokemon";
 import { preloadImage } from "./preloadImage";
 
 const MIN_LOADING_TIME = 600;
-const PAGE_SIZE = 20;
+
 
 type loadPokemonProps = {
+  pokemonFetchSize: number;
   currentPage: number;
   setError: (value: string) => void;
   setPokemon: (value: Pokemon[]) => void;
@@ -13,12 +14,13 @@ type loadPokemonProps = {
 };
 
 export async function loadPokemon({
+  pokemonFetchSize,
   currentPage,
   setError,
   setPokemon,
   setIsLoading,
 }: loadPokemonProps) {
-  const offset = (currentPage - 1) * PAGE_SIZE;
+  const offset = (currentPage - 1) * pokemonFetchSize;
 
   try {
     const minimumDelay = new Promise((resolve) =>
@@ -26,7 +28,7 @@ export async function loadPokemon({
     );
 
     const loadedPokemonSet = async () => {
-      const pokemonSet = await fetchPokemonSet(offset);
+      const pokemonSet = await fetchPokemon({pokemonFetchSize, offset});
 
       await Promise.all(
         pokemonSet.map((pokemon) =>

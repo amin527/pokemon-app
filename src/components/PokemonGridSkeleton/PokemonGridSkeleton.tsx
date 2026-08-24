@@ -1,7 +1,13 @@
 import "../PokemonGrid/PokemonGrid.css";
 import "./PokemonGridSkeleton.css";
 
-function PokemonGridSkeleton() {
+type PokemonGridSkeletonProps = {
+  pokemonFetchSize: number;
+};
+
+function PokemonGridSkeleton({
+  pokemonFetchSize,
+}: PokemonGridSkeletonProps) {
   return (
     <div className="pokemon-grid pokemon-grid--multiple">
       {Array.from({ length: 20 }).map((_, index) => (

@@ -1,12 +1,12 @@
 import { describe, expect, it, vi } from "vitest";
 import { getPokemon } from "./API/getPokemon";
 import { getPokemonList } from "./API/getPokemonList";
-import { fetchPokemonSet } from "./fetchPokemonSet";
+import { fetchPokemon } from "./fetchPokemon";
 
 vi.mock("./API/getPokemon", () => ({ getPokemon: vi.fn() }));
 vi.mock("./API/getPokemonList", () => ({ getPokemonList: vi.fn() }));
 
-describe("fetchPokemonSet", () => {
+describe("fetchPokemon", () => {
   const getPokemonListResponse = {
     count: 2,
     next: null,
@@ -69,7 +69,7 @@ describe("fetchPokemonSet", () => {
     vi.mocked(getPokemon)
       .mockResolvedValueOnce(getPokemonResponseOne)
       .mockResolvedValueOnce(getPokemonResponseTwo);
-    const fetchedPokemonSet = await fetchPokemonSet(0);
-    expect(fetchedPokemonSet).toEqual(formattedPokemonResponse);
+    const fetchedPokemon = await fetchPokemon({offset:0, pokemonFetchSize: 2});
+    expect(fetchedPokemon).toEqual(formattedPokemonResponse);
   });
 });

@@ -1,11 +1,13 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import LandingDisplay from "./LandingDisplay";
-import { fetchPokemonSet } from "../../Functions/fetchPokemonSet";
+import { fetchPokemon } from "../../functions/fetchPokemon";
+import { calculatePokemonFetchSize } from "../../functions/calculatePokemonFetchSize";
+import { useComponentWidth } from "../../hooks/useComponentWidth";
 
-vi.mock("../../Functions/fetchPokemonSet", () => ({
-  fetchPokemonSet: vi.fn(),
-}));
+vi.mock("../../functions/fetchPokemon", () => ({ fetchPokemon: vi.fn() }));
+vi.mock("../../functions/calculatePokemonFetchSize", () => ({  calculatePokemonFetchSize: vi.fn() }))
+vi.mock("../../hooks/useComponentWidth", () => ({  useComponentWidth: vi.fn() }));
 
 class MockImage {
   onload: (() => void) | null = null;
@@ -29,14 +31,14 @@ describe("LandingDisplay", () => {
   });
 
   it("shows skeleton cards while Pokémon are loading", async () => {
+    vi.mocked(useComponentWidth).mockReturnValue(1000);
+    vi.mocked(calculatePokemonFetchSize).mockReturnValue(20);
     const { container } = render(<LandingDisplay />);
-    expect(container.querySelectorAll(".pokemon-card-skeleton")).toHaveLength(
-      20,
-    );
+    expect(container.querySelectorAll(".pokemon-card-skeleton")).toHaveLength(20);
   });
 
   it("loads and displays Pokémon", async () => {
-    vi.mocked(fetchPokemonSet).mockResolvedValue([
+    vi.mocked(fetchPokemon).mockResolvedValue([
       {
         id: 1,
         name: "bulbasaur",
@@ -58,7 +60,7 @@ describe("LandingDisplay", () => {
   });
 
   it("displays an error message when Pokémon fail to load", async () => {
-    vi.mocked(fetchPokemonSet).mockRejectedValueOnce(
+    vi.mocked(fetchPokemon).mockRejectedValueOnce(
       new Error("Failed to fetch Pokémon list"),
     );
 
