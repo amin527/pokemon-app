@@ -1,8 +1,8 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import LandingDisplay from "./LandingDisplay";
-import { fetchPokemon } from "../../functions/fetchPokemon";
-import { calculatePokemonFetchSize } from "../../functions/calculatePokemonFetchSize";
+import { fetchPokemon } from "../../functions-temp/fetchPokemon";
+import { calculatePokemonFetchSize } from "../../functions-temp/calculatePokemonFetchSize";
 import { useComponentWidth } from "../../hooks/useComponentWidth";
 
 vi.mock("../../functions/fetchPokemon", () => ({ fetchPokemon: vi.fn() }));
