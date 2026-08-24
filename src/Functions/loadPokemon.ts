@@ -4,7 +4,6 @@ import { preloadImage } from "./preloadImage";
 
 const MIN_LOADING_TIME = 600;
 
-
 type loadPokemonProps = {
   pokemonFetchSize: number;
   currentPage: number;
@@ -28,7 +27,7 @@ export async function loadPokemon({
     );
 
     const loadedPokemonSet = async () => {
-      const pokemonSet = await fetchPokemon({pokemonFetchSize, offset});
+      const pokemonSet = await fetchPokemon({ pokemonFetchSize, offset });
 
       await Promise.all(
         pokemonSet.map((pokemon) =>

@@ -6,8 +6,12 @@ import { calculatePokemonFetchSize } from "../../functions/calculatePokemonFetch
 import { useComponentWidth } from "../../hooks/useComponentWidth";
 
 vi.mock("../../functions/fetchPokemon", () => ({ fetchPokemon: vi.fn() }));
-vi.mock("../../functions/calculatePokemonFetchSize", () => ({  calculatePokemonFetchSize: vi.fn() }))
-vi.mock("../../hooks/useComponentWidth", () => ({  useComponentWidth: vi.fn() }));
+vi.mock("../../functions/calculatePokemonFetchSize", () => ({
+  calculatePokemonFetchSize: vi.fn(),
+}));
+vi.mock("../../hooks/useComponentWidth", () => ({
+  useComponentWidth: vi.fn(),
+}));
 
 class MockImage {
   onload: (() => void) | null = null;
@@ -34,7 +38,9 @@ describe("LandingDisplay", () => {
     vi.mocked(useComponentWidth).mockReturnValue(1000);
     vi.mocked(calculatePokemonFetchSize).mockReturnValue(20);
     const { container } = render(<LandingDisplay />);
-    expect(container.querySelectorAll(".pokemon-card-skeleton")).toHaveLength(20);
+    expect(container.querySelectorAll(".pokemon-card-skeleton")).toHaveLength(
+      20,
+    );
   });
 
   it("loads and displays Pokémon", async () => {

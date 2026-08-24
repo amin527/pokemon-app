@@ -69,7 +69,10 @@ describe("fetchPokemon", () => {
     vi.mocked(getPokemon)
       .mockResolvedValueOnce(getPokemonResponseOne)
       .mockResolvedValueOnce(getPokemonResponseTwo);
-    const fetchedPokemon = await fetchPokemon({offset:0, pokemonFetchSize: 2});
+    const fetchedPokemon = await fetchPokemon({
+      offset: 0,
+      pokemonFetchSize: 2,
+    });
     expect(fetchedPokemon).toEqual(formattedPokemonResponse);
   });
 });

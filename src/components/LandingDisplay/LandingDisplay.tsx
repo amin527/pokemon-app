@@ -12,27 +12,24 @@ import { calculatePokemonFetchSize } from "../../functions/calculatePokemonFetch
 import { useComponentWidth } from "../../hooks/useComponentWidth";
 import { POKEMON_GRID_HORIZONTAL_MARGIN } from "../../constants/PokemonGridConstants";
 
-
 function LandingDisplay() {
-
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResult, setSearchResult] = useState<Pokemon | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pokemonFetchSize, setPokemonFetchSize] = useState(0);
+  // const [pokemonFetchSize, setPokemonFetchSize] = useState(0);
 
   const pokemonGridComponent = useRef(null);
-  const pokemonGridWidth = useComponentWidth({ component: pokemonGridComponent });
-
-  console.log("pokemonFetchSize: ", pokemonFetchSize)
-  console.log("pokemonGridWidth: ", pokemonGridWidth)
+  const pokemonGridWidth = useComponentWidth({
+    component: pokemonGridComponent,
+  });
 
   const handleNext = useCallback(() => {
     setIsLoading(true);
     setCurrentPage((page) => page + 1);
-  }, [])
+  }, []);
 
   const handlePrevious = useCallback(() => {
     setIsLoading(true);
@@ -48,12 +45,12 @@ function LandingDisplay() {
     }
   }, []);
 
-
-  useEffect(() => {
-    if (pokemonGridWidth > 0) {
-      setPokemonFetchSize(calculatePokemonFetchSize(pokemonGridWidth - 2 * POKEMON_GRID_HORIZONTAL_MARGIN));
-    }
-  }, [pokemonGridWidth])
+  const pokemonFetchSize =
+    pokemonGridWidth > 0
+      ? calculatePokemonFetchSize(
+          pokemonGridWidth - 2 * POKEMON_GRID_HORIZONTAL_MARGIN,
+        )
+      : 0;
 
   useEffect(() => {
     loadPokemon({
@@ -68,13 +65,17 @@ function LandingDisplay() {
   useEffect(() => {
     const query = searchTerm.trim().toLowerCase();
 
-    if (!query) { return; }
+    if (!query) {
+      return;
+    }
 
     // Forced timeout added to make the fetch look longer
     const timeout = setTimeout(() => {
       searchPokemon({ query, setSearchResult, setError });
     }, 500);
-    return () => { clearTimeout(timeout); };
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [searchTerm]);
 
   return (

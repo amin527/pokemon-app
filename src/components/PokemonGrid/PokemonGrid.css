@@ -4,10 +4,14 @@
   margin: 10px 30px 23px;
 }
 
-.pokemon-grid--multiple {
+.pokemon-grid--large-scale {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
-.pokemon-grid--limited {
+.pokemon-grid--small-scale {
+  grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+}
+
+.pokemon-grid--search-result {
   grid-template-columns: repeat(auto-fit, 200px);
 }
