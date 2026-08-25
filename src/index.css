@@ -10,7 +10,7 @@ html::-webkit-scrollbar {
   display: none;
 }
 
-:root{
+:root {
   --primary-color: #dfdfff;
   --secondary-color: rgb(143, 139, 255);
   --accent-color: rgb(168, 98, 196);

@@ -1,11 +1,6 @@
-import "./DropDown.css"
+import "./DropDown.css";
 
-function DropDown(){
-    
-    return(
-        <div className="drop-down" data-testid="drop-down-component">
-
-        </div>
-    )
+function DropDown() {
+  return <div className="drop-down" data-testid="drop-down-component"></div>;
 }
 export default DropDown;
