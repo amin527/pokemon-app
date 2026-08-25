@@ -1,4 +1,23 @@
 .drop-down {
   position: absolute;
   top: 110%;
+  background-color: var(--primary-color);
+  right: 0;
+  padding: 10px;
+  border: 2px black solid;
+  /* min-width: 150px; */
+}
+
+.theme-options-container{
+  font-size: 65%;
+  color: gray;
+  display: flex;
+  flex-direction: column;
+}
+
+.theme-options {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
 }

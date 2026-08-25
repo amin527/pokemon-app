@@ -1,10 +1,22 @@
+import { createContext, useState } from "react";
 import "./App.css";
 import LandingDisplay from "./components/LandingDisplay/LandingDisplay";
 
+type ThemeContextType = { 
+  theme: string;
+  setTheme: ((value: string) => void) ;
+}
+
+export const ThemeContext = createContext<ThemeContextType>({theme: "", setTheme: () =>{}})
+
 function App() {
+
+  const [theme, setTheme] = useState<string>("light")
   return (
     <div data-testid="app-component-content">
-      <LandingDisplay />
+      <ThemeContext.Provider value={{ theme, setTheme }}>
+        <LandingDisplay />
+      </ThemeContext.Provider>
     </div>
   );
 }

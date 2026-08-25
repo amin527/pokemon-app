@@ -18,8 +18,6 @@ function TopNavbar() {
 
   useEffect(() => {
     function handleClickOnScreen(event: MouseEvent) {
-      console.log(settingsRef.current);
-      console.log(event.target as Node);
       if (
         settingsRef.current &&
         !settingsRef.current.contains(event.target as Node)
