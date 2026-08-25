@@ -11,8 +11,18 @@ html::-webkit-scrollbar {
 }
 
 :root {
+  --background-color: rgb(255, 238, 238);
   --primary-color: #dfdfff;
-  --secondary-color: rgb(143, 139, 255);
-  --accent-color: rgb(168, 98, 196);
+  --secondary-color: rgb(167, 164, 255);
+  --primary-accent-color: rgb(164, 213, 255);
+  --secondary-accent-color: rgb(240, 141, 255);
+
   --horizontal-margin: 30px;
+
+
+  --background-color-dark: rgb(24, 23, 31);
+  --primary-color-dark: rgb(53, 51, 72);
+  --secondary-color-dark: rgb(145, 140, 255);
+  --primary-accent-color-dark: rgb(105, 190, 155);
+  --secondary-accent-color-dark: rgb(235, 125, 110);
 }

@@ -1,9 +1,21 @@
 .pokemon-search {
   margin: 10px 30px;
+  margin-top: 20px;
 }
 
 .pokemon-search__input-field {
+  all: unset;
   width: 100%;
   box-sizing: border-box;
   padding: 8px 5px;
+  color: black;
+  background-color: var(--secondary-accent-color);
+}
+
+.pokemon-search__input-field::placeholder {
+  color: black;
+}
+
+.pokemon-search__input-field.dark {
+  background-color: var(--secondary-accent-color-dark);
 }

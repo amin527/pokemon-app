@@ -2,5 +2,11 @@
   position: relative;
   margin-top: auto;
   height: 60px;
-  background-color: rgb(143, 139, 255);
+  background-color: var(--primary-color);
 }
+
+.bottom-navbar.dark {
+  background-color: var(--primary-color-dark);
+}
+
+

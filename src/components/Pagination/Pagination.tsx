@@ -1,5 +1,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import "./Pagination.css";
+import { useContext } from "react";
+import { ThemeContext } from "../../App";
 
 type PaginationProps = {
   currentPage: number;
@@ -14,10 +16,12 @@ function Pagination({
   onPrevious,
   onNext,
 }: PaginationProps) {
+
+  const { theme } = useContext(ThemeContext)
   return (
-    <div className="pagination">
+    <div className={`pagination ${theme == "light" ? "" : "dark"}`}>
       <button
-        className="pagination__button pagination__button--previous"
+        className={`pagination__button ${theme == "light" ? "" : "dark"} pagination__button--previous`}
         onClick={onPrevious}
         aria-label="Previous page"
         disabled={currentPage === 1}
@@ -30,7 +34,7 @@ function Pagination({
       </span>
 
       <button
-        className="pagination__button pagination__button--next"
+        className={`pagination__button ${theme == "light" ? "" : "dark"} pagination__button--next`}
         onClick={onNext}
         aria-label="Next page"
         disabled={currentPage === totalPages}

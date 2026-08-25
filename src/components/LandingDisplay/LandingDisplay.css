@@ -2,4 +2,9 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: var(--background-color);
+}
+
+.landing-display.dark {
+  background-color: var(--background-color-dark);
 }

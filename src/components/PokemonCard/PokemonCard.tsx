@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { ThemeContext } from "../../App";
 import "./PokemonCard.css";
 
 type PokemonCardProps = {
@@ -8,10 +10,24 @@ type PokemonCardProps = {
 };
 
 function PokemonCard({ id, name, artwork, types }: PokemonCardProps) {
+
+  const { theme } = useContext(ThemeContext)
+  let pokemonCardClassName = ""
+  let pokemonCardInfoClassName = ""
+
+  if (theme == "light"){
+    pokemonCardClassName = "pokemon-card";
+    pokemonCardInfoClassName = "pokemon-card__info"
+  } 
+  if (theme == "dark"){
+    pokemonCardClassName = "pokemon-card dark"
+    pokemonCardInfoClassName = "pokemon-card__info dark"
+  } 
+  
   return (
-    <div className="pokemon-card">
+    <div className={pokemonCardClassName}>
       <img className="pokemon-card__artwork" src={artwork} alt={name} />
-      <div className="pokemon-card__info">
+      <div className={pokemonCardInfoClassName}>
         <div className="pokemon-card__id">ID: {id}</div>
         <div className="pokemon-card__name">Name: {name}</div>
         <div className="pokemon-card__types">
