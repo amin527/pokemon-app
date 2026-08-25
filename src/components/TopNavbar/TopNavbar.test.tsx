@@ -3,8 +3,8 @@ import TopNavbar from "./TopNavbar"
 import { render, screen } from "@testing-library/react"
 
 describe("TopNavbar", ()=> {
-    it("Displays children component", ()=> {
-        render(<TopNavbar><div>Child Component</div></TopNavbar>)
-        expect(screen.getByText("Child Component")).toBeInTheDocument()
+    it("Displays navbar component", ()=> {
+        render(<TopNavbar/>)
+        expect(screen.getByTestId("top-navbar-component")).toBeInTheDocument()
     })
 })

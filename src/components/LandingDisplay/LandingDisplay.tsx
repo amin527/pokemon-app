@@ -81,12 +81,11 @@ function LandingDisplay() {
   return (
     <div className="landing-display">
       {error && <div className="error-message">{error}</div>}
-      <TopNavbar>
-        <PokemonSearch
+      <TopNavbar/>
+      <PokemonSearch
           searchTerm={searchTerm}
           onSearchTermChange={handleSearchTermChange}
         />
-      </TopNavbar>
       <div ref={pokemonGridComponent}>
         {isLoading ? (
           <PokemonGridSkeleton pokemonFetchSize={pokemonFetchSize} />

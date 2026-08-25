@@ -9,3 +9,10 @@ html {
 html::-webkit-scrollbar {
   display: none;
 }
+
+:root{
+  --primary-color: #dfdfff;
+  --secondary-color: rgb(143, 139, 255);
+  --accent-color: rgb(168, 98, 196);
+  --horizontal-margin: 30px;
+}
