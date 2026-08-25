@@ -19,13 +19,16 @@ export async function loadPokemon({
   setPokemon,
   setIsLoading,
 }: loadPokemonProps) {
+  if (pokemonFetchSize == 0){
+    return;
+  }
   const offset = (currentPage - 1) * pokemonFetchSize;
 
-  try {
-    const minimumDelay = new Promise((resolve) =>
-      setTimeout(resolve, MIN_LOADING_TIME),
-    );
+  console.log("pokemonFetchSize: ", pokemonFetchSize)
+  console.log("offset: ", offset)
 
+  try {
+    const minimumDelay = new Promise((resolve) => setTimeout(resolve, MIN_LOADING_TIME));
     const loadedPokemonSet = async () => {
       const pokemonSet = await fetchPokemon({ pokemonFetchSize, offset });
 
