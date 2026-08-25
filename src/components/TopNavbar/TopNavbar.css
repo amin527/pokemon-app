@@ -1,4 +1,10 @@
-.top-navbar{
-    background-color: red;
-    padding: 10px 0px;
+.top-navbar {
+  display: flex;
+  background-color: var(--primary-color);
+  padding: 10px 0px;
+}
+.settings-container {
+  position: relative;
+  margin-left: auto;
+  margin-right: var(--horizontal-margin);
 }

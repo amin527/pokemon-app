@@ -1,0 +1,15 @@
+.light-button {
+  all: unset;
+  padding: 5px 10px;
+  background-color: var(--primary-color);
+  color: black;
+  border-radius: 3px;
+  border: 3px solid var(--accent-color);
+}
+
+.light-button:hover {
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border-color: black;
+}

@@ -48,8 +48,8 @@ function LandingDisplay() {
   const pokemonFetchSize =
     pokemonGridWidth > 0
       ? calculatePokemonFetchSize(
-        pokemonGridWidth - 2 * POKEMON_GRID_HORIZONTAL_MARGIN,
-      )
+          pokemonGridWidth - 2 * POKEMON_GRID_HORIZONTAL_MARGIN,
+        )
       : 0;
 
   useEffect(() => {
@@ -81,12 +81,11 @@ function LandingDisplay() {
   return (
     <div className="landing-display">
       {error && <div className="error-message">{error}</div>}
-      <TopNavbar>
-        <PokemonSearch
-          searchTerm={searchTerm}
-          onSearchTermChange={handleSearchTermChange}
-        />
-      </TopNavbar>
+      <TopNavbar />
+      <PokemonSearch
+        searchTerm={searchTerm}
+        onSearchTermChange={handleSearchTermChange}
+      />
       <div ref={pokemonGridComponent}>
         {isLoading ? (
           <PokemonGridSkeleton pokemonFetchSize={pokemonFetchSize} />
