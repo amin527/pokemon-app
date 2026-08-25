@@ -11,6 +11,7 @@ import BottomNavbar from "../BottomNavbar/BottomNavbar";
 import { calculatePokemonFetchSize } from "../../functions/calculatePokemonFetchSize";
 import { useComponentWidth } from "../../hooks/useComponentWidth";
 import { POKEMON_GRID_HORIZONTAL_MARGIN } from "../../constants/PokemonGridConstants";
+import TopNavbar from "../TopNavbar/TopNavbar";
 
 function LandingDisplay() {
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
@@ -19,7 +20,6 @@ function LandingDisplay() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  // const [pokemonFetchSize, setPokemonFetchSize] = useState(0);
 
   const pokemonGridComponent = useRef(null);
   const pokemonGridWidth = useComponentWidth({
@@ -48,8 +48,8 @@ function LandingDisplay() {
   const pokemonFetchSize =
     pokemonGridWidth > 0
       ? calculatePokemonFetchSize(
-          pokemonGridWidth - 2 * POKEMON_GRID_HORIZONTAL_MARGIN,
-        )
+        pokemonGridWidth - 2 * POKEMON_GRID_HORIZONTAL_MARGIN,
+      )
       : 0;
 
   useEffect(() => {
@@ -81,10 +81,12 @@ function LandingDisplay() {
   return (
     <div className="landing-display">
       {error && <div className="error-message">{error}</div>}
-      <PokemonSearch
-        searchTerm={searchTerm}
-        onSearchTermChange={handleSearchTermChange}
-      />
+      <TopNavbar>
+        <PokemonSearch
+          searchTerm={searchTerm}
+          onSearchTermChange={handleSearchTermChange}
+        />
+      </TopNavbar>
       <div ref={pokemonGridComponent}>
         {isLoading ? (
           <PokemonGridSkeleton pokemonFetchSize={pokemonFetchSize} />
