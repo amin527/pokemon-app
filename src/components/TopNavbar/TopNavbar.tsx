@@ -8,7 +8,11 @@ function TopNavbar() {
     const settingsRef = useRef<HTMLDivElement>(null);
 
     function handleDropDownVisibility() {
-        settingsDropDownIsVisible ? setSettingsDropDownIsVisible(false) : setSettingsDropDownIsVisible(true)
+        if (settingsDropDownIsVisible) {
+            setSettingsDropDownIsVisible(false)  
+        } else {
+            setSettingsDropDownIsVisible(true)
+        }
     }
 
     useEffect(() => {
@@ -27,9 +31,9 @@ function TopNavbar() {
     }, [])
 
     return (
-        <div 
-            className="top-navbar" 
-            data-testid="top-navbar-component" 
+        <div
+            className="top-navbar"
+            data-testid="top-navbar-component"
         >
             <div className="settings-container" ref={settingsRef}>
                 <Button text="Settings" handleClick={() => { handleDropDownVisibility() }} />
