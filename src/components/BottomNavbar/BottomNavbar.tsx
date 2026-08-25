@@ -5,6 +5,6 @@ type BottomNavbarProps = {
 };
 
 function BottomNavbar({ children }: BottomNavbarProps) {
-  return <div className="bottom-nav-bar">{children}</div>;
+  return <div className="bottom-navbar">{children}</div>;
 }
 export default BottomNavbar;
