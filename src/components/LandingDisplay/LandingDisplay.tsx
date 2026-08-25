@@ -11,6 +11,7 @@ import BottomNavbar from "../BottomNavbar/BottomNavbar";
 import { calculatePokemonFetchSize } from "../../functions/calculatePokemonFetchSize";
 import { useComponentWidth } from "../../hooks/useComponentWidth";
 import { POKEMON_GRID_HORIZONTAL_MARGIN } from "../../constants/PokemonGridConstants";
+import { updatePokemon } from "../../functions/updatePokemon";
 
 function LandingDisplay() {
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
@@ -60,7 +61,20 @@ function LandingDisplay() {
       setPokemon,
       setIsLoading,
     });
-  }, [currentPage, pokemonFetchSize]);
+  }, [currentPage]);
+
+
+  useEffect(() => {
+    updatePokemon({
+      pokemon,
+      pokemonFetchSize,
+      currentPage,
+      setError,
+      setPokemon,
+      setIsLoading,
+    });
+  }, [pokemonFetchSize]);
+
 
   useEffect(() => {
     const query = searchTerm.trim().toLowerCase();
