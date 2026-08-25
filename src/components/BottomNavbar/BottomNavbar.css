@@ -1,6 +1,6 @@
-.bottom-nav-bar {
+.bottom-navbar {
   position: relative;
-  margin-top: 15px;
+  margin-top: auto;
   height: 60px;
   background-color: rgb(143, 139, 255);
 }

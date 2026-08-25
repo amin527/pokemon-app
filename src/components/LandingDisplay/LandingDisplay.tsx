@@ -79,7 +79,7 @@ function LandingDisplay() {
   }, [searchTerm]);
 
   return (
-    <div>
+    <div className="landing-display">
       {error && <div className="error-message">{error}</div>}
       <PokemonSearch
         searchTerm={searchTerm}
