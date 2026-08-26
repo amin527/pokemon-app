@@ -82,7 +82,10 @@ function LandingDisplay() {
   }, [searchTerm]);
 
   return (
-    <div className={`landing-display ${ theme == "light" ? "" : "landing-display--dark"}`}>
+    <div
+      className={`landing-display ${theme == "light" ? "" : "landing-display--dark"}`}
+      data-testid="landing-display"
+    >
       {error && <div className="error-message">{error}</div>}
       <TopNavbar />
       <PokemonSearch

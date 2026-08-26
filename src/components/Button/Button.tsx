@@ -10,7 +10,10 @@ type ButtonProps = {
 function Button({ text, handleClick }: ButtonProps) {
   const { theme } = useContext(ThemeContext);
   return (
-    <button className={`button ${theme == "light" ? "" : "button--dark"}`} onClick={handleClick}>
+    <button
+      className={`button ${theme == "light" ? "" : "button--dark"}`}
+      onClick={handleClick}
+    >
       {text}
     </button>
   );

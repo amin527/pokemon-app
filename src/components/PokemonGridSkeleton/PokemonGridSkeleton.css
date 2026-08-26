@@ -12,7 +12,7 @@
   background-color: var(--primary-color);
 }
 
-.pokemon-card-skeleton__artwork.dark {
+.pokemon-card-skeleton__artwork--dark {
   background-color: var(--primary-color-dark);
 }
 

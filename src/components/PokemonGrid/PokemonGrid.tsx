@@ -31,6 +31,7 @@ function PokemonGrid({ pokemon, pokemonGridWidth }: PokemonGridProps) {
     <div className={gridClassName}>
       {pokemon.map((pokemon) => (
         <PokemonCard
+          key={pokemon.id}
           id={pokemon.id}
           name={pokemon.name}
           artwork={pokemon.image}

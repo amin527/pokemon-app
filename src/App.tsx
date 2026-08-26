@@ -8,6 +8,8 @@ function App() {
     return localStorage.getItem("theme") ?? "light";
   });
 
+  console.log(theme);
+
   return (
     <div data-testid="app">
       <ThemeContext.Provider value={{ theme, setTheme }}>
