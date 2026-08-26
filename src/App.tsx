@@ -28,7 +28,3 @@ function App() {
 }
 
 export default App;
-function useEffectLayout(arg0: () => void) {
-  throw new Error("Function not implemented.");
-}
-
