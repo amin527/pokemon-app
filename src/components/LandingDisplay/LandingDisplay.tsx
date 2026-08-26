@@ -12,7 +12,7 @@ import { calculatePokemonFetchSize } from "../../functions/calculatePokemonFetch
 import { useComponentWidth } from "../../hooks/useComponentWidth";
 import { POKEMON_GRID_HORIZONTAL_MARGIN } from "../../constants/PokemonGridConstants";
 import TopNavbar from "../TopNavbar/TopNavbar";
-import { ThemeContext } from "../../App";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 function LandingDisplay() {
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
@@ -22,8 +22,7 @@ function LandingDisplay() {
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { theme } = useContext(ThemeContext)
-  const landingDisplayClassName = theme == "light" ? "landing-display" : "landing-display dark"
+  const { theme } = useContext(ThemeContext);
 
   const pokemonGridComponent = useRef(null);
   const pokemonGridWidth = useComponentWidth({
@@ -83,7 +82,7 @@ function LandingDisplay() {
   }, [searchTerm]);
 
   return (
-    <div className={landingDisplayClassName}>
+    <div className={`landing-display ${ theme == "light" ? "" : "landing-display--dark"}`}>
       {error && <div className="error-message">{error}</div>}
       <TopNavbar />
       <PokemonSearch

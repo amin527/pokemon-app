@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import TopNavbar from "./TopNavbar";
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ThemeContext } from "../../App";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 describe("TopNavbar", () => {
   afterEach(() => {
@@ -39,20 +39,22 @@ describe("TopNavbar", () => {
   it("applies the dark color formatting when the application theme is dark", () => {
     const theme: string = "dark";
     render(
-      <ThemeContext.Provider value={{ theme, setTheme:()=>{} }}>
+      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
         <TopNavbar />
-      </ThemeContext.Provider>
+      </ThemeContext.Provider>,
     );
     expect(screen.getByTestId("top-navbar")).toHaveClass("top-navbar--dark");
-  })
+  });
 
   it("applies the light color formatting when the application theme is light", () => {
     const theme: string = "light";
     render(
-      <ThemeContext.Provider value={{ theme, setTheme:()=>{} }}>
+      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
         <TopNavbar />
-      </ThemeContext.Provider>
+      </ThemeContext.Provider>,
     );
-    expect(screen.getByTestId("top-navbar")).not.toHaveClass("top-navbar--dark");
-  })
+    expect(screen.getByTestId("top-navbar")).not.toHaveClass(
+      "top-navbar--dark",
+    );
+  });
 });

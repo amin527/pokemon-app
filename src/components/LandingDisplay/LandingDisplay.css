@@ -5,6 +5,6 @@
   background-color: var(--background-color);
 }
 
-.landing-display.dark {
+.landing-display--dark {
   background-color: var(--background-color-dark);
 }

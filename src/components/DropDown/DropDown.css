@@ -12,7 +12,7 @@
   background-color: var(--primary-color-dark);
 }
 
-.theme-options-container{
+.theme-options-container {
   font-size: 65%;
   color: gray;
   display: flex;

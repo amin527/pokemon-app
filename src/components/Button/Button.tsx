@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import "./Button.css";
-import { ThemeContext } from "../../App";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 type ButtonProps = {
   text: string;
@@ -8,10 +8,9 @@ type ButtonProps = {
 };
 
 function Button({ text, handleClick }: ButtonProps) {
-  const { theme } = useContext(ThemeContext)
-  const ButtonClassName = theme == "light" ? "button" : "button dark"
+  const { theme } = useContext(ThemeContext);
   return (
-    <button className={ButtonClassName} onClick={handleClick}>
+    <button className={`button ${theme == "light" ? "" : "button--dark"}`} onClick={handleClick}>
       {text}
     </button>
   );

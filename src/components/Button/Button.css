@@ -6,7 +6,7 @@
   border-radius: 3px;
 }
 
-.button.dark{
+.button--dark {
   background-color: var(--primary-accent-color-dark);
 }
 
@@ -19,5 +19,4 @@
 
 .button.dark:hover {
   background-color: var(--secondary-accent-color-dark);
-
 }
