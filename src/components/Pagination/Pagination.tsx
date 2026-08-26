@@ -19,11 +19,11 @@ function Pagination({
 
   const { theme } = useContext(ThemeContext)
   return (
-    <div className={`pagination ${theme == "light" ? "" : "dark"}`}>
+    <div className={`pagination ${theme == "light" ? "" : "pagination--dark"}`} data-testid="pagination">
       <button
-        className={`pagination__button ${theme == "light" ? "" : "dark"} pagination__button--previous`}
+        data-testid="pagination-button-previous"
+        className={`pagination__button ${theme == "light" ? "" : "pagination__button--dark"} pagination__button--previous`}
         onClick={onPrevious}
-        aria-label="Previous page"
         disabled={currentPage === 1}
       >
         <ChevronLeft className="pagination__icon pagination__icon--previous" />
@@ -34,9 +34,9 @@ function Pagination({
       </span>
 
       <button
-        className={`pagination__button ${theme == "light" ? "" : "dark"} pagination__button--next`}
+        data-testid="pagination-button-next"
+        className={`pagination__button ${theme == "light" ? "" : "pagination__button--dark"} pagination__button--next`}
         onClick={onNext}
-        aria-label="Next page"
         disabled={currentPage === totalPages}
       >
         <ChevronRight className="pagination__icon pagination__icon--next" />

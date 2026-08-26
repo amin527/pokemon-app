@@ -4,26 +4,24 @@ import "./DropDown.css";
 import { ThemeContext } from "../../App";
 
 type DropDownProps = { 
-  setSettingsDropDownIsVisible: (value: boolean) => void;
+  setDropDownIsVisible: (value: boolean) => void;
 }
 
-function DropDown({ setSettingsDropDownIsVisible }: DropDownProps) {
+function DropDown({ setDropDownIsVisible }: DropDownProps) {
 
-  
   const { theme, setTheme } = useContext(ThemeContext) 
-  const DropDownClassName = theme == "light" ? "drop-down" : "drop-down dark" 
   function applyDarkTheme() {
     setTheme("dark"); 
-    setSettingsDropDownIsVisible(false);
+    setDropDownIsVisible(false);
     localStorage.setItem("theme", "dark")
   }
   function applyLightTheme() {
     setTheme("light"); 
-    setSettingsDropDownIsVisible(false);
+    setDropDownIsVisible(false);
     localStorage.setItem("theme", "light")
   }
   return (
-    <div className={DropDownClassName} data-testid="drop-down-component">
+    <div className={`drop-down ${theme == "light" ? "" : "drop-down--dark"}`} data-testid="drop-down">
       <div className="theme-options-container">
         <div className="">THEME OPTIONS</div>
         <div className="theme-options">

@@ -8,7 +8,7 @@
   background-color: var(--primary-color);
 }
 
-.pokemon-card.dark{
+.pokemon-card--dark{
   background-color: var(--primary-color-dark);
 }
 
@@ -37,7 +37,7 @@
   transition: transform 0.3s ease;
 }
 
-.pokemon-card__info.dark {
+.pokemon-card__info--dark {
   background-color: var(--secondary-color-dark);
 }
 

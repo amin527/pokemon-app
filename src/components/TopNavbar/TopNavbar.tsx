@@ -8,7 +8,6 @@ function TopNavbar() {
   const [settingsDropDownIsVisible, setSettingsDropDownIsVisible] = useState(false);
   const settingsRef = useRef<HTMLDivElement>(null);
   const { theme } = useContext(ThemeContext)
-  const TopNavbarClassName = theme == "light" ? "top-navbar" : "top-navbar dark"
 
   function handleDropDownVisibility() {
     if (settingsDropDownIsVisible) {
@@ -34,7 +33,7 @@ function TopNavbar() {
   }, []);
 
   return (
-    <div className={TopNavbarClassName} data-testid="top-navbar-component">
+    <div className={`top-navbar ${theme == "light" ? "" : "top-navbar--dark"}`} data-testid="top-navbar">
       <div className="settings-container" ref={settingsRef}>
         <Button
           text="Settings"
@@ -42,7 +41,7 @@ function TopNavbar() {
             handleDropDownVisibility();
           }}
         />
-        {settingsDropDownIsVisible && <DropDown setSettingsDropDownIsVisible={setSettingsDropDownIsVisible}/>}
+        {settingsDropDownIsVisible && <DropDown setDropDownIsVisible={setSettingsDropDownIsVisible}/>}
       </div>
     </div>
   );

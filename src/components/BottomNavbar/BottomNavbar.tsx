@@ -9,8 +9,9 @@ type BottomNavbarProps = {
 function BottomNavbar({ children }: BottomNavbarProps) {
 
   const { theme } = useContext(ThemeContext)
-  const bottomNavbarClassName = theme == "light" ? "bottom-navbar" : "bottom-navbar dark"
   
-  return <div className={bottomNavbarClassName}>{children}</div>;
+  return <div className={`bottom-navbar ${theme == "light" ? "" : "bottom-navbar--dark"}`} data-testid="bottom-navbar">
+    {children}
+  </div>;
 }
 export default BottomNavbar;

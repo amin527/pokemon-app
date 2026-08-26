@@ -19,7 +19,7 @@ function App() {
   }, [])
 
   return (
-    <div data-testid="app-component-content">
+    <div data-testid="app">
       <ThemeContext.Provider value={{ theme, setTheme }}>
         <LandingDisplay />
       </ThemeContext.Provider>

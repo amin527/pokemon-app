@@ -5,7 +5,7 @@
   background-color: var(--primary-color);
 }
 
-.bottom-navbar.dark {
+.bottom-navbar--dark {
   background-color: var(--primary-color-dark);
 }
 

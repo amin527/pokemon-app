@@ -12,22 +12,11 @@ type PokemonCardProps = {
 function PokemonCard({ id, name, artwork, types }: PokemonCardProps) {
 
   const { theme } = useContext(ThemeContext)
-  let pokemonCardClassName = ""
-  let pokemonCardInfoClassName = ""
-
-  if (theme == "light"){
-    pokemonCardClassName = "pokemon-card";
-    pokemonCardInfoClassName = "pokemon-card__info"
-  } 
-  if (theme == "dark"){
-    pokemonCardClassName = "pokemon-card dark"
-    pokemonCardInfoClassName = "pokemon-card__info dark"
-  } 
   
   return (
-    <div className={pokemonCardClassName}>
+    <div className={`pokemon-card ${theme == "light" ? "" : "pokemon-card--dark"}`} data-testid="pokemon-card">
       <img className="pokemon-card__artwork" src={artwork} alt={name} />
-      <div className={pokemonCardInfoClassName}>
+      <div className={`pokemon-card__info ${theme == "light" ? "" : "pokemon-card__info--dark"}`} data-testid="pokemon-card-info">
         <div className="pokemon-card__id">ID: {id}</div>
         <div className="pokemon-card__name">Name: {name}</div>
         <div className="pokemon-card__types">

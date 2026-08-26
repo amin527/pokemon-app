@@ -16,6 +16,6 @@
   color: black;
 }
 
-.pokemon-search__input-field.dark {
+.pokemon-search__input-field--dark {
   background-color: var(--secondary-accent-color-dark);
 }

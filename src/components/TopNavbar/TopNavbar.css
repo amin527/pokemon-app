@@ -3,7 +3,7 @@
   background-color: var(--primary-color);
   padding: 10px 0px;
 }
-.top-navbar.dark {
+.top-navbar--dark {
   background-color: var(--primary-color-dark);
 }
 .settings-container {
