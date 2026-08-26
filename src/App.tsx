@@ -1,22 +1,12 @@
-import { createContext, useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 import LandingDisplay from "./components/LandingDisplay/LandingDisplay";
+import { ThemeContext } from "./contexts/ThemeContext";
 
-type ThemeContextType = { 
-  theme: string;
-  setTheme: (value: string) => void;
-}
-
-export const ThemeContext = createContext<ThemeContextType>({theme: "", setTheme: () =>{}})
 
 function App() {
 
-  const [theme, setTheme] = useState<string>("light")
-
-  useEffect(() => {
-    const loadedTheme = localStorage.getItem("theme")
-    if (loadedTheme) { setTheme(loadedTheme) }
-  }, [])
+  const [theme, setTheme] = useState<string>(() => {return localStorage.getItem("theme") ?? "light"});
 
   return (
     <div data-testid="app">
@@ -26,5 +16,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
