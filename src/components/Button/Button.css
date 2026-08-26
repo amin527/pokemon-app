@@ -1,22 +1,22 @@
 .button {
   all: unset;
   padding: 5px 10px;
-  background-color: var(--primary-accent-color);
+  background-color: var(--secondary-color);
   color: black;
   border-radius: 3px;
 }
 
 .button--dark {
-  background-color: var(--primary-accent-color-dark);
+  background-color: var(--secondary-color-dark);
 }
 
 .button:hover {
   cursor: pointer;
-  background-color: var(--secondary-accent-color);
+  background-color: var(--primary-accent-color);
   color: black;
   border-color: black;
 }
 
 .button--dark:hover {
-  background-color: var(--secondary-accent-color-dark);
+  background-color: var(--primary-accent-color-dark);
 }

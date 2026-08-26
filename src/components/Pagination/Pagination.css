@@ -15,18 +15,18 @@
   all: unset;
   display: flex;
   border-radius: 15px;
-  background-color: var(--primary-accent-color);
+  background-color: var(--secondary-color);
   padding: 2px 6px;
 }
 .pagination__button--dark {
-  background-color: var(--primary-accent-color-dark);
+  background-color: var(--secondary-color-dark);
 }
 .pagination__button:hover {
-  background-color: var(--secondary-accent-color);
+  background-color: var(--primary-accent-color);
   cursor: pointer;
 }
 .pagination__button--dark:hover {
-  background-color: var(--secondary-accent-color-dark);
+  background-color: var(--primary-accent-color-dark);
   cursor: pointer;
 }
 .pagination__button--next {
