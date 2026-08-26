@@ -9,7 +9,7 @@
   box-sizing: border-box;
   padding: 8px 5px;
   color: black;
-  background-color: var(--secondary-accent-color);
+  background-color: var(--primary-accent-color);
 }
 
 .pokemon-search__input-field::placeholder {
@@ -17,5 +17,5 @@
 }
 
 .pokemon-search__input-field--dark {
-  background-color: var(--secondary-accent-color-dark);
+  background-color: var(--primary-accent-color-dark);
 }
