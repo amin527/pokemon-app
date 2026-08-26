@@ -4,14 +4,16 @@
   min-width: 0;
   box-sizing: border-box;
   overflow: hidden;
-
-  background-color: rgb(143, 139, 255);
 }
 
 .pokemon-card-skeleton__artwork {
   width: 100%;
   aspect-ratio: 1 / 1;
-  background-color: rgb(143, 139, 255);
+  background-color: var(--primary-color);
+}
+
+.pokemon-card-skeleton__artwork--dark {
+  background-color: var(--primary-color-dark);
 }
 
 .pokemon-card-skeleton::after {

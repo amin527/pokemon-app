@@ -1,4 +1,27 @@
 .drop-down {
   position: absolute;
-  top: 110%;
+  top: 130%;
+  background-color: var(--primary-color);
+  right: 0;
+  padding: 10px;
+  border-radius: 3px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+}
+
+.drop-down--dark {
+  background-color: var(--primary-color-dark);
+}
+
+.theme-options-container {
+  font-size: 65%;
+  color: gray;
+  display: flex;
+  flex-direction: column;
+}
+
+.theme-options {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
 }

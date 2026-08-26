@@ -1,24 +1,32 @@
 .pagination {
   position: absolute;
   bottom: 15px;
-
-  background-color: rgb(215, 236, 255);
+  background-color: var(--primary-color);
   border-radius: 15px;
-
   display: flex;
   justify-self: center;
   margin-top: 20px;
+}
+.pagination--dark {
+  background-color: var(--primary-color-dark);
 }
 /* ----------------------------------- */
 .pagination__button {
   all: unset;
   display: flex;
   border-radius: 15px;
-  background-color: rgb(164, 213, 255);
+  background-color: var(--primary-accent-color);
   padding: 2px 6px;
 }
+.pagination__button--dark {
+  background-color: var(--primary-accent-color-dark);
+}
 .pagination__button:hover {
-  background-color: rgb(167, 164, 255);
+  background-color: var(--secondary-accent-color);
+  cursor: pointer;
+}
+.pagination__button--dark:hover {
+  background-color: var(--secondary-accent-color-dark);
   cursor: pointer;
 }
 .pagination__button--next {

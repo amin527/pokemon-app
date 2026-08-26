@@ -5,9 +5,11 @@
   min-width: 0;
   box-sizing: border-box;
   cursor: pointer;
+  background-color: var(--primary-color);
+}
 
-  background-color: rgb(223, 223, 255);
-  border: solid 5px rgb(143, 139, 255);
+.pokemon-card--dark {
+  background-color: var(--primary-color-dark);
 }
 
 .pokemon-card img {
@@ -29,10 +31,14 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: rgb(143, 139, 255);
+  background-color: var(--secondary-color);
 
   transform: translateY(100%);
   transition: transform 0.3s ease;
+}
+
+.pokemon-card__info--dark {
+  background-color: var(--secondary-color-dark);
 }
 
 .pokemon-card:hover {

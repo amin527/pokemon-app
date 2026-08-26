@@ -3,6 +3,9 @@
   background-color: var(--primary-color);
   padding: 10px 0px;
 }
+.top-navbar--dark {
+  background-color: var(--primary-color-dark);
+}
 .settings-container {
   position: relative;
   margin-left: auto;

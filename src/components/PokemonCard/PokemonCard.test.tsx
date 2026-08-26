@@ -1,6 +1,7 @@
 import { describe, expect, it, afterEach } from "vitest";
 import { render, screen, cleanup } from "@testing-library/react";
 import PokemonCard from "./PokemonCard";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 describe("PokemonCard", () => {
   const pokemon = {
@@ -36,7 +37,54 @@ describe("PokemonCard", () => {
 
   it("displays the Pokémon types", () => {
     render(<PokemonCard {...pokemon} />);
-
     expect(screen.getByText("electric")).toBeTruthy();
+  });
+
+  it("applies the dark colour formatting to the card background when the application theme is dark", () => {
+    const theme: string = "dark";
+    render(
+      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
+        <PokemonCard {...pokemon} />
+      </ThemeContext.Provider>,
+    );
+    expect(screen.getByTestId("pokemon-card")).toHaveClass(
+      "pokemon-card--dark",
+    );
+  });
+
+  it("applies the light colour formatting to the card background when the application theme is light", () => {
+    const theme: string = "light";
+    render(
+      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
+        <PokemonCard {...pokemon} />
+      </ThemeContext.Provider>,
+    );
+    expect(screen.getByTestId("pokemon-card")).not.toHaveClass(
+      "pokemon-card_--dark",
+    );
+  });
+
+  it("applies the dark colour formatting to the card info background when the application theme is dark", () => {
+    const theme: string = "dark";
+    render(
+      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
+        <PokemonCard {...pokemon} />
+      </ThemeContext.Provider>,
+    );
+    expect(screen.getByTestId("pokemon-card-info")).toHaveClass(
+      "pokemon-card__info--dark",
+    );
+  });
+
+  it("applies the light colour formatting to the card info background when the application theme is light", () => {
+    const theme: string = "light";
+    render(
+      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
+        <PokemonCard {...pokemon} />
+      </ThemeContext.Provider>,
+    );
+    expect(screen.getByTestId("pokemon-card-info")).not.toHaveClass(
+      "pokemon-card__info--dark",
+    );
   });
 });

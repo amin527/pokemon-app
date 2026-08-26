@@ -4,6 +4,7 @@ import LandingDisplay from "./LandingDisplay";
 import { fetchPokemon } from "../../functions/fetchPokemon";
 import { calculatePokemonFetchSize } from "../../functions/calculatePokemonFetchSize";
 import { useComponentWidth } from "../../hooks/useComponentWidth";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 vi.mock("../../functions/fetchPokemon", () => ({ fetchPokemon: vi.fn() }));
 vi.mock("../../functions/calculatePokemonFetchSize", () => ({
@@ -69,11 +70,33 @@ describe("LandingDisplay", () => {
     vi.mocked(fetchPokemon).mockRejectedValueOnce(
       new Error("Failed to fetch Pokémon list"),
     );
-
     render(<LandingDisplay />);
-
     expect(
       await screen.findByText("Failed to load Pokémon"),
     ).toBeInTheDocument();
+  });
+
+  it("applies the dark color formatting when the application theme is dark", () => {
+    const theme: string = "dark";
+    render(
+      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
+        <LandingDisplay />
+      </ThemeContext.Provider>,
+    );
+    expect(screen.getByTestId("landing-display")).toHaveClass(
+      "landing-display--dark",
+    );
+  });
+
+  it("applies the light color formatting when the application theme is light", () => {
+    const theme: string = "light";
+    render(
+      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
+        <LandingDisplay />
+      </ThemeContext.Provider>,
+    );
+    expect(screen.getByTestId("landing-display")).not.toHaveClass(
+      "landing-display--dark",
+    );
   });
 });

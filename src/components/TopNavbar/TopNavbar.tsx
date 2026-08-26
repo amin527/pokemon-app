@@ -1,12 +1,14 @@
 import "./TopNavbar.css";
 import Button from "../Button/Button";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import DropDown from "../DropDown/DropDown";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 function TopNavbar() {
   const [settingsDropDownIsVisible, setSettingsDropDownIsVisible] =
     useState(false);
   const settingsRef = useRef<HTMLDivElement>(null);
+  const { theme } = useContext(ThemeContext);
 
   function handleDropDownVisibility() {
     if (settingsDropDownIsVisible) {
@@ -18,8 +20,6 @@ function TopNavbar() {
 
   useEffect(() => {
     function handleClickOnScreen(event: MouseEvent) {
-      console.log(settingsRef.current);
-      console.log(event.target as Node);
       if (
         settingsRef.current &&
         !settingsRef.current.contains(event.target as Node)
@@ -34,7 +34,10 @@ function TopNavbar() {
   }, []);
 
   return (
-    <div className="top-navbar" data-testid="top-navbar-component">
+    <div
+      className={`top-navbar ${theme == "light" ? "" : "top-navbar--dark"}`}
+      data-testid="top-navbar"
+    >
       <div className="settings-container" ref={settingsRef}>
         <Button
           text="Settings"
@@ -42,7 +45,9 @@ function TopNavbar() {
             handleDropDownVisibility();
           }}
         />
-        {settingsDropDownIsVisible && <DropDown />}
+        {settingsDropDownIsVisible && (
+          <DropDown setDropDownIsVisible={setSettingsDropDownIsVisible} />
+        )}
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import PokemonGrid from "../PokemonGrid/PokemonGrid";
 import Pagination from "../Pagination/Pagination";
 import PokemonSearch from "../PokemonSearch/PokemonSearch";
 import PokemonGridSkeleton from "../PokemonGridSkeleton/PokemonGridSkeleton";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { searchPokemon } from "../../functions/searchPokemon";
 import { loadPokemon } from "../../functions/loadPokemon";
 import type { Pokemon } from "../../types/pokemon";
@@ -12,6 +12,7 @@ import { calculatePokemonFetchSize } from "../../functions/calculatePokemonFetch
 import { useComponentWidth } from "../../hooks/useComponentWidth";
 import { POKEMON_GRID_HORIZONTAL_MARGIN } from "../../constants/PokemonGridConstants";
 import TopNavbar from "../TopNavbar/TopNavbar";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 function LandingDisplay() {
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
@@ -20,6 +21,8 @@ function LandingDisplay() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const { theme } = useContext(ThemeContext);
 
   const pokemonGridComponent = useRef(null);
   const pokemonGridWidth = useComponentWidth({
@@ -79,7 +82,10 @@ function LandingDisplay() {
   }, [searchTerm]);
 
   return (
-    <div className="landing-display">
+    <div
+      className={`landing-display ${theme == "light" ? "" : "landing-display--dark"}`}
+      data-testid="landing-display"
+    >
       {error && <div className="error-message">{error}</div>}
       <TopNavbar />
       <PokemonSearch

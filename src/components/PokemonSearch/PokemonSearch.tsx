@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import "./PokemonSearch.css";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 interface PokemonSearchProps {
   searchTerm: string;
@@ -6,15 +8,17 @@ interface PokemonSearchProps {
 }
 
 function PokemonSearch({ searchTerm, onSearchTermChange }: PokemonSearchProps) {
+  const { theme } = useContext(ThemeContext);
+
   return (
     <div className="pokemon-search">
       <input
-        className="pokemon-search__input-field"
+        className={`pokemon-search__input-field ${theme == "light" ? "" : "pokemon-search__input-field--dark"}`}
         type="text"
         value={searchTerm}
         onChange={(event) => onSearchTermChange(event.target.value)}
         placeholder="Search Pokémon"
-        aria-label="Search Pokémon"
+        data-testid="pokemon-search-input-field"
       />
     </div>
   );
