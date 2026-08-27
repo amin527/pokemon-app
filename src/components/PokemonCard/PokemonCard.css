@@ -17,6 +17,7 @@
   width: 100%;
   max-width: 100%;
   height: auto;
+  --shake-angle: 8deg;
 }
 
 .pokemon-card__artwork {
@@ -50,27 +51,5 @@
 }
 
 .pokemon-card:hover .pokemon-card__artwork {
-  animation: pokemon-shake 0.5s ease;
-}
-
-@keyframes pokemon-shake {
-  0% {
-    transform: perspective(600px) rotateY(0deg);
-  }
-
-  25% {
-    transform: perspective(600px) rotateY(-12deg);
-  }
-
-  50% {
-    transform: perspective(600px) rotateY(12deg);
-  }
-
-  75% {
-    transform: perspective(600px) rotateY(-4deg);
-  }
-
-  100% {
-    transform: perspective(600px) rotateY(0deg);
-  }
+  animation: shake 0.5s ease;
 }

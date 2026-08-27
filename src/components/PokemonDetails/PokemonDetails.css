@@ -6,7 +6,12 @@
     border-radius: 15px;
     width: 100%;
     max-width: 100%;
-    background-color: var(--primary-color)
+    background-color: var(--primary-color);
+    --shake-angle: 3deg;
+}
+
+.pokemon-details__image:hover img{
+    animation: ease 0.5s shake;
 }
 
 .pokemon-details__info{
@@ -23,6 +28,11 @@
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
+}
+
+.pokemon-details__abilities:hover, .pokemon-details__basic-info:hover, .pokemon-details__stats:hover{
+    animation: ease 0.7s pop;
 }
 
 .pokemon-details__title{
