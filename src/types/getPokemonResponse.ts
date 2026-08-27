@@ -1,6 +1,10 @@
 export type getPokemonResponse = {
+
   id: number;
   name: string;
+  height: number;
+  weight: number;
+
   sprites: {
     other: {
       "official-artwork": {
@@ -8,8 +12,22 @@ export type getPokemonResponse = {
       };
     };
   };
+
   types: {
     type: {
+      name: string;
+    };
+  }[];
+
+  stats: {
+    base_stat: number;
+    stat: {
+      name: string;
+    };
+  }[];
+
+  abilities: {
+    ability: {
       name: string;
     };
   }[];

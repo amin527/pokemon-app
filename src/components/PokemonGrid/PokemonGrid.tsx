@@ -1,6 +1,6 @@
 import PokemonCard from "../PokemonCard/PokemonCard";
 import "./PokemonGrid.css";
-import type { Pokemon } from "../../types/pokemon";
+import type { Pokemon } from "../../types/Pokemon";
 import {
   POKEMON_GRID_CARD_GAP,
   POKEMON_GRID_HORIZONTAL_MARGIN,

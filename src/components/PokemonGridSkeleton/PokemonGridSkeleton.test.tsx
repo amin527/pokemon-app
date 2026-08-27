@@ -31,7 +31,7 @@ describe("PokemonGridSkeleton", () => {
     render(
       <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
         <PokemonGridSkeleton pokemonFetchSize={1} />
-      </ThemeContext.Provider>,
+      </ThemeContext.Provider>
     );
     expect(screen.getByTestId("pokemon-card-skeleton-artwork")).not.toHaveClass(
       "pokemon-card-skeleton__artwork--dark",

@@ -1,5 +1,5 @@
 import type { getPokemonResponse } from "../types/getPokemonResponse";
-import type { Pokemon } from "../types/pokemon";
+import type { Pokemon } from "../types/Pokemon";
 
 export function formatPokemon(pokemon: getPokemonResponse): Pokemon {
   return {

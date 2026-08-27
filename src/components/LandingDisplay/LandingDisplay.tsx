@@ -6,7 +6,7 @@ import PokemonGridSkeleton from "../PokemonGridSkeleton/PokemonGridSkeleton";
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { searchPokemon } from "../../functions/searchPokemon";
 import { loadPokemon } from "../../functions/loadPokemon";
-import type { Pokemon } from "../../types/pokemon";
+import type { Pokemon } from "../../types/Pokemon";
 import BottomNavbar from "../BottomNavbar/BottomNavbar";
 import { calculatePokemonFetchSize } from "../../functions/calculatePokemonFetchSize";
 import { useComponentWidth } from "../../hooks/useComponentWidth";
