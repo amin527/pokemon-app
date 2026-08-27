@@ -3,12 +3,19 @@ import "./PokemonCard.css";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { Link } from "react-router";
 import type { Pokemon } from "../../types/Pokemon";
+import { NavigationContext } from "../../contexts/NavigationContext";
 
 function PokemonCard({ id, name, image, types }: Pokemon) {
   const { theme } = useContext(ThemeContext);
+  const { stackNavigation, setStackNavigation, navigationIndex, setNavigationIndex } = useContext(NavigationContext)
+
+  function handleClick(){
+    setStackNavigation([...[...stackNavigation].slice(0, navigationIndex + 1), `/pokemon/${id}`])
+    setNavigationIndex(navigationIndex  + 1)
+  }
 
   return (
-    <Link to={`/pokemon/${id}`}>
+    <Link to={`/pokemon/${id}`} onClick={handleClick}>
       <div
         className={`pokemon-card ${theme == "light" ? "" : "pokemon-card--dark"}`}
         data-testid="pokemon-card"

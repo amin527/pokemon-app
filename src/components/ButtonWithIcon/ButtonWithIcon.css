@@ -15,9 +15,19 @@
   cursor: pointer;
   background-color: var(--primary-accent-color);
   color: black;
-  border-color: black;
 }
 
 .button-with-icon--dark:hover {
   background-color: var(--primary-accent-color-dark);
 }
+
+.button-with-icon-gray{
+  color: gray;
+}
+.button-with-icon-gray:hover{
+  background-color: unset;
+  color: gray;
+  cursor: unset;
+}
+
+

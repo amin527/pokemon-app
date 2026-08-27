@@ -34,7 +34,8 @@ function Pagination({
 
       <ButtonWithIcon 
         icon={<ChevronLeft className="pagination__icon pagination__icon--previous" />}
-        handleClick={onNext}
+        handleClick={onPrevious}
+        className={currentPage == 1 ? "button-with-icon-gray" : ""}
       />
 
       <span className="pagination__text">
@@ -52,6 +53,7 @@ function Pagination({
       <ButtonWithIcon 
         icon={<ChevronRight className="pagination__icon pagination__icon--next" />}
         handleClick={onNext}
+        className={currentPage == 10 ? "button-with-icon-gray" : ""}
       />
     </div>
   );

@@ -35,13 +35,17 @@ function LandingDisplay() {
 
   const handleNext = useCallback(() => {
     setIsLoading(true);
-    setCurrentPage((page) => page + 1);
-  }, []);
+    if(currentPage != 10) {
+      setCurrentPage((page) => page + 1);
+    }
+  }, [currentPage]);
 
   const handlePrevious = useCallback(() => {
     setIsLoading(true);
-    setCurrentPage((page) => page - 1);
-  }, []);
+    if(currentPage > 0) {
+      setCurrentPage((page) => page - 1);
+    }
+  }, [currentPage]);
 
   const handleSearchTermChange = useCallback((value: string) => {
     setSearchTerm(value);

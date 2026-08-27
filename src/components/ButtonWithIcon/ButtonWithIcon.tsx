@@ -1,17 +1,19 @@
 import { useContext } from "react";
-import "./ButtonWithIcon.css";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import "./ButtonWithIcon.css";
 
 type ButtonProps = {
   icon: React.ReactNode;
   handleClick: () => void;
+  className?: string;
 };
 
-function ButtonWithIcon({ icon, handleClick }: ButtonProps) {
+function ButtonWithIcon({ icon, handleClick, className }: ButtonProps) {
   const { theme } = useContext(ThemeContext);
+
   return (
     <button
-      className={`button-with-icon ${theme == "light" ? "" : "button-with-icon--dark"}`}
+      className={`button-with-icon ${theme == "light" ? "" : "button-with-icon--dark"} ${className} `}
       onClick={handleClick}
     >
       {icon}
