@@ -2,12 +2,11 @@ import TopNavbar from "../TopNavbar/TopNavbar";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { loadDetailedPokemon } from "../../functions/loadDetailedPokemon";
-import { getPokemonByType } from "../../functions/API/getPokemonByType";
-import { formatPokemon } from "../../functions/formatPokemon";
 import type { DetailedPokemon } from "../../types/DetailedPokemon";
 import type { Pokemon } from "../../types/Pokemon";
 import "./PokemonDetails.css"
 import PokemonCard from "../PokemonCard/PokemonCard";
+import { loadSimilarPokemon } from "../../functions/loadSimilarPokemon";
 
 
 function PokemonDetails() {
@@ -15,72 +14,85 @@ function PokemonDetails() {
     const [pokemon, setPokemon] = useState<DetailedPokemon | null>(null)
     const [similarPokemon, setSimilarPokemon] = useState<Pokemon[] | null>(null);
     const primaryType = pokemon?.types[0];
-
-    console.log(pokemon)
-
-    useEffect(() => { loadDetailedPokemon({ setPokemon, id }); }, [])
+    const [isLoading, setIsLoading] = useState<boolean>(true)
 
     useEffect(() => {
-        if (!pokemon || !primaryType) return;
+        setPokemon(null)
+        setSimilarPokemon(null)
+        setIsLoading(true)
+    }, [id])
+    
+    useEffect(() => { loadDetailedPokemon({ setPokemon, id }); }, [id])
 
-        async function loadSimilarPokemon() {
-            const fetchedPokemonList = await getPokemonByType(primaryType);
+    useEffect(() => {
+        if (!primaryType) return;
+        loadSimilarPokemon({ setSimilarPokemon, pokemon, type: primaryType });
+    }, [primaryType]);
 
-            if (!fetchedPokemonList || !pokemon) return;
-
-            const firstThreePokemon = fetchedPokemonList
-                .filter((fetchedPokemon) => fetchedPokemon.name !== pokemon.name)
-                .slice(0, 3);
-
-            const formattedPokemonList = firstThreePokemon.map((pokemon) =>
-                formatPokemon(pokemon),
-            );
-
-            setSimilarPokemon(formattedPokemonList);
+    useEffect(() => {
+        if (similarPokemon && pokemon) {
+            setIsLoading(false);
         }
-
-        loadSimilarPokemon();
-    }, [primaryType, pokemon?.name]);
+    }, [similarPokemon, pokemon])
 
     return (
         <div className="pokemon-details-component">
             <TopNavbar></TopNavbar>
-            {pokemon &&
-                <div className="pokemon-details-component__content">
-                    <div className="pokemon-details">
-                        <div className="pokemon-details__image"><img src={pokemon.image} /></div>
-                        <div className="pokemon-details__info">
-                            <div className="pokemon-details__basic-info">
-                                <div className="pokemon-details__title">Base Info</div>
-                                <div className="pokemon-details__id">ID: {pokemon.id}</div>
-                                <div className="pokemon-details__name">Name: {pokemon.name}</div>
-                                <div className="pokemon-details__height">Height: {pokemon.height}</div>
-                                <div className="pokemon-details__weight">Weight: {pokemon.weight}</div>
-                                <div className="pokemon-details__types">
-                                    Types: {pokemon.types.map((type, index) => <span key={index}>{type}</span>)}
+            {!isLoading ?
+                <>
+                    {pokemon &&
+                        <div className="pokemon-details-component__content">
+                            <div className="pokemon-details">
+                                <div className="pokemon-details__image"><img src={pokemon.image} /></div>
+                                <div className="pokemon-details__info">
+                                    <div className="pokemon-details__basic-info">
+                                        <div className="pokemon-details__title">Base Info</div>
+                                        <div className="pokemon-details__id">ID: {pokemon.id}</div>
+                                        <div className="pokemon-details__name">Name: {pokemon.name}</div>
+                                        <div className="pokemon-details__height">Height: {pokemon.height}</div>
+                                        <div className="pokemon-details__weight">Weight: {pokemon.weight}</div>
+                                        <div className="pokemon-details__types">
+                                            Types: {pokemon.types.map((type, index) => <span key={index}>{type}</span>)}
+                                        </div>
+                                    </div>
+                                    <div className="pokemon-details__stats">
+                                        <div className="pokemon-details__title">Stats</div>
+                                        {pokemon.stats.map((stat) => (
+                                            <div key={stat.name}> {stat.name}: {stat.baseValue}</div>
+                                        ))}
+                                    </div>
+                                    <div className="pokemon-details__abilities">
+                                        <div className="pokemon-details__title">Abilities</div>
+                                        {pokemon.abilities.map((ability, index) => <div key={index}>{ability}</div>)}
+                                    </div>
                                 </div>
                             </div>
-                            <div className="pokemon-details__stats">
-                                <div className="pokemon-details__title">Stats</div>
-                                {pokemon.stats.map((stat) => (
-                                    <div key={stat.name}> {stat.name}: {stat.baseValue}</div>
-                                ))}
+                            <div className="similar-pokemon">
+                                {similarPokemon?.map((pokemon) =>
+                                    <PokemonCard
+                                        key={pokemon.id}
+                                        id={pokemon.id}
+                                        name={pokemon.name}
+                                        image={pokemon.image}
+                                        types={pokemon.types}
+                                    />)}
                             </div>
-                            <div className="pokemon-details__abilities">
-                                <div className="pokemon-details__title">Abilities</div>
-                                {pokemon.abilities.map((ability, index) => <div key={index}>{ability}</div>)}
-                            </div>
+                        </div>
+                    }
+                </> :
+                <div className="pokemon-details-component__content">
+                    <div className="pokemon-details--loading">
+                        <div className="pokemon-details__image--loading"></div>
+                        <div className="pokemon-details__info">
+                            <div className="pokemon-details__basic-info--loading"></div>
+                            <div className="pokemon-details__stats--loading"></div>
+                            <div className="pokemon-details__abilities--loading"></div>
                         </div>
                     </div>
                     <div className="similar-pokemon">
-                        {similarPokemon?.map((pokemon) =>
-                            <PokemonCard
-                                key={pokemon.id}
-                                id={pokemon.id}
-                                name={pokemon.name}
-                                image={pokemon.image}
-                                types={pokemon.types}
-                            />)}
+                        <div className="pokemon-card--loading"></div>
+                        <div className="pokemon-card--loading"></div>
+                        <div className="pokemon-card--loading"></div>
                     </div>
                 </div>
             }

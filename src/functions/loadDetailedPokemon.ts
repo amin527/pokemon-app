@@ -8,20 +8,20 @@ type loadDetailedPokemonProps = {
 }
 
 export async function loadDetailedPokemon({ setPokemon, id }: loadDetailedPokemonProps): Promise<void> {
-        if (id != undefined) {
-            const fetchedPokemonData = await getPokemon(id);
-            setPokemon({
-                id: Number(id),
-                name: fetchedPokemonData.name,
-                weight: fetchedPokemonData.weight,
-                height: fetchedPokemonData.height,
-                image: fetchedPokemonData.sprites.other["official-artwork"].front_default,
-                types: fetchedPokemonData.types.map((type) => type.type.name),
-                stats: fetchedPokemonData.stats.map((stat) => ({
-                    name: STAT_DISPLAY_NAMES[stat.stat.name as keyof typeof STAT_DISPLAY_NAMES],
-                    baseValue: stat.base_stat,
-                })),
-                abilities: fetchedPokemonData.abilities.map((ability) => ability.ability.name)
-            })
-        }
+    if (id != undefined) {
+        const fetchedPokemonData = await getPokemon(id);
+        setPokemon({
+            id: Number(id),
+            name: fetchedPokemonData.name,
+            weight: fetchedPokemonData.weight,
+            height: fetchedPokemonData.height,
+            image: fetchedPokemonData.sprites.other["official-artwork"].front_default,
+            types: fetchedPokemonData.types.map((type) => type.type.name),
+            stats: fetchedPokemonData.stats.map((stat) => ({
+                name: STAT_DISPLAY_NAMES[stat.stat.name as keyof typeof STAT_DISPLAY_NAMES],
+                baseValue: stat.base_stat,
+            })),
+            abilities: fetchedPokemonData.abilities.map((ability) => ability.ability.name)
+        })
     }
+}
