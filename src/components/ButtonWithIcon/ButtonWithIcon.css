@@ -1,22 +1,23 @@
-.button {
+.button-with-icon {
   all: unset;
-  padding: 5px 10px;
-  background-color: var(--secondary-color);
+  padding: 2px 6px;
+  background-color: var(--primary-color);
+  display: flex;
   color: black;
-  border-radius: 3px;
+  border-radius: 15px;
 }
 
-.button--dark {
+.button-with-icon--dark {
   background-color: var(--secondary-color-dark);
 }
 
-.button:hover {
+.button-with-icon:hover {
   cursor: pointer;
   background-color: var(--primary-accent-color);
   color: black;
   border-color: black;
 }
 
-.button--dark:hover {
+.button-with-icon--dark:hover {
   background-color: var(--primary-accent-color-dark);
 }

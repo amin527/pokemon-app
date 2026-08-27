@@ -1,0 +1,22 @@
+.button-with-text {
+  all: unset;
+  padding: 5px 10px;
+  background-color: var(--secondary-color);
+  color: black;
+  border-radius: 3px;
+}
+
+.button-with-text--dark {
+  background-color: var(--secondary-color-dark);
+}
+
+.button-with-text:hover {
+  cursor: pointer;
+  background-color: var(--primary-accent-color);
+  color: black;
+  border-color: black;
+}
+
+.button-with-text--dark:hover {
+  background-color: var(--primary-accent-color-dark);
+}

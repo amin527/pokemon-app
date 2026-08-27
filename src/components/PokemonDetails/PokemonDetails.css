@@ -16,9 +16,10 @@
     max-width: 100%;
     background-color: var(--primary-color);
     box-shadow: 0px 0px 10px 5px rgb(235, 235, 235);
+    cursor: pointer;
 }
 
-.pokemon-details__image:hover{
+.pokemon-details__image:hover {
     animation: pop ease 0.7s;
 }
 
@@ -70,6 +71,7 @@
 .similar-pokemon .pokemon-card img {
     object-fit: contain;
     display: block;
+    display: flex;
 }
 
 .pokemon-details--loading {

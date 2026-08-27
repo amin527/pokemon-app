@@ -42,7 +42,7 @@ function PokemonDetails() {
 
     return (
         <div className="pokemon-details-component">
-            <TopNavbar></TopNavbar>
+            <TopNavbar />
             {!isLoading ?
                 <>
                     {pokemon &&
@@ -57,7 +57,7 @@ function PokemonDetails() {
                                         <div className="pokemon-details__height">Height: {pokemon.height}</div>
                                         <div className="pokemon-details__weight">Weight: {pokemon.weight}</div>
                                         <div className="pokemon-details__types">
-                                            Types: {pokemon.types.map((type, index) => <span key={index}>{type}</span>)}
+                                            Types: {pokemon.types.map((type, index) => <span key={index}>{type}{index < pokemon.types.length - 1 ? ", " : ""}</span>)}
                                         </div>
                                     </div>
                                     <div className="pokemon-details__stats">

@@ -1,10 +1,10 @@
 import { cleanup, render, screen } from "@testing-library/react";
-import Button from "./Button";
+import Button from "./ButtonWithText";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
-describe("Button", () => {
+describe("ButtonWithText", () => {
   afterEach(() => {
     cleanup();
   });
