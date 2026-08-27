@@ -27,6 +27,7 @@
 }
 
 .pokemon-card__info {
+  color: black;
   padding: 10px;
   position: absolute;
   bottom: 0;

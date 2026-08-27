@@ -21,21 +21,32 @@ function PokemonDetails() {
     useEffect(() => { loadDetailedPokemon({ setPokemon, id }); }, [])
 
     useEffect(() => {
+        if (!pokemon || !primaryType) return;
+
         async function loadSimilarPokemon() {
             const fetchedPokemonList = await getPokemonByType(primaryType);
-            if (!fetchedPokemonList) return;
-            const firstThreePokemon = fetchedPokemonList.slice(0, 3);
-            const formattedPokemonList = firstThreePokemon.map((pokemon) => formatPokemon(pokemon));
+
+            if (!fetchedPokemonList || !pokemon) return;
+
+            const firstThreePokemon = fetchedPokemonList
+                .filter((fetchedPokemon) => fetchedPokemon.name !== pokemon.name)
+                .slice(0, 3);
+
+            const formattedPokemonList = firstThreePokemon.map((pokemon) =>
+                formatPokemon(pokemon),
+            );
+
             setSimilarPokemon(formattedPokemonList);
         }
-        loadSimilarPokemon()
-    }, [primaryType]);
+
+        loadSimilarPokemon();
+    }, [primaryType, pokemon?.name]);
 
     return (
         <div className="pokemon-details-component">
             <TopNavbar></TopNavbar>
             {pokemon &&
-                <div>
+                <div className="pokemon-details-component__content">
                     <div className="pokemon-details">
                         <div className="pokemon-details__image"><img src={pokemon.image} /></div>
                         <div className="pokemon-details__info">
@@ -61,7 +72,7 @@ function PokemonDetails() {
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div className="similar-pokemon">
                         {similarPokemon?.map((pokemon) =>
                             <PokemonCard
                                 key={pokemon.id}

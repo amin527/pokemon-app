@@ -9,7 +9,7 @@ type loadDetailedPokemonProps = {
 
 export async function loadDetailedPokemon({ setPokemon, id }: loadDetailedPokemonProps): Promise<void> {
         if (id != undefined) {
-            const fetchedPokemonData = await getPokemon(1);
+            const fetchedPokemonData = await getPokemon(id);
             setPokemon({
                 id: Number(id),
                 name: fetchedPokemonData.name,
