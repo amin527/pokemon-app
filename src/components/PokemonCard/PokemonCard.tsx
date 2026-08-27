@@ -2,15 +2,9 @@ import { useContext } from "react";
 import "./PokemonCard.css";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { Link } from "react-router";
+import type { Pokemon } from "../../types/Pokemon";
 
-type PokemonCardProps = {
-  id: number;
-  name: string;
-  artwork: string;
-  types: string[];
-};
-
-function PokemonCard({ id, name, artwork, types }: PokemonCardProps) {
+function PokemonCard({ id, name, image, types }: Pokemon) {
   const { theme } = useContext(ThemeContext);
 
   return (
@@ -19,7 +13,7 @@ function PokemonCard({ id, name, artwork, types }: PokemonCardProps) {
         className={`pokemon-card ${theme == "light" ? "" : "pokemon-card--dark"}`}
         data-testid="pokemon-card"
       >
-        <img className="pokemon-card__artwork" src={artwork} alt={name} />
+        <img className="pokemon-card__artwork" src={image} alt={name} />
         <div
           className={`pokemon-card__info ${theme == "light" ? "" : "pokemon-card__info--dark"}`}
           data-testid="pokemon-card-info"

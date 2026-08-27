@@ -1,62 +1,75 @@
-import { useParams } from "react-router";
-import { getPokemon } from "../../functions/API/getPokemon";
-import { useEffect, useState } from "react";
-import type { DetailedPokemon } from "../../types/DetailedPokemon";
 import TopNavbar from "../TopNavbar/TopNavbar";
+import { useParams } from "react-router";
+import { useEffect, useState } from "react";
+import { loadDetailedPokemon } from "../../functions/loadDetailedPokemon";
+import { getPokemonByType } from "../../functions/API/getPokemonByType";
+import { formatPokemon } from "../../functions/formatPokemon";
+import type { DetailedPokemon } from "../../types/DetailedPokemon";
+import type { Pokemon } from "../../types/Pokemon";
 import "./PokemonDetails.css"
-import { STAT_DISPLAY_NAMES } from "../../constants/StatDisplayNames";
+import PokemonCard from "../PokemonCard/PokemonCard";
+
 
 function PokemonDetails() {
     const { id } = useParams();
     const [pokemon, setPokemon] = useState<DetailedPokemon | null>(null)
+    const [similarPokemon, setSimilarPokemon] = useState<Pokemon[] | null>(null);
+    const primaryType = pokemon?.types[0];
 
-    async function loadDetailedPokemon(): Promise<void> {
-        if (id != undefined) {
-            const fetchedPokemonData = await getPokemon(1);
-            setPokemon({
-                id: Number(id),
-                name: fetchedPokemonData.name,
-                weight: fetchedPokemonData.weight,
-                height: fetchedPokemonData.height,
-                image: fetchedPokemonData.sprites.other["official-artwork"].front_default,
-                types: fetchedPokemonData.types.map((type) => type.type.name),
-                stats: fetchedPokemonData.stats.map((stat) => ({
-                    name: STAT_DISPLAY_NAMES[stat.stat.name as keyof typeof STAT_DISPLAY_NAMES],
-                    baseValue: stat.base_stat,
-                })),
-                abilities: fetchedPokemonData.abilities.map((ability) => ability.ability.name)
-            })
+    console.log(pokemon)
+
+    useEffect(() => { loadDetailedPokemon({ setPokemon, id }); }, [])
+
+    useEffect(() => {
+        async function loadSimilarPokemon() {
+            const fetchedPokemonList = await getPokemonByType(primaryType);
+            if (!fetchedPokemonList) return;
+            const firstThreePokemon = fetchedPokemonList.slice(0, 3);
+            const formattedPokemonList = firstThreePokemon.map((pokemon) => formatPokemon(pokemon));
+            setSimilarPokemon(formattedPokemonList);
         }
-    }
+        loadSimilarPokemon()
+    }, [primaryType]);
 
-    useEffect(() => { loadDetailedPokemon(); }, [])
     return (
         <div className="pokemon-details-component">
             <TopNavbar></TopNavbar>
             {pokemon &&
-                <div className="pokemon-details">
-                    <div className="pokemon-details__image"><img src={pokemon.image} /></div>
-                    <div className="pokemon-details__info">
-                        <div className="pokemon-details__basic-info">
-                            <div className="pokemon-details__title">Base Info</div>
-                            <div className="pokemon-details__id">ID: {pokemon.id}</div>
-                            <div className="pokemon-details__name">Name: {pokemon.name}</div>
-                            <div className="pokemon-details__height">Height: {pokemon.height}</div>
-                            <div className="pokemon-details__weight">Weight: {pokemon.weight}</div>
-                            <div className="pokemon-details__types">
-                                Types: {pokemon.types.map((type) => <span>{type} </span>)}
+                <div>
+                    <div className="pokemon-details">
+                        <div className="pokemon-details__image"><img src={pokemon.image} /></div>
+                        <div className="pokemon-details__info">
+                            <div className="pokemon-details__basic-info">
+                                <div className="pokemon-details__title">Base Info</div>
+                                <div className="pokemon-details__id">ID: {pokemon.id}</div>
+                                <div className="pokemon-details__name">Name: {pokemon.name}</div>
+                                <div className="pokemon-details__height">Height: {pokemon.height}</div>
+                                <div className="pokemon-details__weight">Weight: {pokemon.weight}</div>
+                                <div className="pokemon-details__types">
+                                    Types: {pokemon.types.map((type, index) => <span key={index}>{type}</span>)}
+                                </div>
+                            </div>
+                            <div className="pokemon-details__stats">
+                                <div className="pokemon-details__title">Stats</div>
+                                {pokemon.stats.map((stat) => (
+                                    <div key={stat.name}> {stat.name}: {stat.baseValue}</div>
+                                ))}
+                            </div>
+                            <div className="pokemon-details__abilities">
+                                <div className="pokemon-details__title">Abilities</div>
+                                {pokemon.abilities.map((ability, index) => <div key={index}>{ability}</div>)}
                             </div>
                         </div>
-                        <div className="pokemon-details__stats">
-                            <div className="pokemon-details__title">Stats</div>
-                            {pokemon.stats.map((stat) => (
-                                <div key={stat.name}> {stat.name}: {stat.baseValue}</div>
-                            ))}
-                        </div>
-                        <div className="pokemon-details__abilities">
-                            <div className="pokemon-details__title">Abilities</div>
-                            {pokemon.abilities.map((ability) => <div>{ability}</div>)}
-                        </div>
+                    </div>
+                    <div>
+                        {similarPokemon?.map((pokemon) =>
+                            <PokemonCard
+                                key={pokemon.id}
+                                id={pokemon.id}
+                                name={pokemon.name}
+                                image={pokemon.image}
+                                types={pokemon.types}
+                            />)}
                     </div>
                 </div>
             }

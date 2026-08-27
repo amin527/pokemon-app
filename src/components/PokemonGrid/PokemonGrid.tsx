@@ -34,7 +34,7 @@ function PokemonGrid({ pokemon, pokemonGridWidth }: PokemonGridProps) {
           key={pokemon.id}
           id={pokemon.id}
           name={pokemon.name}
-          artwork={pokemon.image}
+          image={pokemon.image}
           types={pokemon.types}
         />
       ))}

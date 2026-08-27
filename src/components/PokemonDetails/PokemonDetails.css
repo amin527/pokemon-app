@@ -1,4 +1,9 @@
+/* .pokemon-details-component{
+    margin-top: 50px;
+    margin-left: 50px;
+} */
 .pokemon-details{
+    margin: 50px auto;
     width: 500px;
 }
 
