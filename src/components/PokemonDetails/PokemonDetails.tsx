@@ -1,12 +1,13 @@
 import TopNavbar from "../TopNavbar/TopNavbar";
+import PokemonCard from "../PokemonCard/PokemonCard";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { loadDetailedPokemon } from "../../functions/loadDetailedPokemon";
+import { loadSimilarPokemon } from "../../functions/loadSimilarPokemon";
+import { preloadImage } from "../../functions/preloadImage";
 import type { DetailedPokemon } from "../../types/DetailedPokemon";
 import type { Pokemon } from "../../types/Pokemon";
 import "./PokemonDetails.css"
-import PokemonCard from "../PokemonCard/PokemonCard";
-import { loadSimilarPokemon } from "../../functions/loadSimilarPokemon";
 
 
 function PokemonDetails() {
@@ -21,7 +22,7 @@ function PokemonDetails() {
         setSimilarPokemon(null)
         setIsLoading(true)
     }, [id])
-    
+
     useEffect(() => { loadDetailedPokemon({ setPokemon, id }); }, [id])
 
     useEffect(() => {
@@ -30,9 +31,13 @@ function PokemonDetails() {
     }, [primaryType]);
 
     useEffect(() => {
-        if (similarPokemon && pokemon) {
-            setIsLoading(false);
+        async function resolveLoading() {
+            if (similarPokemon && pokemon) {
+                await Promise.all(similarPokemon.map((pokemon) => pokemon.image ? preloadImage(pokemon.image) : Promise.resolve()))
+                setIsLoading(false);
+            }
         }
+        resolveLoading()
     }, [similarPokemon, pokemon])
 
     return (

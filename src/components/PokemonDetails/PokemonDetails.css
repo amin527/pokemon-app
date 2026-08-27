@@ -15,11 +15,11 @@
     width: 100%;
     max-width: 100%;
     background-color: var(--primary-color);
-    --shake-angle: 3deg;
+    box-shadow: 0px 0px 10px 5px rgb(235, 235, 235);
 }
 
-.pokemon-details__image:hover img {
-    animation: ease 0.5s shake;
+.pokemon-details__image:hover{
+    animation: pop ease 0.7s;
 }
 
 .pokemon-details__info {
