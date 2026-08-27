@@ -14,7 +14,7 @@ function PokemonCard({ id, name, artwork, types }: PokemonCardProps) {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <Link to="/pokemon/id">
+    <Link to={`/pokemon/${id}`}>
       <div
         className={`pokemon-card ${theme == "light" ? "" : "pokemon-card--dark"}`}
         data-testid="pokemon-card"

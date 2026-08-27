@@ -1,9 +1,10 @@
 import { useParams } from "react-router";
 import { getPokemon } from "../../functions/API/getPokemon";
 import { useEffect, useState } from "react";
-import type { DetailedPokemon } from "../../types/detailedPokemon";
+import type { DetailedPokemon } from "../../types/DetailedPokemon";
 import TopNavbar from "../TopNavbar/TopNavbar";
 import "./PokemonDetails.css"
+import { STAT_DISPLAY_NAMES } from "../../constants/StatDisplayNames";
 
 function PokemonDetails() {
     const { id } = useParams();
@@ -19,7 +20,10 @@ function PokemonDetails() {
                 height: fetchedPokemonData.height,
                 image: fetchedPokemonData.sprites.other["official-artwork"].front_default,
                 types: fetchedPokemonData.types.map((type) => type.type.name),
-                stats: fetchedPokemonData.stats.map((stat) => ({ name: stat.stat.name, baseValue: stat.base_stat })),
+                stats: fetchedPokemonData.stats.map((stat) => ({
+                    name: STAT_DISPLAY_NAMES[stat.stat.name as keyof typeof STAT_DISPLAY_NAMES],
+                    baseValue: stat.base_stat,
+                })),
                 abilities: fetchedPokemonData.abilities.map((ability) => ability.ability.name)
             })
         }

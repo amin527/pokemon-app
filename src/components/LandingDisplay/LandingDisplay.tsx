@@ -1,18 +1,22 @@
-import "./LandingDisplay.css";
 import PokemonGrid from "../PokemonGrid/PokemonGrid";
 import Pagination from "../Pagination/Pagination";
 import PokemonSearch from "../PokemonSearch/PokemonSearch";
 import PokemonGridSkeleton from "../PokemonGridSkeleton/PokemonGridSkeleton";
+import BottomNavbar from "../BottomNavbar/BottomNavbar";
+import TopNavbar from "../TopNavbar/TopNavbar";
+
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { searchPokemon } from "../../functions/searchPokemon";
 import { loadPokemon } from "../../functions/loadPokemon";
-import type { Pokemon } from "../../types/Pokemon";
-import BottomNavbar from "../BottomNavbar/BottomNavbar";
 import { calculatePokemonFetchSize } from "../../functions/calculatePokemonFetchSize";
 import { useComponentWidth } from "../../hooks/useComponentWidth";
 import { POKEMON_GRID_HORIZONTAL_MARGIN } from "../../constants/PokemonGridConstants";
-import TopNavbar from "../TopNavbar/TopNavbar";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import type { Pokemon } from "../../types/Pokemon";
+
+import "./LandingDisplay.css";
+import "../../animations/shake.css"
+import "../../animations/pop.css"
 
 function LandingDisplay() {
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
