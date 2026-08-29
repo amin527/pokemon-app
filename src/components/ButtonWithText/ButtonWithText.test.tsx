@@ -29,7 +29,7 @@ describe("ButtonWithText", () => {
         <Button text="" handleClick={() => {}}></Button>
       </ThemeContext.Provider>,
     );
-    expect(screen.getByRole("button")).not.toHaveClass("button--dark");
+    expect(screen.getByRole("button")).not.toHaveClass("button-with-text--dark");
   });
 
   it("applies the dark color formatting when the application theme is dark", () => {
@@ -39,6 +39,6 @@ describe("ButtonWithText", () => {
         <Button text="" handleClick={() => {}}></Button>
       </ThemeContext.Provider>,
     );
-    expect(screen.getByRole("button")).toHaveClass("button--dark");
+    expect(screen.getByRole("button")).toHaveClass("button-with-text--dark");
   });
 });

@@ -8,11 +8,12 @@ type ButtonProps = {
   className?: string;
 };
 
-function ButtonWithIcon({ icon, handleClick, className }: ButtonProps) {
+function ButtonWithIcon({ icon, handleClick, className, ...props }: ButtonProps) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <button
+      {...props}
       className={`button-with-icon ${theme == "light" ? "" : "button-with-icon--dark"} ${className} `}
       onClick={handleClick}
     >

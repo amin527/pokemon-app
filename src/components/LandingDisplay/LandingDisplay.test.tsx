@@ -5,6 +5,7 @@ import { fetchPokemon } from "../../functions/fetchPokemon";
 import { calculatePokemonFetchSize } from "../../functions/calculatePokemonFetchSize";
 import { useComponentWidth } from "../../hooks/useComponentWidth";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { MemoryRouter } from "react-router";
 
 vi.mock("../../functions/fetchPokemon", () => ({ fetchPokemon: vi.fn() }));
 vi.mock("../../functions/calculatePokemonFetchSize", () => ({
@@ -38,7 +39,11 @@ describe("LandingDisplay", () => {
   it("shows skeleton cards while Pokémon are loading", async () => {
     vi.mocked(useComponentWidth).mockReturnValue(1000);
     vi.mocked(calculatePokemonFetchSize).mockReturnValue(20);
-    const { container } = render(<LandingDisplay />);
+    const { container } = render(
+      <MemoryRouter>
+        <LandingDisplay />
+      </MemoryRouter>
+    );
     expect(container.querySelectorAll(".pokemon-card-skeleton")).toHaveLength(
       20,
     );
@@ -60,7 +65,11 @@ describe("LandingDisplay", () => {
       },
     ]);
 
-    render(<LandingDisplay />);
+    render(
+      <MemoryRouter>
+        <LandingDisplay />
+      </MemoryRouter>
+    );
 
     expect(await screen.findByText("Name: bulbasaur")).toBeInTheDocument();
     expect(await screen.findByText("Name: charmander")).toBeInTheDocument();
@@ -70,7 +79,11 @@ describe("LandingDisplay", () => {
     vi.mocked(fetchPokemon).mockRejectedValueOnce(
       new Error("Failed to fetch Pokémon list"),
     );
-    render(<LandingDisplay />);
+    render(
+      <MemoryRouter>
+        <LandingDisplay />
+      </MemoryRouter>
+    );
     expect(
       await screen.findByText("Failed to load Pokémon"),
     ).toBeInTheDocument();
@@ -79,9 +92,11 @@ describe("LandingDisplay", () => {
   it("applies the dark color formatting when the application theme is dark", () => {
     const theme: string = "dark";
     render(
-      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-        <LandingDisplay />
-      </ThemeContext.Provider>,
+      <MemoryRouter>
+        <ThemeContext.Provider value={{ theme, setTheme: () => { } }}>
+          <LandingDisplay />
+        </ThemeContext.Provider>
+      </MemoryRouter>
     );
     expect(screen.getByTestId("landing-display")).toHaveClass(
       "landing-display--dark",
@@ -91,9 +106,11 @@ describe("LandingDisplay", () => {
   it("applies the light color formatting when the application theme is light", () => {
     const theme: string = "light";
     render(
-      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-        <LandingDisplay />
-      </ThemeContext.Provider>,
+      <MemoryRouter>
+        <ThemeContext.Provider value={{ theme, setTheme: () => { } }}>
+          <LandingDisplay />
+        </ThemeContext.Provider>
+      </MemoryRouter>
     );
     expect(screen.getByTestId("landing-display")).not.toHaveClass(
       "landing-display--dark",
