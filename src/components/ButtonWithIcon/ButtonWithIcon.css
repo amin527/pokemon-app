@@ -24,6 +24,11 @@
 .button-with-icon-gray{
   color: gray;
 }
+
+.button-with-icon-nav {
+  background-color: unset;
+}
+
 .button-with-icon-gray:hover{
   background-color: unset;
   color: gray;

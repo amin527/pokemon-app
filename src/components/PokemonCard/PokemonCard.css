@@ -11,6 +11,7 @@
 
 .pokemon-card--dark {
   background-color: var(--primary-color-dark);
+  box-shadow: 0px 0px 15px 5px rgb(37, 37, 37);
 }
 
 .pokemon-card img {

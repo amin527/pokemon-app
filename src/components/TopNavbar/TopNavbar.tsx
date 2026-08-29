@@ -64,8 +64,8 @@ function TopNavbar() {
       data-testid="top-navbar"
     >
       <div className="navigation-buttons">
-        <ButtonWithIcon className={navigationIndex == 0 ? "button-with-icon-gray" : ""} icon={<ChevronLeft />} handleClick={handleBackClick} />
-        <ButtonWithIcon className={navigationIndex == stackNavigation.length - 1? "button-with-icon-gray" : ""} icon={<ChevronRight />} handleClick={handleForwardClick} />
+        <ButtonWithIcon className={`button-with-icon-nav ${navigationIndex == 0 ? "button-with-icon-gray" : ""}`} icon={<ChevronLeft />} handleClick={handleBackClick} />
+        <ButtonWithIcon className={`button-with-icon-nav ${navigationIndex == stackNavigation.length - 1? "button-with-icon-gray" : ""}`} icon={<ChevronRight />} handleClick={handleForwardClick} />
       </div>
       <div className="settings-container" ref={settingsRef}>
         <ButtonWithText
