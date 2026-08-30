@@ -8,7 +8,11 @@ interface PokemonSearchProps {
   error: string | null;
 }
 
-function PokemonSearch({ searchTerm, onSearchTermChange, error }: PokemonSearchProps) {
+function PokemonSearch({
+  searchTerm,
+  onSearchTermChange,
+  error,
+}: PokemonSearchProps) {
   const { theme } = useContext(ThemeContext);
 
   return (
