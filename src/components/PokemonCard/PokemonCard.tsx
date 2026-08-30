@@ -8,15 +8,15 @@ import { NavigationContext } from "../../contexts/NavigationContext";
 function PokemonCard({ id, name, image, types }: Pokemon) {
   const { theme } = useContext(ThemeContext);
   const {
-    stackNavigation,
-    setStackNavigation,
+    navigationHistory,
+    setNavigationHistory,
     navigationIndex,
     setNavigationIndex,
   } = useContext(NavigationContext);
 
   function handleClick() {
-    setStackNavigation([
-      ...[...stackNavigation].slice(0, navigationIndex + 1),
+    setNavigationHistory([
+      ...[...navigationHistory].slice(0, navigationIndex + 1),
       `/pokemon/${id}`,
     ]);
     setNavigationIndex(navigationIndex + 1);

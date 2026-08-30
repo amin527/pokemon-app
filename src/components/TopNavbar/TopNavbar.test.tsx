@@ -18,10 +18,10 @@ describe("TopNavbar", () => {
     return (
       <NavigationContext.Provider
         value={{
-          stackNavigation: ["/", "/pokemon/5"],
+          navigationHistory: ["/", "/pokemon/5"],
           navigationIndex,
           setNavigationIndex,
-          setStackNavigation: vi.fn(),
+          setNavigationHistory: vi.fn(),
         }}
       >
         <TopNavbar />

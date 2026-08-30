@@ -13,7 +13,7 @@ function TopNavbar() {
     useState(false);
   const settingsRef = useRef<HTMLDivElement>(null);
   const { theme } = useContext(ThemeContext);
-  const { stackNavigation, navigationIndex, setNavigationIndex } =
+  const { navigationHistory, navigationIndex, setNavigationIndex } =
     useContext(NavigationContext);
   const navigate = useNavigate();
 
@@ -26,8 +26,8 @@ function TopNavbar() {
   }
 
   useEffect(() => {
-    navigate(stackNavigation[navigationIndex]);
-  }, [navigationIndex, stackNavigation, navigate]);
+    navigate(navigationHistory[navigationIndex]);
+  }, [navigationIndex, navigationHistory, navigate]);
 
   function handleBackClick() {
     if (navigationIndex > 0) {
@@ -36,7 +36,7 @@ function TopNavbar() {
   }
 
   function handleForwardClick() {
-    if (navigationIndex != stackNavigation.length - 1) {
+    if (navigationIndex != navigationHistory.length - 1) {
       setNavigationIndex(navigationIndex + 1);
     }
   }
@@ -70,7 +70,7 @@ function TopNavbar() {
         />
         <ButtonWithIcon
           data-testid="navigation-button-next"
-          className={`button-with-icon-nav ${navigationIndex == stackNavigation.length - 1 ? "button-with-icon-gray" : ""}`}
+          className={`button-with-icon-nav ${navigationIndex == navigationHistory.length - 1 ? "button-with-icon-gray" : ""}`}
           icon={<ChevronRight />}
           handleClick={handleForwardClick}
         />

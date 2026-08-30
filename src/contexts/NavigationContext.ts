@@ -1,15 +1,15 @@
 import { createContext } from "react";
 
 type NavigationContextType = {
-  stackNavigation: string[];
+  navigationHistory: string[];
   navigationIndex: number;
-  setStackNavigation: (value: string[]) => void;
+  setNavigationHistory: (value: string[]) => void;
   setNavigationIndex: (value: number) => void;
 };
 
 export const NavigationContext = createContext<NavigationContextType>({
-  stackNavigation: ["/"],
+  navigationHistory: ["/"],
   navigationIndex: 0,
-  setStackNavigation: () => {},
+  setNavigationHistory: () => {},
   setNavigationIndex: () => {},
 });

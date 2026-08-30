@@ -44,8 +44,8 @@ describe("PokemonDetails", () => {
       <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
         <NavigationContext.Provider
           value={{
-            stackNavigation: [],
-            setStackNavigation: vi.fn(),
+            navigationHistory: [],
+            setNavigationHistory: vi.fn(),
             navigationIndex: 0,
             setNavigationIndex: vi.fn(),
           }}

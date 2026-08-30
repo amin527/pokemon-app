@@ -12,7 +12,7 @@ function App() {
     return localStorage.getItem("theme") ?? "light";
   });
 
-  const [stackNavigation, setStackNavigation] = useState<string[]>(["/"]);
+  const [navigationHistory, setNavigationHistory] = useState<string[]>(["/"]);
   const [navigationIndex, setNavigationIndex] = useState<number>(0);
 
   return (
@@ -20,8 +20,8 @@ function App() {
       <ThemeContext.Provider value={{ theme, setTheme }}>
         <NavigationContext.Provider
           value={{
-            stackNavigation,
-            setStackNavigation,
+            navigationHistory,
+            setNavigationHistory,
             navigationIndex,
             setNavigationIndex,
           }}
