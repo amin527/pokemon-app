@@ -26,36 +26,32 @@ function LandingDisplay() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPokemon, setTotalPokemon] = useState(0);
-  const [totalPages, setTotalPages] = useState(10);
+  const [totalPokemon, setTotalPokemon] = useState<number | null>(null);
 
   const { theme } = useContext(ThemeContext);
   const pokemonGridComponent = useRef(null);
-  const pokemonGridWidth = useComponentWidth({ component: pokemonGridComponent, });
+  const pokemonGridWidth = useComponentWidth({
+    component: pokemonGridComponent,
+  });
 
   const pokemonFetchSize =
     pokemonGridWidth > 0
       ? calculatePokemonFetchSize(
-        pokemonGridWidth - 2 * POKEMON_GRID_HORIZONTAL_MARGIN,
-      )
+          pokemonGridWidth - 2 * POKEMON_GRID_HORIZONTAL_MARGIN,
+        )
       : 0;
 
-  const updateTotalPokemonCount = useCallback(async () => {
-    const pokemonCount = await getPokemonCount();
-    setTotalPokemon(pokemonCount)
-  }, [])
-
-  const updateTotalPages = useCallback(() => {
-    const totalPages = Math.ceil(totalPokemon / pokemonFetchSize)
-    setTotalPages(totalPages);
-  }, [pokemonGridWidth, totalPokemon])
+  const totalPages =
+    totalPokemon !== null && pokemonFetchSize > 0
+      ? Math.ceil(totalPokemon / pokemonFetchSize)
+      : null;
 
   const handleNext = useCallback(() => {
     setIsLoading(true);
     if (currentPage != totalPages) {
       setCurrentPage((page) => page + 1);
     }
-  }, [currentPage]);
+  }, [currentPage, totalPages]);
 
   const handlePrevious = useCallback(() => {
     setIsLoading(true);
@@ -74,12 +70,13 @@ function LandingDisplay() {
   }, []);
 
   useEffect(() => {
-    updateTotalPokemonCount();
-  }, [])
+    const fetchPokemonCount = async () => {
+      const pokemonCount = await getPokemonCount();
+      setTotalPokemon(pokemonCount);
+    };
 
-  useEffect(() => {
-    updateTotalPages()
-  }, [totalPokemon, pokemonGridWidth])
+    fetchPokemonCount();
+  }, []);
 
   useEffect(() => {
     loadPokemon({
@@ -128,7 +125,7 @@ function LandingDisplay() {
           />
         )}
       </div>
-      {!searchResult && (
+      {!searchResult && totalPages !== null && (
         <BottomNavbar>
           <Pagination
             currentPage={currentPage}

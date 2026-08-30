@@ -11,7 +11,9 @@ import { getPokemonCount } from "../../functions/API/getPokemonCount";
 vi.mock("../../functions/API/getPokemonCount");
 vi.mock("../../hooks/useComponentWidth");
 vi.mock("../../functions/fetchPokemon", () => ({ fetchPokemon: vi.fn() }));
-vi.mock("../../functions/calculatePokemonFetchSize", () => ({ calculatePokemonFetchSize: vi.fn() }));
+vi.mock("../../functions/calculatePokemonFetchSize", () => ({
+  calculatePokemonFetchSize: vi.fn(),
+}));
 vi.mock("../../hooks/useComponentWidth", () => ({
   useComponentWidth: vi.fn(),
 }));
@@ -100,7 +102,7 @@ describe("LandingDisplay", () => {
     const theme: string = "dark";
     render(
       <MemoryRouter>
-        <ThemeContext.Provider value={{ theme, setTheme: () => { } }}>
+        <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
           <LandingDisplay />
         </ThemeContext.Provider>
       </MemoryRouter>,
@@ -114,7 +116,7 @@ describe("LandingDisplay", () => {
     const theme: string = "light";
     render(
       <MemoryRouter>
-        <ThemeContext.Provider value={{ theme, setTheme: () => { } }}>
+        <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
           <LandingDisplay />
         </ThemeContext.Provider>
       </MemoryRouter>,

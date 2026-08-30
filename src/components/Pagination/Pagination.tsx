@@ -19,8 +19,6 @@ function Pagination({
 }: PaginationProps) {
   const { theme } = useContext(ThemeContext);
 
-
-  
   return (
     <div
       className={`pagination ${theme == "light" ? "" : "pagination--dark"}`}
