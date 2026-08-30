@@ -29,8 +29,8 @@ function PokemonCard({ id, name, image, types }: Pokemon) {
           <div className="pokemon-card__name">Name: {name}</div>
           <div className="pokemon-card__types">
             Types:{" "}
-            {types.map((type) => (
-              <span key={type}>{type}</span>
+            {types.map((type, index) => (
+              <span key={type}>{type}{index < types.length - 1 ? ", " : ""}</span>
             ))}
           </div>
         </div>

@@ -15,8 +15,8 @@ function PokemonDetails() {
     const { id } = useParams();
     const [pokemon, setPokemon] = useState<DetailedPokemon | null>(null)
     const [similarPokemon, setSimilarPokemon] = useState<Pokemon[] | null>(null);
-    const primaryType = pokemon?.types[0];
     const [isLoading, setIsLoading] = useState<boolean>(true)
+    const primaryType = pokemon?.types[0];
     const { theme } = useContext(ThemeContext)
 
     useEffect(() => {
@@ -43,14 +43,17 @@ function PokemonDetails() {
     }, [similarPokemon, pokemon])
 
     return (
-        <div className={`pokemon-details-component ${theme == "light" ? "" : "pokemon-details-component--dark"}`}>
+        <div 
+            data-testid="pokemon-details-component"
+            className={`pokemon-details-component ${theme == "light" ? "" : "pokemon-details-component--dark"}`}
+        >
             <TopNavbar />
             {!isLoading ?
                 <>
                     {pokemon &&
                         <div className="pokemon-details-component__content">
                             <div className="pokemon-details">
-                                <div className={`pokemon-details__image ${theme == "light" ? "" : "pokemon-details__image--dark"}`}><img src={pokemon.image} /></div>
+                                <div data-testid="pokemon-details-image" className={`pokemon-details__image ${theme == "light" ? "" : "pokemon-details__image--dark"}`}><img src={pokemon.image} /></div>
                                 <div className="pokemon-details__info">
                                     <div className="pokemon-details__basic-info">
                                         <div className="pokemon-details__title">Base Info</div>
@@ -87,7 +90,10 @@ function PokemonDetails() {
                         </div>
                     }
                 </> :
-                <div className={`pokemon-details-component__content ${theme == "light" ? "" : "pokemon-details-component__content--dark"}`}>
+                <div 
+                    data-testid="pokemon-details-component-content" 
+                    className={`pokemon-details-component__content ${theme == "light" ? "" : "pokemon-details-component__content--dark"}`}
+                >
                     <div className="pokemon-details--loading">
                         <div className="pokemon-details__image--loading"></div>
                         <div className="pokemon-details__info">
