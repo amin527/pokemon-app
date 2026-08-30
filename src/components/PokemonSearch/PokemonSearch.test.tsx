@@ -9,14 +9,22 @@ describe("PokemonSearch", () => {
   });
 
   it("renders the search input", () => {
-    render(<PokemonSearch error={""} searchTerm="" onSearchTermChange={vi.fn()} />);
+    render(
+      <PokemonSearch error={""} searchTerm="" onSearchTermChange={vi.fn()} />,
+    );
     expect(
       screen.getByTestId("pokemon-search-input-field"),
     ).toBeInTheDocument();
   });
 
   it("displays the current search term", () => {
-    render(<PokemonSearch error={""} searchTerm="pikachu" onSearchTermChange={vi.fn()} />);
+    render(
+      <PokemonSearch
+        error={""}
+        searchTerm="pikachu"
+        onSearchTermChange={vi.fn()}
+      />,
+    );
     expect(screen.getByTestId("pokemon-search-input-field")).toHaveValue(
       "pikachu",
     );
@@ -25,7 +33,11 @@ describe("PokemonSearch", () => {
   it("calls onSearchTermChange when the user types", () => {
     const onSearchTermChange = vi.fn();
     render(
-      <PokemonSearch error={""} searchTerm="" onSearchTermChange={onSearchTermChange} />,
+      <PokemonSearch
+        error={""}
+        searchTerm=""
+        onSearchTermChange={onSearchTermChange}
+      />,
     );
     const input = screen.getByTestId("pokemon-search-input-field");
     fireEvent.change(input, { target: { value: "pikachu" } });
