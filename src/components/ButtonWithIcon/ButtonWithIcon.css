@@ -8,7 +8,7 @@
 }
 
 .button-with-icon--dark {
-  background-color: var(--secondary-color-dark);
+  background-color: var(--primary-color-dark);
 }
 
 .button-with-icon:hover {
