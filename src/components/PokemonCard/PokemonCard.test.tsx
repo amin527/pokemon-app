@@ -2,7 +2,8 @@ import { describe, expect, it, afterEach } from "vitest";
 import { render, screen, cleanup } from "@testing-library/react";
 import PokemonCard from "./PokemonCard";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter, useLocation } from "react-router";
+import userEvent from "@testing-library/user-event";
 
 describe("PokemonCard", () => {
   const pokemon = {
@@ -12,9 +13,12 @@ describe("PokemonCard", () => {
     types: ["electric"],
   };
 
-  afterEach(() => {
-    cleanup();
-  });
+  const LocationDisplay = () => {
+    const location = useLocation();
+    return <div data-testid="location">{location.pathname}</div>;
+  };
+
+  afterEach(() => { cleanup(); });
 
   it("displays the Pokémon name", () => {
     render(
@@ -57,6 +61,21 @@ describe("PokemonCard", () => {
     expect(screen.getByText("electric")).toBeTruthy();
   });
 
+  it("navigates to the Pokémon details page when clicked", async () => {
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter>
+        <PokemonCard {...pokemon} />
+        <LocationDisplay/>
+      </MemoryRouter>
+    )
+    await user.click(screen.getByTestId("pokemon-card"))
+    expect(screen.getByTestId("location")).toHaveTextContent(
+      `/pokemon/${pokemon.id}`,
+    );
+
+  })
+
   it("applies the dark colour formatting to the card background when the application theme is dark", () => {
     const theme: string = "dark";
     render(
@@ -88,7 +107,7 @@ describe("PokemonCard", () => {
   it("applies the dark colour formatting to the card info background when the application theme is dark", () => {
     const theme: string = "dark";
     render(
-     <MemoryRouter>
+      <MemoryRouter>
         <ThemeContext.Provider value={{ theme, setTheme: () => { } }}>
           <PokemonCard {...pokemon} />
         </ThemeContext.Provider>,
@@ -102,7 +121,7 @@ describe("PokemonCard", () => {
   it("applies the light colour formatting to the card info background when the application theme is light", () => {
     const theme: string = "light";
     render(
-     <MemoryRouter>
+      <MemoryRouter>
         <ThemeContext.Provider value={{ theme, setTheme: () => { } }}>
           <PokemonCard {...pokemon} />
         </ThemeContext.Provider>,
