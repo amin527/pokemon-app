@@ -5,13 +5,19 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 interface PokemonSearchProps {
   searchTerm: string;
   onSearchTermChange: (value: string) => void;
+  error: string | null;
 }
 
-function PokemonSearch({ searchTerm, onSearchTermChange }: PokemonSearchProps) {
+function PokemonSearch({
+  searchTerm,
+  onSearchTermChange,
+  error,
+}: PokemonSearchProps) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <div className="pokemon-search">
+      {error && <div className="error-message">{error}</div>}
       <input
         className={`pokemon-search__input-field ${theme == "light" ? "" : "pokemon-search__input-field--dark"}`}
         type="text"

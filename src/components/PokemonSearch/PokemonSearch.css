@@ -19,3 +19,8 @@
 .pokemon-search__input-field--dark {
   background-color: var(--primary-accent-color-dark);
 }
+
+.error-message {
+  background-color: var(--secondary-color);
+  padding: 3px 8px;
+}

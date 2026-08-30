@@ -9,14 +9,22 @@ describe("PokemonSearch", () => {
   });
 
   it("renders the search input", () => {
-    render(<PokemonSearch searchTerm="" onSearchTermChange={vi.fn()} />);
+    render(
+      <PokemonSearch error={""} searchTerm="" onSearchTermChange={vi.fn()} />,
+    );
     expect(
       screen.getByTestId("pokemon-search-input-field"),
     ).toBeInTheDocument();
   });
 
   it("displays the current search term", () => {
-    render(<PokemonSearch searchTerm="pikachu" onSearchTermChange={vi.fn()} />);
+    render(
+      <PokemonSearch
+        error={""}
+        searchTerm="pikachu"
+        onSearchTermChange={vi.fn()}
+      />,
+    );
     expect(screen.getByTestId("pokemon-search-input-field")).toHaveValue(
       "pikachu",
     );
@@ -25,7 +33,11 @@ describe("PokemonSearch", () => {
   it("calls onSearchTermChange when the user types", () => {
     const onSearchTermChange = vi.fn();
     render(
-      <PokemonSearch searchTerm="" onSearchTermChange={onSearchTermChange} />,
+      <PokemonSearch
+        error={""}
+        searchTerm=""
+        onSearchTermChange={onSearchTermChange}
+      />,
     );
     const input = screen.getByTestId("pokemon-search-input-field");
     fireEvent.change(input, { target: { value: "pikachu" } });
@@ -36,7 +48,7 @@ describe("PokemonSearch", () => {
     const theme: string = "light";
     render(
       <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-        <PokemonSearch searchTerm="" onSearchTermChange={vi.fn()} />
+        <PokemonSearch error={""} searchTerm="" onSearchTermChange={vi.fn()} />
       </ThemeContext.Provider>,
     );
     expect(screen.getByTestId("pokemon-search-input-field")).not.toHaveClass(
@@ -48,7 +60,7 @@ describe("PokemonSearch", () => {
     const theme: string = "dark";
     render(
       <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-        <PokemonSearch searchTerm="" onSearchTermChange={vi.fn()} />
+        <PokemonSearch error={""} searchTerm="" onSearchTermChange={vi.fn()} />
       </ThemeContext.Provider>,
     );
     expect(screen.getByTestId("pokemon-search-input-field")).toHaveClass(
