@@ -36,8 +36,8 @@ describe("fetchPokemon", () => {
     height: 0,
     weight: 0,
     types: [{ type: { name: "grass" } }],
-    stats: [{ base_stat: 0, stat: { name: "" }, }],
-    abilities: [{ ability: { name: "" }, }],
+    stats: [{ base_stat: 0, stat: { name: "" } }],
+    abilities: [{ ability: { name: "" } }],
   };
 
   const getPokemonResponseTwo = {
@@ -53,8 +53,8 @@ describe("fetchPokemon", () => {
     types: [{ type: { name: "fire" } }],
     height: 0,
     weight: 0,
-    stats: [{ base_stat: 0, stat: { name: "" }, }],
-    abilities: [{ ability: { name: "" }}],
+    stats: [{ base_stat: 0, stat: { name: "" } }],
+    abilities: [{ ability: { name: "" } }],
   };
 
   const formattedPokemonResponse = [
