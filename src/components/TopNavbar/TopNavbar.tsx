@@ -12,12 +12,8 @@ function TopNavbar() {
   const [settingsDropDownIsVisible, setSettingsDropDownIsVisible] = useState(false);
   const settingsRef = useRef<HTMLDivElement>(null);
   const { theme } = useContext(ThemeContext);
-  const { stackNavigation, setStackNavigation, navigationIndex, setNavigationIndex } = useContext(NavigationContext)
+  const { stackNavigation, navigationIndex, setNavigationIndex } = useContext(NavigationContext)
   const navigate = useNavigate()
-
-  console.log("stackNavigation", stackNavigation)
-  console.log("navigationIndex", navigationIndex)
-
 
   function handleDropDownVisibility() {
     if (settingsDropDownIsVisible) {
@@ -64,8 +60,18 @@ function TopNavbar() {
       data-testid="top-navbar"
     >
       <div className="navigation-buttons">
-        <ButtonWithIcon className={`button-with-icon-nav ${navigationIndex == 0 ? "button-with-icon-gray" : ""}`} icon={<ChevronLeft />} handleClick={handleBackClick} />
-        <ButtonWithIcon className={`button-with-icon-nav ${navigationIndex == stackNavigation.length - 1? "button-with-icon-gray" : ""}`} icon={<ChevronRight />} handleClick={handleForwardClick} />
+        <ButtonWithIcon 
+          data-testid="navigation-button-previous" 
+          className={`button-with-icon-nav ${navigationIndex == 0 ? "button-with-icon-gray" : ""}`} 
+          icon={<ChevronLeft />} 
+          handleClick={handleBackClick} 
+        />
+        <ButtonWithIcon 
+          data-testid="navigation-button-next" 
+          className={`button-with-icon-nav ${navigationIndex == stackNavigation.length - 1? "button-with-icon-gray" : ""}`} 
+          icon={<ChevronRight />} 
+          handleClick={handleForwardClick} 
+        />
       </div>
       <div className="settings-container" ref={settingsRef}>
         <ButtonWithText

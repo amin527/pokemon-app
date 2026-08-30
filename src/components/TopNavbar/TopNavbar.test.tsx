@@ -1,14 +1,45 @@
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import TopNavbar from "./TopNavbar";
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter, Route, Routes } from "react-router";
+import { NavigationContext } from "../../contexts/NavigationContext";
+import { useState } from "react";
 
 describe("TopNavbar", () => {
   afterEach(() => {
     cleanup();
   });
+
+  function NavigationTestWrapper({
+    initialIndex,
+  }: {
+    initialIndex: number;
+  }) {
+    const [navigationIndex, setNavigationIndex] = useState(initialIndex);
+
+    return (
+      <NavigationContext.Provider
+        value={{
+          stackNavigation: ["/", "/pokemon/5"],
+          navigationIndex,
+          setNavigationIndex,
+          setStackNavigation: vi.fn(),
+        }}
+      >
+        <TopNavbar />
+
+        <Routes>
+          <Route path="/" element={<div>Landing Page</div>} />
+          <Route
+            path="/pokemon/:id"
+            element={<div>Pokemon Details</div>}
+          />
+        </Routes>
+      </NavigationContext.Provider>
+    );
+  }
   it("Displays navbar component", () => {
     render(
       <MemoryRouter>
@@ -73,8 +104,30 @@ describe("TopNavbar", () => {
           <TopNavbar />
         </ThemeContext.Provider>,
       </MemoryRouter>);
-    expect(screen.getByTestId("top-navbar")).not.toHaveClass(
-      "top-navbar--dark",
+    expect(screen.getByTestId("top-navbar")).not.toHaveClass("top-navbar--dark");
+  });
+
+  it("redirects to the previous page in the navigation stack", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter initialEntries={["/pokemon/5"]}>
+        <NavigationTestWrapper initialIndex={1} />
+      </MemoryRouter>,
     );
+    await user.click(screen.getByTestId("navigation-button-previous"));
+    expect(screen.getByText("Landing Page")).toBeInTheDocument();
+  });
+
+  it("redirects to the next page in the navigation stack", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <NavigationTestWrapper initialIndex={0} />
+      </MemoryRouter>,
+    );
+    await user.click(screen.getByTestId("navigation-button-next"));
+    expect(screen.getByText("Pokemon Details")).toBeInTheDocument();
   });
 });
