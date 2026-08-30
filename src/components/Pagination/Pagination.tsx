@@ -18,6 +18,9 @@ function Pagination({
   onNext,
 }: PaginationProps) {
   const { theme } = useContext(ThemeContext);
+
+
+  
   return (
     <div
       className={`pagination ${theme == "light" ? "" : "pagination--dark"}`}
@@ -41,7 +44,7 @@ function Pagination({
           <ChevronRight className="pagination__icon pagination__icon--next" />
         }
         handleClick={onNext}
-        className={currentPage == 10 ? "button-with-icon-gray" : ""}
+        className={currentPage == totalPages ? "button-with-icon-gray" : ""}
       />
     </div>
   );

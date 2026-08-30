@@ -17,6 +17,7 @@ import type { Pokemon } from "../../types/Pokemon";
 import "./LandingDisplay.css";
 import "../../animations/shake.css";
 import "../../animations/pop.css";
+import { getPokemonCount } from "../../functions/API/getPokemonCount";
 
 function LandingDisplay() {
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
@@ -25,17 +26,33 @@ function LandingDisplay() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPokemon, setTotalPokemon] = useState(0);
+  const [totalPages, setTotalPages] = useState(10);
 
   const { theme } = useContext(ThemeContext);
-
   const pokemonGridComponent = useRef(null);
-  const pokemonGridWidth = useComponentWidth({
-    component: pokemonGridComponent,
-  });
+  const pokemonGridWidth = useComponentWidth({ component: pokemonGridComponent, });
+
+  const pokemonFetchSize =
+    pokemonGridWidth > 0
+      ? calculatePokemonFetchSize(
+        pokemonGridWidth - 2 * POKEMON_GRID_HORIZONTAL_MARGIN,
+      )
+      : 0;
+
+  const updateTotalPokemonCount = useCallback(async () => {
+    const pokemonCount = await getPokemonCount();
+    setTotalPokemon(pokemonCount)
+  }, [])
+
+  const updateTotalPages = useCallback(() => {
+    const totalPages = Math.ceil(totalPokemon / pokemonFetchSize)
+    setTotalPages(totalPages);
+  }, [pokemonGridWidth, totalPokemon])
 
   const handleNext = useCallback(() => {
     setIsLoading(true);
-    if (currentPage != 10) {
+    if (currentPage != totalPages) {
       setCurrentPage((page) => page + 1);
     }
   }, [currentPage]);
@@ -56,12 +73,13 @@ function LandingDisplay() {
     }
   }, []);
 
-  const pokemonFetchSize =
-    pokemonGridWidth > 0
-      ? calculatePokemonFetchSize(
-          pokemonGridWidth - 2 * POKEMON_GRID_HORIZONTAL_MARGIN,
-        )
-      : 0;
+  useEffect(() => {
+    updateTotalPokemonCount();
+  }, [])
+
+  useEffect(() => {
+    updateTotalPages()
+  }, [totalPokemon, pokemonGridWidth])
 
   useEffect(() => {
     loadPokemon({
@@ -114,7 +132,7 @@ function LandingDisplay() {
         <BottomNavbar>
           <Pagination
             currentPage={currentPage}
-            totalPages={10}
+            totalPages={totalPages}
             onPrevious={handlePrevious}
             onNext={handleNext}
           />
