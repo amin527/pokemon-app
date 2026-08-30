@@ -1,6 +1,6 @@
 import PokemonCard from "../PokemonCard/PokemonCard";
 import "./PokemonGrid.css";
-import type { Pokemon } from "../../types/pokemon";
+import type { Pokemon } from "../../types/Pokemon";
 import {
   POKEMON_GRID_CARD_GAP,
   POKEMON_GRID_HORIZONTAL_MARGIN,
@@ -34,7 +34,7 @@ function PokemonGrid({ pokemon, pokemonGridWidth }: PokemonGridProps) {
           key={pokemon.id}
           id={pokemon.id}
           name={pokemon.name}
-          artwork={pokemon.image}
+          image={pokemon.image}
           types={pokemon.types}
         />
       ))}

@@ -1,10 +1,10 @@
 import { cleanup, render, screen } from "@testing-library/react";
-import Button from "./Button";
+import Button from "./ButtonWithText";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
-describe("Button", () => {
+describe("ButtonWithText", () => {
   afterEach(() => {
     cleanup();
   });
@@ -29,7 +29,9 @@ describe("Button", () => {
         <Button text="" handleClick={() => {}}></Button>
       </ThemeContext.Provider>,
     );
-    expect(screen.getByRole("button")).not.toHaveClass("button--dark");
+    expect(screen.getByRole("button")).not.toHaveClass(
+      "button-with-text--dark",
+    );
   });
 
   it("applies the dark color formatting when the application theme is dark", () => {
@@ -39,6 +41,6 @@ describe("Button", () => {
         <Button text="" handleClick={() => {}}></Button>
       </ThemeContext.Provider>,
     );
-    expect(screen.getByRole("button")).toHaveClass("button--dark");
+    expect(screen.getByRole("button")).toHaveClass("button-with-text--dark");
   });
 });

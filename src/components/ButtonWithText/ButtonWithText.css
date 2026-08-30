@@ -1,4 +1,4 @@
-.button {
+.button-with-text {
   all: unset;
   padding: 5px 10px;
   background-color: var(--secondary-color);
@@ -6,17 +6,17 @@
   border-radius: 3px;
 }
 
-.button--dark {
+.button-with-text--dark {
   background-color: var(--secondary-color-dark);
 }
 
-.button:hover {
+.button-with-text:hover {
   cursor: pointer;
   background-color: var(--primary-accent-color);
   color: black;
   border-color: black;
 }
 
-.button--dark:hover {
+.button-with-text--dark:hover {
   background-color: var(--primary-accent-color-dark);
 }

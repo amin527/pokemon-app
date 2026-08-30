@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import Button from "../Button/Button";
+import ButtonWithText from "../ButtonWithText/ButtonWithText";
 import "./DropDown.css";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
@@ -27,8 +27,8 @@ function DropDown({ setDropDownIsVisible }: DropDownProps) {
       <div className="theme-options-container">
         <div className="">THEME OPTIONS</div>
         <div className="theme-options">
-          <Button text="Dark" handleClick={applyDarkTheme} />
-          <Button text="Light" handleClick={applyLightTheme} />
+          <ButtonWithText text="Dark" handleClick={applyDarkTheme} />
+          <ButtonWithText text="Light" handleClick={applyLightTheme} />
         </div>
       </div>
     </div>

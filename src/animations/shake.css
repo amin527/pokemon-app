@@ -1,0 +1,21 @@
+@keyframes shake {
+  0% {
+    transform: perspective(600px) rotateY(0deg);
+  }
+
+  25% {
+    transform: perspective(600px) rotateY(calc(var(--shake-angle) * -1));
+  }
+
+  50% {
+    transform: perspective(600px) rotateY(var(--shake-angle));
+  }
+
+  75% {
+    transform: perspective(600px) rotateY(calc(var(--shake-angle) * -0.35));
+  }
+
+  100% {
+    transform: perspective(600px) rotateY(0deg);
+  }
+}

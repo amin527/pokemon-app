@@ -1,4 +1,4 @@
-import type { Pokemon } from "../types/pokemon";
+import type { Pokemon } from "../types/Pokemon";
 import { getPokemon } from "./API/getPokemon";
 import { getPokemonList } from "./API/getPokemonList";
 import { formatPokemon } from "./formatPokemon";

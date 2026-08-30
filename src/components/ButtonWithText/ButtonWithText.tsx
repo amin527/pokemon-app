@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import "./Button.css";
+import "./ButtonWithText.css";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
 type ButtonProps = {
@@ -7,15 +7,15 @@ type ButtonProps = {
   handleClick: () => void;
 };
 
-function Button({ text, handleClick }: ButtonProps) {
+function ButtonWithText({ text, handleClick }: ButtonProps) {
   const { theme } = useContext(ThemeContext);
   return (
     <button
-      className={`button ${theme == "light" ? "" : "button--dark"}`}
+      className={`button-with-text ${theme == "light" ? "" : "button-with-text--dark"}`}
       onClick={handleClick}
     >
       {text}
     </button>
   );
 }
-export default Button;
+export default ButtonWithText;

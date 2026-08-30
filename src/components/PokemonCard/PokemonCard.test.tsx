@@ -2,13 +2,20 @@ import { describe, expect, it, afterEach } from "vitest";
 import { render, screen, cleanup } from "@testing-library/react";
 import PokemonCard from "./PokemonCard";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { MemoryRouter, useLocation } from "react-router";
+import userEvent from "@testing-library/user-event";
 
 describe("PokemonCard", () => {
   const pokemon = {
     id: 25,
     name: "Pikachu",
-    artwork: "https://example.com/pikachu.png",
+    image: "https://example.com/pikachu.png",
     types: ["electric"],
+  };
+
+  const LocationDisplay = () => {
+    const location = useLocation();
+    return <div data-testid="location">{location.pathname}</div>;
   };
 
   afterEach(() => {
@@ -16,19 +23,31 @@ describe("PokemonCard", () => {
   });
 
   it("displays the Pokémon name", () => {
-    render(<PokemonCard {...pokemon} />);
+    render(
+      <MemoryRouter>
+        <PokemonCard {...pokemon} />
+      </MemoryRouter>,
+    );
 
     expect(screen.getByText("Name: Pikachu")).toBeTruthy();
   });
 
   it("displays the Pokémon ID", () => {
-    render(<PokemonCard {...pokemon} />);
+    render(
+      <MemoryRouter>
+        <PokemonCard {...pokemon} />
+      </MemoryRouter>,
+    );
 
     expect(screen.getByText("ID: 25")).toBeTruthy();
   });
 
   it("displays the Pokémon artwork", () => {
-    render(<PokemonCard {...pokemon} />);
+    render(
+      <MemoryRouter>
+        <PokemonCard {...pokemon} />
+      </MemoryRouter>,
+    );
 
     const image = screen.getByRole("img", { name: "Pikachu" });
 
@@ -36,16 +55,37 @@ describe("PokemonCard", () => {
   });
 
   it("displays the Pokémon types", () => {
-    render(<PokemonCard {...pokemon} />);
+    render(
+      <MemoryRouter>
+        <PokemonCard {...pokemon} />
+      </MemoryRouter>,
+    );
     expect(screen.getByText("electric")).toBeTruthy();
+  });
+
+  it("navigates to the Pokémon details page when clicked", async () => {
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter>
+        <PokemonCard {...pokemon} />
+        <LocationDisplay />
+      </MemoryRouter>,
+    );
+    await user.click(screen.getByTestId("pokemon-card"));
+    expect(screen.getByTestId("location")).toHaveTextContent(
+      `/pokemon/${pokemon.id}`,
+    );
   });
 
   it("applies the dark colour formatting to the card background when the application theme is dark", () => {
     const theme: string = "dark";
     render(
-      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-        <PokemonCard {...pokemon} />
-      </ThemeContext.Provider>,
+      <MemoryRouter>
+        <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
+          <PokemonCard {...pokemon} />
+        </ThemeContext.Provider>
+        ,
+      </MemoryRouter>,
     );
     expect(screen.getByTestId("pokemon-card")).toHaveClass(
       "pokemon-card--dark",
@@ -55,9 +95,12 @@ describe("PokemonCard", () => {
   it("applies the light colour formatting to the card background when the application theme is light", () => {
     const theme: string = "light";
     render(
-      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-        <PokemonCard {...pokemon} />
-      </ThemeContext.Provider>,
+      <MemoryRouter>
+        <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
+          <PokemonCard {...pokemon} />
+        </ThemeContext.Provider>
+        ,
+      </MemoryRouter>,
     );
     expect(screen.getByTestId("pokemon-card")).not.toHaveClass(
       "pokemon-card_--dark",
@@ -67,9 +110,12 @@ describe("PokemonCard", () => {
   it("applies the dark colour formatting to the card info background when the application theme is dark", () => {
     const theme: string = "dark";
     render(
-      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-        <PokemonCard {...pokemon} />
-      </ThemeContext.Provider>,
+      <MemoryRouter>
+        <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
+          <PokemonCard {...pokemon} />
+        </ThemeContext.Provider>
+        ,
+      </MemoryRouter>,
     );
     expect(screen.getByTestId("pokemon-card-info")).toHaveClass(
       "pokemon-card__info--dark",
@@ -79,9 +125,12 @@ describe("PokemonCard", () => {
   it("applies the light colour formatting to the card info background when the application theme is light", () => {
     const theme: string = "light";
     render(
-      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-        <PokemonCard {...pokemon} />
-      </ThemeContext.Provider>,
+      <MemoryRouter>
+        <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
+          <PokemonCard {...pokemon} />
+        </ThemeContext.Provider>
+        ,
+      </MemoryRouter>,
     );
     expect(screen.getByTestId("pokemon-card-info")).not.toHaveClass(
       "pokemon-card__info--dark",

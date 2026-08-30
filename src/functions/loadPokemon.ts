@@ -1,4 +1,4 @@
-import type { Pokemon } from "../types/pokemon";
+import type { Pokemon } from "../types/Pokemon";
 import { fetchPokemon } from "./fetchPokemon";
 import { preloadImage } from "./preloadImage";
 
