@@ -1,5 +1,4 @@
 export type getPokemonResponse = {
-
   id: number;
   name: string;
   height: number;

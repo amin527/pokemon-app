@@ -23,7 +23,7 @@ describe("PokemonGrid", () => {
     render(
       <MemoryRouter>
         <PokemonGrid pokemonGridWidth={1000} pokemon={pokemon} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByText("Name: bulbasaur")).toBeInTheDocument();

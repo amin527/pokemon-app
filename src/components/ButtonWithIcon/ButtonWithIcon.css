@@ -21,7 +21,7 @@
   background-color: var(--primary-accent-color-dark);
 }
 
-.button-with-icon-gray{
+.button-with-icon-gray {
   color: gray;
 }
 
@@ -29,10 +29,8 @@
   background-color: unset;
 }
 
-.button-with-icon-gray:hover{
+.button-with-icon-gray:hover {
   background-color: unset;
   color: gray;
   cursor: unset;
 }
-
-

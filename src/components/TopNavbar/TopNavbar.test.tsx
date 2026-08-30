@@ -12,11 +12,7 @@ describe("TopNavbar", () => {
     cleanup();
   });
 
-  function NavigationTestWrapper({
-    initialIndex,
-  }: {
-    initialIndex: number;
-  }) {
+  function NavigationTestWrapper({ initialIndex }: { initialIndex: number }) {
     const [navigationIndex, setNavigationIndex] = useState(initialIndex);
 
     return (
@@ -32,10 +28,7 @@ describe("TopNavbar", () => {
 
         <Routes>
           <Route path="/" element={<div>Landing Page</div>} />
-          <Route
-            path="/pokemon/:id"
-            element={<div>Pokemon Details</div>}
-          />
+          <Route path="/pokemon/:id" element={<div>Pokemon Details</div>} />
         </Routes>
       </NavigationContext.Provider>
     );
@@ -44,7 +37,7 @@ describe("TopNavbar", () => {
     render(
       <MemoryRouter>
         <TopNavbar />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(screen.getByTestId("top-navbar")).toBeInTheDocument();
   });
@@ -54,7 +47,7 @@ describe("TopNavbar", () => {
     render(
       <MemoryRouter>
         <TopNavbar />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     await user.click(screen.getByRole("button", { name: "Settings" }));
     expect(screen.getByTestId("drop-down")).toBeInTheDocument();
@@ -65,7 +58,7 @@ describe("TopNavbar", () => {
     render(
       <MemoryRouter>
         <TopNavbar />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     await user.click(screen.getByRole("button", { name: "Settings" }));
     await user.click(screen.getByRole("button", { name: "Settings" }));
@@ -77,7 +70,7 @@ describe("TopNavbar", () => {
     render(
       <MemoryRouter>
         <TopNavbar />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     await user.click(screen.getByRole("button", { name: "Settings" }));
     await user.click(document.body);
@@ -88,10 +81,11 @@ describe("TopNavbar", () => {
     const theme: string = "dark";
     render(
       <MemoryRouter>
-        <ThemeContext.Provider value={{ theme, setTheme: () => { } }}>
+        <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
           <TopNavbar />
-        </ThemeContext.Provider>,
-      </MemoryRouter>
+        </ThemeContext.Provider>
+        ,
+      </MemoryRouter>,
     );
     expect(screen.getByTestId("top-navbar")).toHaveClass("top-navbar--dark");
   });
@@ -100,11 +94,15 @@ describe("TopNavbar", () => {
     const theme: string = "light";
     render(
       <MemoryRouter>
-        <ThemeContext.Provider value={{ theme, setTheme: () => { } }}>
+        <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
           <TopNavbar />
-        </ThemeContext.Provider>,
-      </MemoryRouter>);
-    expect(screen.getByTestId("top-navbar")).not.toHaveClass("top-navbar--dark");
+        </ThemeContext.Provider>
+        ,
+      </MemoryRouter>,
+    );
+    expect(screen.getByTestId("top-navbar")).not.toHaveClass(
+      "top-navbar--dark",
+    );
   });
 
   it("redirects to the previous page in the navigation stack", async () => {

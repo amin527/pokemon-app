@@ -3,7 +3,7 @@ import { createContext } from "react";
 type NavigationContextType = {
   stackNavigation: string[];
   navigationIndex: number;
-  setStackNavigation: (value: string[]) => void
+  setStackNavigation: (value: string[]) => void;
   setNavigationIndex: (value: number) => void;
 };
 

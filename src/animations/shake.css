@@ -12,8 +12,7 @@
   }
 
   75% {
-    transform: perspective(600px)
-      rotateY(calc(var(--shake-angle) * -0.35));
+    transform: perspective(600px) rotateY(calc(var(--shake-angle) * -0.35));
   }
 
   100% {

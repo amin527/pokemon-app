@@ -7,11 +7,19 @@ import { NavigationContext } from "../../contexts/NavigationContext";
 
 function PokemonCard({ id, name, image, types }: Pokemon) {
   const { theme } = useContext(ThemeContext);
-  const { stackNavigation, setStackNavigation, navigationIndex, setNavigationIndex } = useContext(NavigationContext)
+  const {
+    stackNavigation,
+    setStackNavigation,
+    navigationIndex,
+    setNavigationIndex,
+  } = useContext(NavigationContext);
 
-  function handleClick(){
-    setStackNavigation([...[...stackNavigation].slice(0, navigationIndex + 1), `/pokemon/${id}`])
-    setNavigationIndex(navigationIndex  + 1)
+  function handleClick() {
+    setStackNavigation([
+      ...[...stackNavigation].slice(0, navigationIndex + 1),
+      `/pokemon/${id}`,
+    ]);
+    setNavigationIndex(navigationIndex + 1);
   }
 
   return (
@@ -30,7 +38,10 @@ function PokemonCard({ id, name, image, types }: Pokemon) {
           <div className="pokemon-card__types">
             Types:{" "}
             {types.map((type, index) => (
-              <span key={type}>{type}{index < types.length - 1 ? ", " : ""}</span>
+              <span key={type}>
+                {type}
+                {index < types.length - 1 ? ", " : ""}
+              </span>
             ))}
           </div>
         </div>

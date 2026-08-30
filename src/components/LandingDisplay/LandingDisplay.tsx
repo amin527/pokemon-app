@@ -15,8 +15,8 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import type { Pokemon } from "../../types/Pokemon";
 
 import "./LandingDisplay.css";
-import "../../animations/shake.css"
-import "../../animations/pop.css"
+import "../../animations/shake.css";
+import "../../animations/pop.css";
 
 function LandingDisplay() {
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
@@ -35,14 +35,14 @@ function LandingDisplay() {
 
   const handleNext = useCallback(() => {
     setIsLoading(true);
-    if(currentPage != 10) {
+    if (currentPage != 10) {
       setCurrentPage((page) => page + 1);
     }
   }, [currentPage]);
 
   const handlePrevious = useCallback(() => {
     setIsLoading(true);
-    if(currentPage > 0) {
+    if (currentPage > 0) {
       setCurrentPage((page) => page - 1);
     }
   }, [currentPage]);

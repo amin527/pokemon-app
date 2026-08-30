@@ -42,7 +42,7 @@ describe("LandingDisplay", () => {
     const { container } = render(
       <MemoryRouter>
         <LandingDisplay />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(container.querySelectorAll(".pokemon-card-skeleton")).toHaveLength(
       20,
@@ -68,7 +68,7 @@ describe("LandingDisplay", () => {
     render(
       <MemoryRouter>
         <LandingDisplay />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(await screen.findByText("Name: bulbasaur")).toBeInTheDocument();
@@ -82,7 +82,7 @@ describe("LandingDisplay", () => {
     render(
       <MemoryRouter>
         <LandingDisplay />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(
       await screen.findByText("Failed to load Pokémon"),
@@ -93,10 +93,10 @@ describe("LandingDisplay", () => {
     const theme: string = "dark";
     render(
       <MemoryRouter>
-        <ThemeContext.Provider value={{ theme, setTheme: () => { } }}>
+        <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
           <LandingDisplay />
         </ThemeContext.Provider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(screen.getByTestId("landing-display")).toHaveClass(
       "landing-display--dark",
@@ -107,10 +107,10 @@ describe("LandingDisplay", () => {
     const theme: string = "light";
     render(
       <MemoryRouter>
-        <ThemeContext.Provider value={{ theme, setTheme: () => { } }}>
+        <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
           <LandingDisplay />
         </ThemeContext.Provider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(screen.getByTestId("landing-display")).not.toHaveClass(
       "landing-display--dark",

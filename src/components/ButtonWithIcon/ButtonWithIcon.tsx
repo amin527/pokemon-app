@@ -8,7 +8,12 @@ type ButtonProps = {
   className?: string;
 };
 
-function ButtonWithIcon({ icon, handleClick, className, ...props }: ButtonProps) {
+function ButtonWithIcon({
+  icon,
+  handleClick,
+  className,
+  ...props
+}: ButtonProps) {
   const { theme } = useContext(ThemeContext);
 
   return (

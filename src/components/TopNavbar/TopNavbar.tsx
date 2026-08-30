@@ -9,11 +9,13 @@ import { useNavigate } from "react-router";
 import { NavigationContext } from "../../contexts/NavigationContext";
 
 function TopNavbar() {
-  const [settingsDropDownIsVisible, setSettingsDropDownIsVisible] = useState(false);
+  const [settingsDropDownIsVisible, setSettingsDropDownIsVisible] =
+    useState(false);
   const settingsRef = useRef<HTMLDivElement>(null);
   const { theme } = useContext(ThemeContext);
-  const { stackNavigation, navigationIndex, setNavigationIndex } = useContext(NavigationContext)
-  const navigate = useNavigate()
+  const { stackNavigation, navigationIndex, setNavigationIndex } =
+    useContext(NavigationContext);
+  const navigate = useNavigate();
 
   function handleDropDownVisibility() {
     if (settingsDropDownIsVisible) {
@@ -24,18 +26,18 @@ function TopNavbar() {
   }
 
   useEffect(() => {
-    navigate(stackNavigation[navigationIndex])
-  }, [navigationIndex])
+    navigate(stackNavigation[navigationIndex]);
+  }, [navigationIndex]);
 
   function handleBackClick() {
-    if (navigationIndex > 0){
-      setNavigationIndex(navigationIndex - 1)
+    if (navigationIndex > 0) {
+      setNavigationIndex(navigationIndex - 1);
     }
   }
 
   function handleForwardClick() {
-    if(navigationIndex != stackNavigation.length - 1){
-      setNavigationIndex(navigationIndex + 1)
+    if (navigationIndex != stackNavigation.length - 1) {
+      setNavigationIndex(navigationIndex + 1);
     }
   }
 
@@ -60,17 +62,17 @@ function TopNavbar() {
       data-testid="top-navbar"
     >
       <div className="navigation-buttons">
-        <ButtonWithIcon 
-          data-testid="navigation-button-previous" 
-          className={`button-with-icon-nav ${navigationIndex == 0 ? "button-with-icon-gray" : ""}`} 
-          icon={<ChevronLeft />} 
-          handleClick={handleBackClick} 
+        <ButtonWithIcon
+          data-testid="navigation-button-previous"
+          className={`button-with-icon-nav ${navigationIndex == 0 ? "button-with-icon-gray" : ""}`}
+          icon={<ChevronLeft />}
+          handleClick={handleBackClick}
         />
-        <ButtonWithIcon 
-          data-testid="navigation-button-next" 
-          className={`button-with-icon-nav ${navigationIndex == stackNavigation.length - 1? "button-with-icon-gray" : ""}`} 
-          icon={<ChevronRight />} 
-          handleClick={handleForwardClick} 
+        <ButtonWithIcon
+          data-testid="navigation-button-next"
+          className={`button-with-icon-nav ${navigationIndex == stackNavigation.length - 1 ? "button-with-icon-gray" : ""}`}
+          icon={<ChevronRight />}
+          handleClick={handleForwardClick}
         />
       </div>
       <div className="settings-container" ref={settingsRef}>

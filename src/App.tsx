@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ThemeContext } from "./contexts/ThemeContext";
-import { Route, Routes } from "react-router"
+import { Route, Routes } from "react-router";
 import LandingDisplay from "./components/LandingDisplay/LandingDisplay";
 import "./App.css";
 import PokemonDetails from "./components/PokemonDetails/PokemonDetails";
@@ -17,7 +17,14 @@ function App() {
   return (
     <div data-testid="app">
       <ThemeContext.Provider value={{ theme, setTheme }}>
-        <NavigationContext.Provider value={{stackNavigation, setStackNavigation, navigationIndex, setNavigationIndex}}>
+        <NavigationContext.Provider
+          value={{
+            stackNavigation,
+            setStackNavigation,
+            navigationIndex,
+            setNavigationIndex,
+          }}
+        >
           <Routes>
             <Route path="/" element={<LandingDisplay />} />
             <Route path="/pokemon/:id" element={<PokemonDetails />} />

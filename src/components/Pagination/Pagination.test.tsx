@@ -51,33 +51,33 @@ describe("Pagination", () => {
   });
 
   it("does not update currentPage below the first page", async () => {
-  const user = userEvent.setup();
+    const user = userEvent.setup();
 
-  function TestPagination() {
-    const [currentPage, setCurrentPage] = useState(1);
-    const onPrevious = () => {
-      if (currentPage > 1) {
-        setCurrentPage(currentPage - 1);
-      }
-    };
-    
-    return (
-      <>
-        <span data-testid="current-page">{currentPage}</span>
+    function TestPagination() {
+      const [currentPage, setCurrentPage] = useState(1);
+      const onPrevious = () => {
+        if (currentPage > 1) {
+          setCurrentPage(currentPage - 1);
+        }
+      };
 
-        <Pagination
-          currentPage={currentPage}
-          totalPages={10}
-          onPrevious={onPrevious}
-          onNext={vi.fn()}
-        />
-      </>
-    );
-  }
-  render(<TestPagination />);
-  await user.click(screen.getByTestId("pagination-button-previous"));
-  expect(screen.getByTestId("current-page")).toHaveTextContent("1");
-});
+      return (
+        <>
+          <span data-testid="current-page">{currentPage}</span>
+
+          <Pagination
+            currentPage={currentPage}
+            totalPages={10}
+            onPrevious={onPrevious}
+            onNext={vi.fn()}
+          />
+        </>
+      );
+    }
+    render(<TestPagination />);
+    await user.click(screen.getByTestId("pagination-button-previous"));
+    expect(screen.getByTestId("current-page")).toHaveTextContent("1");
+  });
 
   it("does not update currentPage past the last page", async () => {
     const user = userEvent.setup();
@@ -116,7 +116,7 @@ describe("Pagination", () => {
   it("applies the light colour formatting when the application theme is light", () => {
     const theme: string = "light";
     render(
-      <ThemeContext.Provider value={{ theme, setTheme: () => { } }}>
+      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
         <Pagination
           currentPage={10}
           totalPages={10}
@@ -133,7 +133,7 @@ describe("Pagination", () => {
   it("applies the dark colour formatting when the application theme is dark", () => {
     const theme: string = "dark";
     render(
-      <ThemeContext.Provider value={{ theme, setTheme: () => { } }}>
+      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
         <Pagination
           currentPage={10}
           totalPages={10}
@@ -148,7 +148,7 @@ describe("Pagination", () => {
   it("applies the dark colour formatting when the application theme is dark", () => {
     const theme: string = "dark";
     render(
-      <ThemeContext.Provider value={{ theme, setTheme: () => { } }}>
+      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
         <Pagination
           currentPage={10}
           totalPages={10}
@@ -168,7 +168,7 @@ describe("Pagination", () => {
   it("applies the dark colour formatting when the application theme is light", () => {
     const theme: string = "light";
     render(
-      <ThemeContext.Provider value={{ theme, setTheme: () => { } }}>
+      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
         <Pagination
           currentPage={10}
           totalPages={10}
