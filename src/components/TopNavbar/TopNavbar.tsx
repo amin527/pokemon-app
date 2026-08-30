@@ -27,7 +27,7 @@ function TopNavbar() {
 
   useEffect(() => {
     navigate(stackNavigation[navigationIndex]);
-  }, [navigationIndex]);
+  }, [navigationIndex, stackNavigation, navigate]);
 
   function handleBackClick() {
     if (navigationIndex > 0) {

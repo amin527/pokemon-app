@@ -19,19 +19,13 @@ function PokemonDetails() {
   const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
-    setPokemon(null);
-    setSimilarPokemon(null);
-    setIsLoading(true);
-  }, [id]);
-
-  useEffect(() => {
     loadDetailedPokemon({ setPokemon, id });
   }, [id]);
 
   useEffect(() => {
     if (!primaryType) return;
     loadSimilarPokemon({ setSimilarPokemon, pokemon, type: primaryType });
-  }, [primaryType]);
+  }, [primaryType, pokemon]);
 
   useEffect(() => {
     async function resolveLoading() {

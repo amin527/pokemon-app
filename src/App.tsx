@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { ThemeContext } from "./contexts/ThemeContext";
 import { Route, Routes } from "react-router";
+import { NavigationContext } from "./contexts/NavigationContext";
+import { PokemonDetailsRoute } from "./components/PokemonDetailsRoute/PokemonDetailsRoute";
+
 import LandingDisplay from "./components/LandingDisplay/LandingDisplay";
 import "./App.css";
-import PokemonDetails from "./components/PokemonDetails/PokemonDetails";
-import { NavigationContext } from "./contexts/NavigationContext";
 
 function App() {
   const [theme, setTheme] = useState<string>(() => {
@@ -27,7 +28,7 @@ function App() {
         >
           <Routes>
             <Route path="/" element={<LandingDisplay />} />
-            <Route path="/pokemon/:id" element={<PokemonDetails />} />
+            <Route path="/pokemon/:id" element={<PokemonDetailsRoute />} />
           </Routes>
         </NavigationContext.Provider>
       </ThemeContext.Provider>
