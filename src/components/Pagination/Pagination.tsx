@@ -23,15 +23,6 @@ function Pagination({
       className={`pagination ${theme == "light" ? "" : "pagination--dark"}`}
       data-testid="pagination"
     >
-      {/* <button
-        data-testid="pagination-button-previous"
-        className={`pagination__button ${theme == "light" ? "" : "pagination__button--dark"} pagination__button--previous`}
-        onClick={onPrevious}
-        disabled={currentPage === 1}
-      >
-        <ChevronLeft className="pagination__icon pagination__icon--previous" />
-      </button> */}
-
       <ButtonWithIcon
         data-testid="pagination-button-previous"
         icon={
@@ -44,15 +35,6 @@ function Pagination({
       <span className="pagination__text">
         {currentPage} of {totalPages}
       </span>
-
-      {/* <button
-        data-testid="pagination-button-next"
-        className={`pagination__button ${theme == "light" ? "" : "pagination__button--dark"} pagination__button--next`}
-        onClick={onNext}
-        disabled={currentPage === totalPages}
-      >
-        <ChevronRight className="pagination__icon pagination__icon--next" />
-      </button> */}
       <ButtonWithIcon
         data-testid="pagination-button-next"
         icon={
