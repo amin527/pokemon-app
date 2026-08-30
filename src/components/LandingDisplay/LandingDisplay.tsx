@@ -17,6 +17,7 @@ import type { Pokemon } from "../../types/Pokemon";
 import "./LandingDisplay.css";
 import "../../animations/shake.css";
 import "../../animations/pop.css";
+import { getPokemonCount } from "../../functions/API/getPokemonCount";
 
 function LandingDisplay() {
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
@@ -25,20 +26,32 @@ function LandingDisplay() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPokemon, setTotalPokemon] = useState<number | null>(null);
 
   const { theme } = useContext(ThemeContext);
-
   const pokemonGridComponent = useRef(null);
   const pokemonGridWidth = useComponentWidth({
     component: pokemonGridComponent,
   });
 
+  const pokemonFetchSize =
+    pokemonGridWidth > 0
+      ? calculatePokemonFetchSize(
+          pokemonGridWidth - 2 * POKEMON_GRID_HORIZONTAL_MARGIN,
+        )
+      : 0;
+
+  const totalPages =
+    totalPokemon !== null && pokemonFetchSize > 0
+      ? Math.ceil(totalPokemon / pokemonFetchSize)
+      : null;
+
   const handleNext = useCallback(() => {
     setIsLoading(true);
-    if (currentPage != 10) {
+    if (currentPage != totalPages) {
       setCurrentPage((page) => page + 1);
     }
-  }, [currentPage]);
+  }, [currentPage, totalPages]);
 
   const handlePrevious = useCallback(() => {
     setIsLoading(true);
@@ -56,12 +69,14 @@ function LandingDisplay() {
     }
   }, []);
 
-  const pokemonFetchSize =
-    pokemonGridWidth > 0
-      ? calculatePokemonFetchSize(
-          pokemonGridWidth - 2 * POKEMON_GRID_HORIZONTAL_MARGIN,
-        )
-      : 0;
+  useEffect(() => {
+    const fetchPokemonCount = async () => {
+      const pokemonCount = await getPokemonCount();
+      setTotalPokemon(pokemonCount);
+    };
+
+    fetchPokemonCount();
+  }, []);
 
   useEffect(() => {
     loadPokemon({
@@ -110,11 +125,11 @@ function LandingDisplay() {
           />
         )}
       </div>
-      {!searchResult && (
+      {!searchResult && totalPages !== null && (
         <BottomNavbar>
           <Pagination
             currentPage={currentPage}
-            totalPages={10}
+            totalPages={totalPages}
             onPrevious={handlePrevious}
             onNext={handleNext}
           />

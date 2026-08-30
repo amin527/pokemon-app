@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import LandingDisplay from "./LandingDisplay";
 import { fetchPokemon } from "../../functions/fetchPokemon";
@@ -6,7 +6,10 @@ import { calculatePokemonFetchSize } from "../../functions/calculatePokemonFetch
 import { useComponentWidth } from "../../hooks/useComponentWidth";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { MemoryRouter } from "react-router";
+import { getPokemonCount } from "../../functions/API/getPokemonCount";
 
+vi.mock("../../functions/API/getPokemonCount");
+vi.mock("../../hooks/useComponentWidth");
 vi.mock("../../functions/fetchPokemon", () => ({ fetchPokemon: vi.fn() }));
 vi.mock("../../functions/calculatePokemonFetchSize", () => ({
   calculatePokemonFetchSize: vi.fn(),
@@ -23,6 +26,12 @@ class MockImage {
     this.onload?.();
   }
 }
+
+vi.mock("../Pagination/Pagination", () => ({
+  default: vi.fn(({ totalPages }) => (
+    <div data-testid="total-pages">{totalPages}</div>
+  )),
+}));
 
 describe("LandingDisplay", () => {
   beforeEach(() => {
@@ -115,5 +124,23 @@ describe("LandingDisplay", () => {
     expect(screen.getByTestId("landing-display")).not.toHaveClass(
       "landing-display--dark",
     );
+  });
+
+  it("calculates the total number of pages from the Pokémon count and fetch size", async () => {
+    vi.mocked(getPokemonCount).mockResolvedValue(1351);
+
+    vi.mocked(useComponentWidth).mockReturnValue(1000);
+
+    vi.mocked(calculatePokemonFetchSize).mockReturnValue(27);
+
+    render(
+      <MemoryRouter>
+        <LandingDisplay />
+      </MemoryRouter>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId("total-pages")).toHaveTextContent("51");
+    });
   });
 });
