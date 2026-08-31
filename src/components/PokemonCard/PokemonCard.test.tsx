@@ -60,7 +60,7 @@ describe("PokemonCard", () => {
         <PokemonCard {...pokemon} />
       </MemoryRouter>,
     );
-    expect(screen.getByText("electric")).toBeTruthy();
+    expect(screen.getByText("Electric")).toBeTruthy();
   });
 
   it("navigates to the Pokémon details page when clicked", async () => {

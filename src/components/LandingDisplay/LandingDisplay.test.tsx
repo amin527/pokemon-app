@@ -80,8 +80,8 @@ describe("LandingDisplay", () => {
       </MemoryRouter>,
     );
 
-    expect(await screen.findByText("Name: bulbasaur")).toBeInTheDocument();
-    expect(await screen.findByText("Name: charmander")).toBeInTheDocument();
+    expect(await screen.findByText("Name: Bulbasaur")).toBeInTheDocument();
+    expect(await screen.findByText("Name: Charmander")).toBeInTheDocument();
   });
 
   it("displays an error message when Pokémon fail to load", async () => {

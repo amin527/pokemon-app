@@ -167,7 +167,7 @@ describe("PokemonDetails", () => {
     const cards = await screen.findAllByTestId("pokemon-card");
 
     similarPokemon.forEach((pokemon, index) => {
-      expect(cards[index]).toHaveTextContent(pokemon.name);
+      expect(cards[index]).toHaveTextContent(pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1));
     });
   });
 
@@ -178,7 +178,7 @@ describe("PokemonDetails", () => {
 
     similarPokemon.forEach((pokemon, index) => {
       pokemon.types.forEach((type) => {
-        expect(cards[index]).toHaveTextContent(type);
+        expect(cards[index]).toHaveTextContent(type.charAt(0).toUpperCase() + type.slice(1));
       });
     });
   });

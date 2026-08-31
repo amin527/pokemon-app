@@ -26,7 +26,7 @@ describe("PokemonGrid", () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByText("Name: bulbasaur")).toBeInTheDocument();
-    expect(screen.getByText("Name: charmander")).toBeInTheDocument();
+    expect(screen.getByText("Name: Bulbasaur")).toBeInTheDocument();
+    expect(screen.getByText("Name: Charmander")).toBeInTheDocument();
   });
 });
