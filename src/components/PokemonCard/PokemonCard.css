@@ -44,14 +44,12 @@
   transition: transform 0.3s ease;
 }
 
-.pokemon-card__info--dark {
-  background-color: var(--secondary-color-dark);
+.pokemon-card:hover .pokemon-card__info {
+  transform: translateY(0px);
 }
 
-.pokemon-card:hover .pokemon-card__info {
-  /* transform: translateY(10px); */
-  transform: translateY(0px);
-  /* z-index: 100; */
+.pokemon-card--dark .pokemon-card__info{
+  background-color: var(--secondary-color-dark);
 }
 
 .pokemon-card:hover .pokemon-card__artwork {

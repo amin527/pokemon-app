@@ -33,12 +33,13 @@ function PokemonCard({ id, name, image, types }: Pokemon) {
         data-testid="pokemon-card"
       >
         <img className="pokemon-card__artwork" src={image} alt={name} />
-        <div className="pokemon-card-display">
+        <div data-testid="pokemon-card-display" className="pokemon-card-display">
           <div className="pokemon-card-display__name">{name.charAt(0).toUpperCase() + name.slice(1)}</div>
           <div className="pokemon-card-display__id">#{id}</div>
         </div>
         <div
-          className={`pokemon-card__info ${theme == "light" ? "" : "pokemon-card__info--dark"}`}
+          // className={`pokemon-card__info ${theme == "light" ? "" : "pokemon-card__info--dark"}`}
+          className="pokemon-card__info"
           data-testid="pokemon-card-info"
         >
           <div className="pokemon-card__name-and-id">
