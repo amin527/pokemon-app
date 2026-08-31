@@ -69,21 +69,24 @@
   margin-bottom: 3px;
 }
 
-.pokemon-card__display-name{
-  background-color: var(--primary-accent-color);
+.pokemon-card-display__name{
   width: 100%;
   display: flex;
   justify-content: center;
   padding: 3px 0px;
 }
 
-.pokemon-card__display-id{
+.pokemon-card-display__id{
   position: absolute;
   bottom: 0;
   right: 2px;
   padding: 3px 8px;
 }
 
-.pokemon-card--dark .pokemon-card__display-name{
+.pokemon-card-display{
+  background-color: var(--primary-accent-color); 
+}
+
+.pokemon-card--dark .pokemon-card-display{
   background-color: var(--primary-accent-color-dark);
 }
