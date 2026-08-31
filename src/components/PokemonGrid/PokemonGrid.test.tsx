@@ -4,8 +4,9 @@ import PokemonGrid from "./PokemonGrid";
 import { MemoryRouter } from "react-router";
 
 describe("PokemonGrid", () => {
-
-  afterEach(() => { cleanup() })
+  afterEach(() => {
+    cleanup();
+  });
 
   const pokemon = [
     {

@@ -80,7 +80,9 @@ describe("LandingDisplay", () => {
       </MemoryRouter>,
     );
 
-    const pokemonDisplays = await screen.findAllByTestId("pokemon-card-display");
+    const pokemonDisplays = await screen.findAllByTestId(
+      "pokemon-card-display",
+    );
 
     expect(pokemonDisplays[0]).toHaveTextContent("Bulbasaur");
     expect(pokemonDisplays[1]).toHaveTextContent("Charmander");
@@ -106,7 +108,7 @@ describe("LandingDisplay", () => {
     const theme: string = "dark";
     render(
       <MemoryRouter>
-        <ThemeContext.Provider value={{ theme, setTheme: () => { } }}>
+        <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
           <LandingDisplay />
         </ThemeContext.Provider>
       </MemoryRouter>,
@@ -120,7 +122,7 @@ describe("LandingDisplay", () => {
     const theme: string = "light";
     render(
       <MemoryRouter>
-        <ThemeContext.Provider value={{ theme, setTheme: () => { } }}>
+        <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
           <LandingDisplay />
         </ThemeContext.Provider>
       </MemoryRouter>,

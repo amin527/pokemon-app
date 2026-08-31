@@ -30,7 +30,9 @@ describe("PokemonCard", () => {
     );
 
     // expect(screen.getByText("Name: Pikachu")).toBeTruthy();
-    expect(screen.getByTestId("pokemon-card-info")).toHaveTextContent("Pikachu");
+    expect(screen.getByTestId("pokemon-card-info")).toHaveTextContent(
+      "Pikachu",
+    );
   });
 
   it("displays the Pokémon ID", () => {
