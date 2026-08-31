@@ -29,30 +29,62 @@
 }
 
 .pokemon-card__info {
-  color: black;
-  padding: 10px;
   position: absolute;
   bottom: 0;
   left: 0;
+
   width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+
   background-color: var(--secondary-color);
+  color: black;
 
   transform: translateY(100%);
   transition: transform 0.3s ease;
 }
 
-.pokemon-card__info--dark {
-  background-color: var(--secondary-color-dark);
-}
-
-.pokemon-card:hover {
-  border-color: rgb(168, 98, 196);
-}
-
 .pokemon-card:hover .pokemon-card__info {
-  transform: translateY(0);
+  transform: translateY(0px);
+}
+
+.pokemon-card--dark .pokemon-card__info {
+  background-color: var(--secondary-color-dark);
 }
 
 .pokemon-card:hover .pokemon-card__artwork {
   animation: shake 0.5s ease;
+}
+
+.pokemon-card-link {
+  all: unset;
+}
+
+.pokemon-card__name-and-id {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3px;
+}
+
+.pokemon-card-display__name {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 3px 0px;
+}
+
+.pokemon-card-display__id {
+  position: absolute;
+  bottom: 0;
+  right: 2px;
+  padding: 3px 8px;
+}
+
+.pokemon-card-display {
+  background-color: var(--primary-accent-color);
+}
+
+.pokemon-card--dark .pokemon-card-display {
+  background-color: var(--primary-accent-color-dark);
 }

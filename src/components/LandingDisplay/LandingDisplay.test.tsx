@@ -80,9 +80,15 @@ describe("LandingDisplay", () => {
       </MemoryRouter>,
     );
 
-    expect(await screen.findByText("Name: bulbasaur")).toBeInTheDocument();
-    expect(await screen.findByText("Name: charmander")).toBeInTheDocument();
+    const pokemonDisplays = await screen.findAllByTestId(
+      "pokemon-card-display",
+    );
+
+    expect(pokemonDisplays[0]).toHaveTextContent("Bulbasaur");
+    expect(pokemonDisplays[1]).toHaveTextContent("Charmander");
   });
+  // expect(await screen.findByText("Name: Bulbasaur")).toBeInTheDocument();
+  // expect(await screen.findByText("Name: Charmander")).toBeInTheDocument();
 
   it("displays an error message when Pokémon fail to load", async () => {
     vi.mocked(fetchPokemon).mockRejectedValueOnce(

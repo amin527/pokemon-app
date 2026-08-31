@@ -1,9 +1,13 @@
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { cleanup, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it } from "vitest";
 import PokemonGrid from "./PokemonGrid";
 import { MemoryRouter } from "react-router";
 
 describe("PokemonGrid", () => {
+  afterEach(() => {
+    cleanup();
+  });
+
   const pokemon = [
     {
       id: 1,
@@ -26,7 +30,10 @@ describe("PokemonGrid", () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByText("Name: bulbasaur")).toBeInTheDocument();
-    expect(screen.getByText("Name: charmander")).toBeInTheDocument();
+    const pokemonDisplays = screen.getAllByTestId("pokemon-card-display");
+
+    expect(pokemonDisplays).toHaveLength(pokemon.length);
+    expect(pokemonDisplays[0]).toHaveTextContent("Bulbasaur");
+    expect(pokemonDisplays[1]).toHaveTextContent("Charmander");
   });
 });
