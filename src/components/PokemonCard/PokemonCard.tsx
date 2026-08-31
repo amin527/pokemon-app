@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import "./PokemonCard.css";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { Link } from "react-router";
@@ -23,23 +23,31 @@ function PokemonCard({ id, name, image, types }: Pokemon) {
   }
 
   return (
-    <Link to={`/pokemon/${id}`} onClick={handleClick}>
+    <Link 
+      to={`/pokemon/${id}`} 
+      onClick={handleClick}
+      className="pokemon-card-link"  
+    >
       <div
         className={`pokemon-card ${theme == "light" ? "" : "pokemon-card--dark"}`}
         data-testid="pokemon-card"
       >
         <img className="pokemon-card__artwork" src={image} alt={name} />
+        <div className="pokemon-card__display-name">{name.charAt(0).toUpperCase() + name.slice(1)}</div>
+        <div className="pokemon-card__display-id">#{id}</div>
         <div
           className={`pokemon-card__info ${theme == "light" ? "" : "pokemon-card__info--dark"}`}
           data-testid="pokemon-card-info"
         >
-          <div className="pokemon-card__id">ID: {id}</div>
-          <div className="pokemon-card__name">Name: {name}</div>
+          <div className="pokemon-card__name-and-id">
+            <div className="pokemon-card__name">Name: {name.charAt(0).toUpperCase() + name.slice(1)}</div>
+            <div className="pokemon-card__id">ID: {id}</div>
+          </div>
           <div className="pokemon-card__types">
             Types:{" "}
             {types.map((type, index) => (
               <span key={type}>
-                {type}
+                {type.charAt(0).toUpperCase() + type.slice(1)}
                 {index < types.length - 1 ? ", " : ""}
               </span>
             ))}
