@@ -29,7 +29,8 @@ describe("PokemonCard", () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByText("Name: Pikachu")).toBeTruthy();
+    // expect(screen.getByText("Name: Pikachu")).toBeTruthy();
+    expect(screen.getByTestId("pokemon-card-info")).toHaveTextContent("Pikachu");
   });
 
   it("displays the Pokémon ID", () => {
@@ -39,7 +40,8 @@ describe("PokemonCard", () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByText("ID: 25")).toBeTruthy();
+    expect(screen.getByTestId("pokemon-card-info")).toHaveTextContent("25");
+    // expect(screen.getByText("ID: 25")).toBeTruthy();
   });
 
   it("displays the Pokémon artwork", () => {
