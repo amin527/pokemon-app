@@ -59,19 +59,11 @@ describe("LandingDisplay", () => {
   });
 
   it("loads and displays Pokémon", async () => {
+    vi.mocked(useComponentWidth).mockReturnValue(1000);
+    vi.mocked(calculatePokemonFetchSize).mockReturnValue(20);
     vi.mocked(fetchPokemon).mockResolvedValue([
-      {
-        id: 1,
-        name: "bulbasaur",
-        image: "bulbasaur.png",
-        types: ["grass"],
-      },
-      {
-        id: 4,
-        name: "charmander",
-        image: "charmander.png",
-        types: ["fire"],
-      },
+      { id: 1, name: "bulbasaur", image: "bulbasaur.png", types: ["grass"] },
+      { id: 4, name: "charmander", image: "charmander.png", types: ["fire"] },
     ]);
 
     render(
@@ -80,15 +72,11 @@ describe("LandingDisplay", () => {
       </MemoryRouter>,
     );
 
-    const pokemonDisplays = await screen.findAllByTestId(
-      "pokemon-card-display",
-    );
+    const pokemonDisplays = await screen.findAllByTestId("pokemon-card-display");
 
     expect(pokemonDisplays[0]).toHaveTextContent("Bulbasaur");
     expect(pokemonDisplays[1]).toHaveTextContent("Charmander");
   });
-  // expect(await screen.findByText("Name: Bulbasaur")).toBeInTheDocument();
-  // expect(await screen.findByText("Name: Charmander")).toBeInTheDocument();
 
   it("displays an error message when Pokémon fail to load", async () => {
     vi.mocked(fetchPokemon).mockRejectedValueOnce(
@@ -108,7 +96,7 @@ describe("LandingDisplay", () => {
     const theme: string = "dark";
     render(
       <MemoryRouter>
-        <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
+        <ThemeContext.Provider value={{ theme, setTheme: () => { } }}>
           <LandingDisplay />
         </ThemeContext.Provider>
       </MemoryRouter>,
@@ -122,7 +110,7 @@ describe("LandingDisplay", () => {
     const theme: string = "light";
     render(
       <MemoryRouter>
-        <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
+        <ThemeContext.Provider value={{ theme, setTheme: () => { } }}>
           <LandingDisplay />
         </ThemeContext.Provider>
       </MemoryRouter>,
