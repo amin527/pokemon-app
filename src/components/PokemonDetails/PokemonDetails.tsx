@@ -13,7 +13,7 @@ import type { Pokemon } from "../../types/Pokemon";
 import type { DetailedPokemon } from "../../types/DetailedPokemon";
 
 import "./PokemonDetails.css";
-import "./PokemonDetailsLoading.css"
+import "./PokemonDetailsLoading.css";
 
 function PokemonDetails() {
   const { id } = useParams();
@@ -22,8 +22,8 @@ function PokemonDetails() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const primaryType = pokemon?.types[0];
   const { theme } = useContext(ThemeContext);
-  const { ref: detailsRef, height: detailsHeight } = useElementHeight<HTMLDivElement>();
-
+  const { ref: detailsRef, height: detailsHeight } =
+    useElementHeight<HTMLDivElement>();
 
   useEffect(() => {
     loadDetailedPokemon({ setPokemon, id });
@@ -106,7 +106,10 @@ function PokemonDetails() {
                 </div>
               </div>
               {/* <div className="similar-pokemon"> */}
-              <div className="similar-pokemon" style={detailsHeight ? { height: detailsHeight } : undefined}>
+              <div
+                className="similar-pokemon"
+                style={detailsHeight ? { height: detailsHeight } : undefined}
+              >
                 {similarPokemon?.map((pokemon) => (
                   <PokemonCard
                     key={pokemon.id}
