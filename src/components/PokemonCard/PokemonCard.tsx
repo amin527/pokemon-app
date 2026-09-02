@@ -40,7 +40,7 @@ function PokemonCard({ id, name, image, types }: Pokemon) {
           <div className="pokemon-card-display__name">
             {name.charAt(0).toUpperCase() + name.slice(1)}
           </div>
-          <div className="pokemon-card-display__id">#{id}</div>
+          {/* <div className="pokemon-card-display__id">#{id}</div> */}
         </div>
         <div className="pokemon-card__info" data-testid="pokemon-card-info">
           <div className="pokemon-card__name-and-id">
