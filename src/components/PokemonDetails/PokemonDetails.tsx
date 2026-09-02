@@ -1,14 +1,19 @@
 import TopNavbar from "../TopNavbar/TopNavbar";
 import PokemonCard from "../PokemonCard/PokemonCard";
+
 import { useParams } from "react-router";
 import { useContext, useEffect, useState } from "react";
 import { loadDetailedPokemon } from "../../functions/loadDetailedPokemon";
 import { loadSimilarPokemon } from "../../functions/loadSimilarPokemon";
 import { preloadImage } from "../../functions/preloadImage";
-import type { DetailedPokemon } from "../../types/DetailedPokemon";
-import type { Pokemon } from "../../types/Pokemon";
-import "./PokemonDetails.css";
+import { useElementHeight } from "../../hooks/useElementHeight";
 import { ThemeContext } from "../../contexts/ThemeContext";
+
+import type { Pokemon } from "../../types/Pokemon";
+import type { DetailedPokemon } from "../../types/DetailedPokemon";
+
+import "./PokemonDetails.css";
+import "./PokemonDetailsLoading.css";
 
 function PokemonDetails() {
   const { id } = useParams();
@@ -17,6 +22,8 @@ function PokemonDetails() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const primaryType = pokemon?.types[0];
   const { theme } = useContext(ThemeContext);
+  const { ref: detailsRef, height: detailsHeight } =
+    useElementHeight<HTMLDivElement>();
 
   useEffect(() => {
     loadDetailedPokemon({ setPokemon, id });
@@ -51,7 +58,7 @@ function PokemonDetails() {
         <>
           {pokemon && (
             <div className="pokemon-details-component__content">
-              <div className="pokemon-details">
+              <div className="pokemon-details" ref={detailsRef}>
                 <div
                   data-testid="pokemon-details-image"
                   className={`pokemon-details__image ${theme == "light" ? "" : "pokemon-details__image--dark"}`}
@@ -98,7 +105,11 @@ function PokemonDetails() {
                   </div>
                 </div>
               </div>
-              <div className="similar-pokemon">
+              {/* <div className="similar-pokemon"> */}
+              <div
+                className="similar-pokemon"
+                style={detailsHeight ? { height: detailsHeight } : undefined}
+              >
                 {similarPokemon?.map((pokemon) => (
                   <PokemonCard
                     key={pokemon.id}
@@ -115,17 +126,17 @@ function PokemonDetails() {
       ) : (
         <div
           data-testid="pokemon-details-component-content"
-          className={`pokemon-details-component__content ${theme == "light" ? "" : "pokemon-details-component__content--dark"}`}
+          className={`pokemon-details-component__content--loading ${theme == "light" ? "" : "pokemon-details-component__content--dark"}`}
         >
           <div className="pokemon-details--loading">
             <div className="pokemon-details__image--loading"></div>
-            <div className="pokemon-details__info">
+            <div className="pokemon-details__info--loading">
               <div className="pokemon-details__basic-info--loading"></div>
               <div className="pokemon-details__stats--loading"></div>
               <div className="pokemon-details__abilities--loading"></div>
             </div>
           </div>
-          <div className="similar-pokemon">
+          <div className="similar-pokemon--loading">
             <div className="pokemon-card--loading"></div>
             <div className="pokemon-card--loading"></div>
             <div className="pokemon-card--loading"></div>
