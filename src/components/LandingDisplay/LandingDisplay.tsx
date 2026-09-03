@@ -47,15 +47,15 @@ function LandingDisplay() {
       : null;
 
   const handleNext = useCallback(() => {
-    setIsLoading(true);
     if (currentPage != totalPages) {
+      setIsLoading(true);
       setCurrentPage((page) => page + 1);
     }
   }, [currentPage, totalPages]);
 
   const handlePrevious = useCallback(() => {
-    setIsLoading(true);
-    if (currentPage > 0) {
+    if (currentPage != 1) {
+      setIsLoading(true);
       setCurrentPage((page) => page - 1);
     }
   }, [currentPage]);
