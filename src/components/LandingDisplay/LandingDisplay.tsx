@@ -27,7 +27,7 @@ function LandingDisplay() {
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPokemon, setTotalPokemon] = useState<number | null>(null);
-
+  
   const { theme } = useContext(ThemeContext);
   const pokemonGridComponent = useRef(null);
   const pokemonGridWidth = useComponentWidth({
