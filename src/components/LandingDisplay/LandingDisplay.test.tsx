@@ -107,7 +107,7 @@ describe("LandingDisplay", () => {
     const theme: string = "dark";
     render(
       <MemoryRouter>
-        <ThemeContext.Provider value={{ theme, setTheme: () => { } }}>
+        <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
           <LandingDisplay />
         </ThemeContext.Provider>
       </MemoryRouter>,
@@ -121,7 +121,7 @@ describe("LandingDisplay", () => {
     const theme: string = "light";
     render(
       <MemoryRouter>
-        <ThemeContext.Provider value={{ theme, setTheme: () => { } }}>
+        <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
           <LandingDisplay />
         </ThemeContext.Provider>
       </MemoryRouter>,
@@ -176,7 +176,6 @@ describe("LandingDisplay", () => {
   });
 
   it("updates navigation history entry when the URL differs from the stored one", () => {
-
     const setNavigationHistory = vi.fn();
 
     render(
@@ -191,10 +190,9 @@ describe("LandingDisplay", () => {
         >
           <LandingDisplay />
         </NavigationContext.Provider>
-      </MemoryRouter>
-    )
+      </MemoryRouter>,
+    );
 
     expect(setNavigationHistory).toHaveBeenCalledWith(["/?page=3"]);
-
-  })
+  });
 });
