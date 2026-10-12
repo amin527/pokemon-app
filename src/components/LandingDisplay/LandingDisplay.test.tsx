@@ -5,8 +5,10 @@ import { fetchPokemon } from "../../functions/fetchPokemon";
 import { calculatePokemonFetchSize } from "../../functions/calculatePokemonFetchSize";
 import { useComponentWidth } from "../../hooks/useComponentWidth";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter, useSearchParams } from "react-router";
 import { getPokemonCount } from "../../functions/API/getPokemonCount";
+import userEvent from "@testing-library/user-event";
+import { NavigationContext } from "../../contexts/NavigationContext";
 
 vi.mock("../../functions/API/getPokemonCount");
 vi.mock("../../hooks/useComponentWidth");
@@ -17,6 +19,14 @@ vi.mock("../../functions/calculatePokemonFetchSize", () => ({
 vi.mock("../../hooks/useComponentWidth", () => ({
   useComponentWidth: vi.fn(),
 }));
+vi.mock("../Pagination/Pagination", () => ({
+  default: vi.fn(({ totalPages, onNext }) => (
+    <div>
+      <div data-testid="total-pages">{totalPages}</div>
+      <button onClick={onNext}>Next</button>
+    </div>
+  )),
+}));
 
 class MockImage {
   onload: (() => void) | null = null;
@@ -26,12 +36,6 @@ class MockImage {
     this.onload?.();
   }
 }
-
-vi.mock("../Pagination/Pagination", () => ({
-  default: vi.fn(({ totalPages }) => (
-    <div data-testid="total-pages">{totalPages}</div>
-  )),
-}));
 
 describe("LandingDisplay", () => {
   beforeEach(() => {
@@ -84,6 +88,11 @@ describe("LandingDisplay", () => {
     vi.mocked(fetchPokemon).mockRejectedValueOnce(
       new Error("Failed to fetch Pokémon list"),
     );
+
+    vi.mocked(useComponentWidth).mockReturnValue(1000);
+
+    vi.mocked(calculatePokemonFetchSize).mockReturnValue(20);
+
     render(
       <MemoryRouter>
         <LandingDisplay />
@@ -138,5 +147,52 @@ describe("LandingDisplay", () => {
     await waitFor(() => {
       expect(screen.getByTestId("total-pages")).toHaveTextContent("51");
     });
+  });
+
+  it("sets the page search param to the given page number", async () => {
+    function PageParam() {
+      const [searchParams] = useSearchParams();
+      return <div data-testid="page-param">{searchParams.get("page")}</div>;
+    }
+
+    const user = userEvent.setup();
+
+    vi.mocked(getPokemonCount).mockResolvedValue(10);
+
+    vi.mocked(useComponentWidth).mockReturnValue(1000);
+
+    vi.mocked(calculatePokemonFetchSize).mockReturnValue(5);
+
+    render(
+      <MemoryRouter>
+        <LandingDisplay />
+        <PageParam />
+      </MemoryRouter>,
+    );
+
+    await user.click(await screen.findByRole("button", { name: "Next" }));
+
+    expect(screen.getByTestId("page-param")).toHaveTextContent("2");
+  });
+
+  it("updates navigation history entry when the URL differs from the stored one", () => {
+    const setNavigationHistory = vi.fn();
+
+    render(
+      <MemoryRouter initialEntries={["/?page=3"]}>
+        <NavigationContext.Provider
+          value={{
+            navigationHistory: ["/"],
+            navigationIndex: 0,
+            setNavigationHistory,
+            setNavigationIndex: vi.fn(),
+          }}
+        >
+          <LandingDisplay />
+        </NavigationContext.Provider>
+      </MemoryRouter>,
+    );
+
+    expect(setNavigationHistory).toHaveBeenCalledWith(["/?page=3"]);
   });
 });

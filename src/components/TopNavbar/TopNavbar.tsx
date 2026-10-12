@@ -25,19 +25,19 @@ function TopNavbar() {
     }
   }
 
-  useEffect(() => {
-    navigate(navigationHistory[navigationIndex]);
-  }, [navigationIndex, navigationHistory, navigate]);
-
   function handleBackClick() {
     if (navigationIndex > 0) {
-      setNavigationIndex(navigationIndex - 1);
+      const newIndex = navigationIndex - 1;
+      setNavigationIndex(newIndex);
+      navigate(navigationHistory[newIndex]);
     }
   }
 
   function handleForwardClick() {
-    if (navigationIndex != navigationHistory.length - 1) {
-      setNavigationIndex(navigationIndex + 1);
+    if (navigationIndex < navigationHistory.length - 1) {
+      const newIndex = navigationIndex + 1;
+      setNavigationIndex(newIndex);
+      navigate(navigationHistory[newIndex]);
     }
   }
 
