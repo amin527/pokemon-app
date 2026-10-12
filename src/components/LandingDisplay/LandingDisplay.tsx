@@ -13,11 +13,14 @@ import { useComponentWidth } from "../../hooks/useComponentWidth";
 import { POKEMON_GRID_HORIZONTAL_MARGIN } from "../../constants/PokemonGridConstants";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import type { Pokemon } from "../../types/Pokemon";
+import { useSearchParams } from "react-router";
 
 import "./LandingDisplay.css";
 import "../../animations/shake.css";
 import "../../animations/pop.css";
 import { getPokemonCount } from "../../functions/API/getPokemonCount";
+import { parsePage } from "../../functions/parsePage";
+import { NavigationContext } from "../../contexts/NavigationContext";
 
 function LandingDisplay() {
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
@@ -25,14 +28,19 @@ function LandingDisplay() {
   const [searchResult, setSearchResult] = useState<Pokemon | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
   const [totalPokemon, setTotalPokemon] = useState<number | null>(null);
-  
+
+  const { navigationHistory, setNavigationHistory, navigationIndex } =
+    useContext(NavigationContext);
+
   const { theme } = useContext(ThemeContext);
   const pokemonGridComponent = useRef(null);
   const pokemonGridWidth = useComponentWidth({
     component: pokemonGridComponent,
   });
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = parsePage(searchParams.get("page"));
 
   const pokemonFetchSize =
     pokemonGridWidth > 0
@@ -46,19 +54,19 @@ function LandingDisplay() {
       ? Math.ceil(totalPokemon / pokemonFetchSize)
       : null;
 
-  const handleNext = useCallback(() => {
-    if (currentPage != totalPages) {
+  function handleNext() {
+    if (totalPages !== null && currentPage < totalPages) {
       setIsLoading(true);
-      setCurrentPage((page) => page + 1);
+      goToPage(currentPage + 1);
     }
-  }, [currentPage, totalPages]);
+  }
 
-  const handlePrevious = useCallback(() => {
-    if (currentPage != 1) {
+  function handlePrevious() {
+    if (currentPage > 1) {
       setIsLoading(true);
-      setCurrentPage((page) => page - 1);
+      goToPage(currentPage - 1);
     }
-  }, [currentPage]);
+  }
 
   const handleSearchTermChange = useCallback((value: string) => {
     setSearchTerm(value);
@@ -68,6 +76,37 @@ function LandingDisplay() {
       setError(null);
     }
   }, []);
+
+  function goToPage(page: number) {
+    setSearchParams((params) => {
+      params.set("page", String(page));
+      return params;
+    });
+  }
+
+  useEffect(() => {
+    const query = searchParams.toString();
+    const url = query ? `/?${query}` : "/";
+
+    if (navigationHistory[navigationIndex] == url) return;
+    const updatedNavigationHistory = [...navigationHistory];
+    updatedNavigationHistory[navigationIndex] = url;
+    setNavigationHistory(updatedNavigationHistory);
+  }, [searchParams, navigationHistory, navigationIndex, setNavigationHistory]);
+
+  useEffect(() => {
+    if (totalPages != null && currentPage > totalPages) {
+      setSearchParams(
+        (params) => {
+          params.set("page", String(totalPages));
+          return params;
+        },
+        {
+          replace: true,
+        },
+      );
+    }
+  }, [currentPage, totalPages, setSearchParams]);
 
   useEffect(() => {
     const fetchPokemonCount = async () => {
@@ -79,6 +118,7 @@ function LandingDisplay() {
   }, []);
 
   useEffect(() => {
+    if (pokemonFetchSize === 0) return;
     loadPokemon({
       pokemonFetchSize,
       currentPage,
