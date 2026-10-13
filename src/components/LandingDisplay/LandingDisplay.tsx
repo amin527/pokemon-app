@@ -30,8 +30,12 @@ function LandingDisplay() {
   const [error, setError] = useState<string | null>(null);
   const [totalPokemon, setTotalPokemon] = useState<number | null>(null);
 
-  const { navigationHistory, setNavigationHistory, navigationIndex, setNavigationIndex } =
-    useContext(NavigationContext);
+  const {
+    navigationHistory,
+    setNavigationHistory,
+    navigationIndex,
+    setNavigationIndex,
+  } = useContext(NavigationContext);
 
   const { theme } = useContext(ThemeContext);
   const pokemonGridComponent = useRef(null);
@@ -45,8 +49,8 @@ function LandingDisplay() {
   const pokemonFetchSize =
     pokemonGridWidth > 0
       ? calculatePokemonFetchSize(
-        pokemonGridWidth - 2 * POKEMON_GRID_HORIZONTAL_MARGIN,
-      )
+          pokemonGridWidth - 2 * POKEMON_GRID_HORIZONTAL_MARGIN,
+        )
       : 0;
 
   const totalPages =
@@ -100,7 +104,7 @@ function LandingDisplay() {
     setNavigationHistory(updatedNavigationHistory);
   }, [searchParams, navigationHistory, navigationIndex, setNavigationHistory]);
 
-  console.log(navigationHistory)
+  console.log(navigationHistory);
 
   useEffect(() => {
     if (totalPages != null && currentPage > totalPages) {
