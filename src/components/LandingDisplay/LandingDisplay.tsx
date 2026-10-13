@@ -30,7 +30,7 @@ function LandingDisplay() {
   const [error, setError] = useState<string | null>(null);
   const [totalPokemon, setTotalPokemon] = useState<number | null>(null);
 
-  const { navigationHistory, setNavigationHistory, navigationIndex } =
+  const { navigationHistory, setNavigationHistory, navigationIndex, setNavigationIndex } =
     useContext(NavigationContext);
 
   const { theme } = useContext(ThemeContext);
@@ -45,8 +45,8 @@ function LandingDisplay() {
   const pokemonFetchSize =
     pokemonGridWidth > 0
       ? calculatePokemonFetchSize(
-          pokemonGridWidth - 2 * POKEMON_GRID_HORIZONTAL_MARGIN,
-        )
+        pokemonGridWidth - 2 * POKEMON_GRID_HORIZONTAL_MARGIN,
+      )
       : 0;
 
   const totalPages =
@@ -78,21 +78,29 @@ function LandingDisplay() {
   }, []);
 
   function goToPage(page: number) {
-    setSearchParams((params) => {
-      params.set("page", String(page));
-      return params;
-    });
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set("page", String(page));
+
+    setSearchParams(newParams);
+    setNavigationIndex(navigationIndex + 1);
+    setNavigationHistory([
+      ...navigationHistory.slice(0, navigationIndex + 1),
+      `/?${newParams.toString()}`,
+    ]);
   }
 
   useEffect(() => {
-    const query = searchParams.toString();
-    const url = query ? `/?${query}` : "/";
+    const searchString = searchParams.toString();
+    const relativeUrl = searchString ? `/?${searchString}` : "/";
 
-    if (navigationHistory[navigationIndex] == url) return;
+    if (navigationHistory[navigationIndex] == relativeUrl) return;
+
     const updatedNavigationHistory = [...navigationHistory];
-    updatedNavigationHistory[navigationIndex] = url;
+    updatedNavigationHistory[navigationIndex] = relativeUrl;
     setNavigationHistory(updatedNavigationHistory);
   }, [searchParams, navigationHistory, navigationIndex, setNavigationHistory]);
+
+  console.log(navigationHistory)
 
   useEffect(() => {
     if (totalPages != null && currentPage > totalPages) {
