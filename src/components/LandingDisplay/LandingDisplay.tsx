@@ -5,7 +5,7 @@ import PokemonGridSkeleton from "../PokemonGridSkeleton/PokemonGridSkeleton";
 import BottomNavbar from "../BottomNavbar/BottomNavbar";
 import TopNavbar from "../TopNavbar/TopNavbar";
 
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { searchPokemon } from "../../functions/searchPokemon";
 import { loadPokemon } from "../../functions/loadPokemon";
 import { calculatePokemonFetchSize } from "../../functions/calculatePokemonFetchSize";
@@ -24,10 +24,10 @@ import { NavigationContext } from "../../contexts/NavigationContext";
 
 function LandingDisplay() {
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
   const [searchResult, setSearchResult] = useState<Pokemon | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchError, setSearchError] = useState<string | null>(null);
   const [totalPokemon, setTotalPokemon] = useState<number | null>(null);
 
   const {
@@ -45,6 +45,17 @@ function LandingDisplay() {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parsePage(searchParams.get("page"));
+  const query = searchParams.get("query");
+  const normalisedQuery = (query ?? "").trim().toLowerCase();
+  const displayedResult = normalisedQuery ? searchResult : null;
+  const displayedError = normalisedQuery ? searchError : error;
+  const [searchTerm, setSearchTerm] = useState(query ?? "");
+  const [prevQuery, setPrevQuery] = useState(query);
+
+  if (query !== prevQuery) {
+    setPrevQuery(query);
+    setSearchTerm(query ?? "");
+  }
 
   const pokemonFetchSize =
     pokemonGridWidth > 0
@@ -72,14 +83,39 @@ function LandingDisplay() {
     }
   }
 
-  const handleSearchTermChange = useCallback((value: string) => {
-    setSearchTerm(value);
-
-    if (!value.trim()) {
-      setSearchResult(null);
-      setError(null);
+  useEffect(() => {
+    if (!searchTerm.trim()) {
+      setSearchParams(
+        (prev) => {
+          const newParam = new URLSearchParams(prev);
+          newParam.delete("query");
+          return newParam;
+        },
+        { replace: true },
+      );
+      return;
     }
-  }, []);
+
+    const timeout = setTimeout(() => {
+      setSearchParams(
+        (prev) => {
+          const newParam = new URLSearchParams(prev);
+          newParam.set("query", searchTerm);
+          return newParam;
+        },
+        { replace: true },
+      );
+    }, 500);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [searchTerm, setSearchParams]);
+
+  useEffect(() => {
+    if (!normalisedQuery) return;
+    searchPokemon({ query: normalisedQuery, setSearchResult, setSearchError });
+  }, [query, normalisedQuery]);
 
   function goToPage(page: number) {
     const newParams = new URLSearchParams(searchParams);
@@ -140,22 +176,6 @@ function LandingDisplay() {
     });
   }, [currentPage, pokemonFetchSize]);
 
-  useEffect(() => {
-    const query = searchTerm.trim().toLowerCase();
-
-    if (!query) {
-      return;
-    }
-
-    // Forced timeout added to make the fetch look longer
-    const timeout = setTimeout(() => {
-      searchPokemon({ query, setSearchResult, setError });
-    }, 500);
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [searchTerm]);
-
   return (
     <div
       className={`landing-display ${theme == "light" ? "" : "landing-display--dark"}`}
@@ -163,9 +183,9 @@ function LandingDisplay() {
     >
       <TopNavbar />
       <PokemonSearch
-        error={error}
+        error={displayedError}
         searchTerm={searchTerm}
-        onSearchTermChange={handleSearchTermChange}
+        onSearchTermChange={setSearchTerm}
       />
       <div ref={pokemonGridComponent}>
         {isLoading ? (
@@ -173,11 +193,11 @@ function LandingDisplay() {
         ) : (
           <PokemonGrid
             pokemonGridWidth={pokemonGridWidth}
-            pokemon={searchResult ? [searchResult] : pokemon}
+            pokemon={displayedResult ? [displayedResult] : pokemon}
           />
         )}
       </div>
-      {!searchResult && totalPages !== null && (
+      {!displayedResult && totalPages !== null && (
         <BottomNavbar>
           <Pagination
             currentPage={currentPage}

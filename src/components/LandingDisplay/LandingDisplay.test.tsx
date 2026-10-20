@@ -195,4 +195,68 @@ describe("LandingDisplay", () => {
 
     expect(setNavigationHistory).toHaveBeenCalledWith(["/?page=3"]);
   });
+
+  it("sets query search param after the user stops typing", async () => {
+    function PageParam() {
+      const [searchParams] = useSearchParams();
+      return <div data-testid="query-param">{searchParams.get("query")}</div>;
+    }
+
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter>
+        <LandingDisplay />
+        <PageParam />
+      </MemoryRouter>,
+    );
+
+    await user.type(screen.getByTestId("pokemon-search-input-field"), "Test");
+
+    await waitFor(() => {
+      expect(screen.getByTestId("query-param")).toHaveTextContent("Test");
+    });
+  });
+
+  it("removes the query search parameter after the user clears the search field", async () => {
+    function QueryParam() {
+      const [searchParams] = useSearchParams();
+      return <div data-testid="query-param">{searchParams.get("query")}</div>;
+    }
+
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter>
+        <LandingDisplay />
+        <QueryParam />
+      </MemoryRouter>,
+    );
+
+    const input = screen.getByTestId("pokemon-search-input-field");
+
+    await user.type(input, "Test");
+
+    await waitFor(() => {
+      expect(screen.getByTestId("query-param")).toHaveTextContent("Test");
+    });
+
+    await user.clear(input);
+
+    await waitFor(() => {
+      expect(screen.getByTestId("query-param")).toBeEmptyDOMElement();
+    });
+  });
+
+  it("pre-fills the search field from the query search param in the URL", () => {
+    render(
+      <MemoryRouter initialEntries={["/?query=pikachu"]}>
+        <LandingDisplay />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByTestId("pokemon-search-input-field")).toHaveValue(
+      "pikachu",
+    );
+  });
 });

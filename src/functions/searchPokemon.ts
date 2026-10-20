@@ -4,13 +4,13 @@ import { getPokemon } from "./API/getPokemon";
 type searchPokemonProps = {
   query: string;
   setSearchResult: (pokemon: Pokemon | null) => void;
-  setError: (value: null | string) => void;
+  setSearchError: (value: null | string) => void;
 };
 
 export async function searchPokemon({
   query,
   setSearchResult,
-  setError,
+  setSearchError,
 }: searchPokemonProps) {
   try {
     const pokemon = await getPokemon(query);
@@ -21,9 +21,9 @@ export async function searchPokemon({
       types: pokemon.types.map((type) => type.type.name),
     };
     setSearchResult(pokemonFormatted);
-    setError(null);
+    setSearchError(null);
   } catch {
     setSearchResult(null);
-    setError("No Pokémon found");
+    setSearchError("No Pokémon found");
   }
 }
