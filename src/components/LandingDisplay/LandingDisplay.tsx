@@ -45,11 +45,11 @@ function LandingDisplay() {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parsePage(searchParams.get("page"));
-  const query = searchParams.get("query")
+  const query = searchParams.get("query");
   const normalisedQuery = (query ?? "").trim().toLowerCase();
   const displayedResult = normalisedQuery ? searchResult : null;
   const displayedError = normalisedQuery ? searchError : error;
-  const [searchTerm, setSearchTerm] = useState(query ?? "")
+  const [searchTerm, setSearchTerm] = useState(query ?? "");
   const [prevQuery, setPrevQuery] = useState(query);
 
   if (query !== prevQuery) {
@@ -57,12 +57,11 @@ function LandingDisplay() {
     setSearchTerm(query ?? "");
   }
 
-
   const pokemonFetchSize =
     pokemonGridWidth > 0
       ? calculatePokemonFetchSize(
-        pokemonGridWidth - 2 * POKEMON_GRID_HORIZONTAL_MARGIN,
-      )
+          pokemonGridWidth - 2 * POKEMON_GRID_HORIZONTAL_MARGIN,
+        )
       : 0;
 
   const totalPages =
@@ -85,34 +84,38 @@ function LandingDisplay() {
   }
 
   useEffect(() => {
-
     if (!searchTerm.trim()) {
-      setSearchParams((prev) => {
-        const newParam = new URLSearchParams(prev)
-        newParam.delete("query")
-        return newParam
-      }, { replace: true })
+      setSearchParams(
+        (prev) => {
+          const newParam = new URLSearchParams(prev);
+          newParam.delete("query");
+          return newParam;
+        },
+        { replace: true },
+      );
       return;
     }
 
     const timeout = setTimeout(() => {
-      setSearchParams((prev) => {
-        const newParam = new URLSearchParams(prev)
-        newParam.set("query", searchTerm)
-        return newParam
-      }, { replace: true })
+      setSearchParams(
+        (prev) => {
+          const newParam = new URLSearchParams(prev);
+          newParam.set("query", searchTerm);
+          return newParam;
+        },
+        { replace: true },
+      );
     }, 500);
 
-    return () => { clearTimeout(timeout); };
-
-  }, [searchTerm, setSearchParams])
-
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [searchTerm, setSearchParams]);
 
   useEffect(() => {
     if (!normalisedQuery) return;
     searchPokemon({ query: normalisedQuery, setSearchResult, setSearchError });
   }, [query, normalisedQuery]);
-
 
   function goToPage(page: number) {
     const newParams = new URLSearchParams(searchParams);
