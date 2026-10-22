@@ -3,7 +3,6 @@ import Pagination from "../Pagination/Pagination";
 import PokemonSearch from "../PokemonSearch/PokemonSearch";
 import PokemonGridSkeleton from "../PokemonGridSkeleton/PokemonGridSkeleton";
 import BottomNavbar from "../BottomNavbar/BottomNavbar";
-import TopNavbar from "../TopNavbar/TopNavbar";
 
 import { useContext, useEffect, useRef, useState } from "react";
 import { searchPokemon } from "../../functions/searchPokemon";
@@ -20,7 +19,6 @@ import "../../animations/shake.css";
 import "../../animations/pop.css";
 import { getPokemonCount } from "../../functions/API/getPokemonCount";
 import { parsePage } from "../../functions/parsePage";
-import { NavigationContext } from "../../contexts/NavigationContext";
 
 function LandingDisplay() {
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
@@ -29,13 +27,6 @@ function LandingDisplay() {
   const [error, setError] = useState<string | null>(null);
   const [searchError, setSearchError] = useState<string | null>(null);
   const [totalPokemon, setTotalPokemon] = useState<number | null>(null);
-
-  const {
-    navigationHistory,
-    setNavigationHistory,
-    navigationIndex,
-    setNavigationIndex,
-  } = useContext(NavigationContext);
 
   const { theme } = useContext(ThemeContext);
   const pokemonGridComponent = useRef(null);
@@ -122,25 +113,7 @@ function LandingDisplay() {
     newParams.set("page", String(page));
 
     setSearchParams(newParams);
-    setNavigationIndex(navigationIndex + 1);
-    setNavigationHistory([
-      ...navigationHistory.slice(0, navigationIndex + 1),
-      `/?${newParams.toString()}`,
-    ]);
   }
-
-  useEffect(() => {
-    const searchString = searchParams.toString();
-    const relativeUrl = searchString ? `/?${searchString}` : "/";
-
-    if (navigationHistory[navigationIndex] == relativeUrl) return;
-
-    const updatedNavigationHistory = [...navigationHistory];
-    updatedNavigationHistory[navigationIndex] = relativeUrl;
-    setNavigationHistory(updatedNavigationHistory);
-  }, [searchParams, navigationHistory, navigationIndex, setNavigationHistory]);
-
-  console.log(navigationHistory);
 
   useEffect(() => {
     if (totalPages != null && currentPage > totalPages) {
@@ -181,7 +154,6 @@ function LandingDisplay() {
       className={`landing-display ${theme == "light" ? "" : "landing-display--dark"}`}
       data-testid="landing-display"
     >
-      <TopNavbar />
       <PokemonSearch
         error={displayedError}
         searchTerm={searchTerm}

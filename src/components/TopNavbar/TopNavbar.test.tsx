@@ -1,38 +1,15 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import TopNavbar from "./TopNavbar";
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { MemoryRouter, Route, Routes } from "react-router";
-import { NavigationContext } from "../../contexts/NavigationContext";
-import { useState } from "react";
+import { BrowserRouter, Link, MemoryRouter, Route, Routes } from "react-router";
 
 describe("TopNavbar", () => {
   afterEach(() => {
     cleanup();
   });
 
-  function NavigationTestWrapper({ initialIndex }: { initialIndex: number }) {
-    const [navigationIndex, setNavigationIndex] = useState(initialIndex);
-
-    return (
-      <NavigationContext.Provider
-        value={{
-          navigationHistory: ["/", "/pokemon/5"],
-          navigationIndex,
-          setNavigationIndex,
-          setNavigationHistory: vi.fn(),
-        }}
-      >
-        <TopNavbar />
-
-        <Routes>
-          <Route path="/" element={<div>Landing Page</div>} />
-          <Route path="/pokemon/:id" element={<div>Pokemon Details</div>} />
-        </Routes>
-      </NavigationContext.Provider>
-    );
-  }
   it("Displays navbar component", () => {
     render(
       <MemoryRouter>
@@ -109,23 +86,41 @@ describe("TopNavbar", () => {
     const user = userEvent.setup();
 
     render(
-      <MemoryRouter initialEntries={["/pokemon/5"]}>
-        <NavigationTestWrapper initialIndex={1} />
-      </MemoryRouter>,
+      <BrowserRouter>
+        <TopNavbar />
+        <Link to="/pokemon/5">Go to details</Link>
+        <Routes>
+          <Route path="/" element={<div>Landing Page</div>} />
+          <Route path="/pokemon/:id" element={<div>Pokemon Details</div>} />
+        </Routes>
+      </BrowserRouter>,
     );
+
+    await user.click(screen.getByText("Go to details"));
+    expect(await screen.findByText("Pokemon Details")).toBeInTheDocument();
+
     await user.click(screen.getByTestId("navigation-button-previous"));
-    expect(screen.getByText("Landing Page")).toBeInTheDocument();
+    expect(await screen.findByText("Landing Page")).toBeInTheDocument();
   });
 
   it("redirects to the next page in the navigation stack", async () => {
     const user = userEvent.setup();
 
     render(
-      <MemoryRouter initialEntries={["/"]}>
-        <NavigationTestWrapper initialIndex={0} />
-      </MemoryRouter>,
+      <BrowserRouter>
+        <TopNavbar />
+        <Link to="/pokemon/5">Go to details</Link>
+        <Routes>
+          <Route path="/" element={<div>Landing Page</div>} />
+          <Route path="/pokemon/:id" element={<div>Pokemon Details</div>} />
+        </Routes>
+      </BrowserRouter>,
     );
+    await user.click(screen.getByText("Go to details"));
+    await user.click(screen.getByTestId("navigation-button-previous"));
+    expect(await screen.findByText("Landing Page")).toBeInTheDocument();
+
     await user.click(screen.getByTestId("navigation-button-next"));
-    expect(screen.getByText("Pokemon Details")).toBeInTheDocument();
+    expect(await screen.findByText("Pokemon Details")).toBeInTheDocument();
   });
 });

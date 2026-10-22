@@ -8,7 +8,6 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import { MemoryRouter, useSearchParams } from "react-router";
 import { getPokemonCount } from "../../functions/API/getPokemonCount";
 import userEvent from "@testing-library/user-event";
-import { NavigationContext } from "../../contexts/NavigationContext";
 
 vi.mock("../../functions/API/getPokemonCount");
 vi.mock("../../hooks/useComponentWidth");
@@ -173,27 +172,6 @@ describe("LandingDisplay", () => {
     await user.click(await screen.findByRole("button", { name: "Next" }));
 
     expect(screen.getByTestId("page-param")).toHaveTextContent("2");
-  });
-
-  it("updates navigation history entry when the URL differs from the stored one", () => {
-    const setNavigationHistory = vi.fn();
-
-    render(
-      <MemoryRouter initialEntries={["/?page=3"]}>
-        <NavigationContext.Provider
-          value={{
-            navigationHistory: ["/"],
-            navigationIndex: 0,
-            setNavigationHistory,
-            setNavigationIndex: vi.fn(),
-          }}
-        >
-          <LandingDisplay />
-        </NavigationContext.Provider>
-      </MemoryRouter>,
-    );
-
-    expect(setNavigationHistory).toHaveBeenCalledWith(["/?page=3"]);
   });
 
   it("sets query search param after the user stops typing", async () => {
