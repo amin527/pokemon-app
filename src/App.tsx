@@ -20,7 +20,7 @@ function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<LandingDisplay />} />
             <Route path="/pokemon/:id" element={<PokemonDetailsRoute />} />
-            <Route path="*" element={<NotFound />}/>
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </ThemeContext.Provider>
