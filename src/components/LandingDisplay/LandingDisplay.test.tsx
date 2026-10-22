@@ -8,7 +8,6 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import { MemoryRouter, useSearchParams } from "react-router";
 import { getPokemonCount } from "../../functions/API/getPokemonCount";
 import userEvent from "@testing-library/user-event";
-import { NavigationContext } from "../../contexts/NavigationContext";
 
 vi.mock("../../functions/API/getPokemonCount");
 vi.mock("../../hooks/useComponentWidth");
@@ -40,7 +39,7 @@ class MockImage {
 describe("LandingDisplay", () => {
   beforeEach(() => {
     vi.stubGlobal("Image", MockImage);
-});
+  });
 
   afterEach(() => {
     cleanup();

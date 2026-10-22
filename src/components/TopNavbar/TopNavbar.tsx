@@ -13,12 +13,13 @@ function TopNavbar() {
   const settingsRef = useRef<HTMLDivElement>(null);
   const { theme } = useContext(ThemeContext);
   const navigate = useNavigate();
-  const location = useLocation()
-  const navigationType = useNavigationType();
   const idx: number = window.history.state?.idx ?? 0;
-  const [furthestIdx, setFurthestIdx] = useState(idx)
+  const [furthestIdx, setFurthestIdx] = useState(idx);
+  const location = useLocation();
+  const [prevLocationKey, setPrevLocationKey] = useState(location.key);
   const isBackDisabled = idx === 0;
   const isForwardDisabled = idx === furthestIdx;
+  const navigationType = useNavigationType();
 
   function handleDropDownVisibility() {
     if (settingsDropDownIsVisible) {
@@ -29,24 +30,23 @@ function TopNavbar() {
   }
 
   function handleBackClick() {
-    if (!isBackDisabled){
+    if (!isBackDisabled) {
       navigate(-1);
     }
   }
 
   function handleForwardClick() {
-    if (!isForwardDisabled){
+    if (!isForwardDisabled) {
       navigate(+1);
     }
   }
 
-  useEffect(() => {
-    if (navigationType === "PUSH"){
-      setFurthestIdx(idx);
-    } else {
-      setFurthestIdx((prev) => Math.max(idx, prev))
-    }
-  }, [location])
+  if (location.key !== prevLocationKey) {
+    setPrevLocationKey(location.key);
+    setFurthestIdx(
+      navigationType === "PUSH" ? idx : Math.max(idx, furthestIdx),
+    );
+  }
 
   useEffect(() => {
     function handleClickOnScreen(event: MouseEvent) {

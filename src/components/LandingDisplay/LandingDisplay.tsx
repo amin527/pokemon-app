@@ -28,7 +28,6 @@ function LandingDisplay() {
   const [searchError, setSearchError] = useState<string | null>(null);
   const [totalPokemon, setTotalPokemon] = useState<number | null>(null);
 
-
   const { theme } = useContext(ThemeContext);
   const pokemonGridComponent = useRef(null);
   const pokemonGridWidth = useComponentWidth({
@@ -115,7 +114,6 @@ function LandingDisplay() {
 
     setSearchParams(newParams);
   }
-
 
   useEffect(() => {
     if (totalPages != null && currentPage > totalPages) {

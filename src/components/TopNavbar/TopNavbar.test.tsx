@@ -10,7 +10,6 @@ describe("TopNavbar", () => {
     cleanup();
   });
 
-
   it("Displays navbar component", () => {
     render(
       <MemoryRouter>
@@ -59,7 +58,7 @@ describe("TopNavbar", () => {
     const theme: string = "dark";
     render(
       <MemoryRouter>
-        <ThemeContext.Provider value={{ theme, setTheme: () => { } }}>
+        <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
           <TopNavbar />
         </ThemeContext.Provider>
         ,
@@ -72,7 +71,7 @@ describe("TopNavbar", () => {
     const theme: string = "light";
     render(
       <MemoryRouter>
-        <ThemeContext.Provider value={{ theme, setTheme: () => { } }}>
+        <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
           <TopNavbar />
         </ThemeContext.Provider>
         ,
@@ -108,14 +107,14 @@ describe("TopNavbar", () => {
     const user = userEvent.setup();
 
     render(
-      <BrowserRouter >
+      <BrowserRouter>
         <TopNavbar />
         <Link to="/pokemon/5">Go to details</Link>
         <Routes>
           <Route path="/" element={<div>Landing Page</div>} />
           <Route path="/pokemon/:id" element={<div>Pokemon Details</div>} />
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter>,
     );
     await user.click(screen.getByText("Go to details"));
     await user.click(screen.getByTestId("navigation-button-previous"));
@@ -124,5 +123,4 @@ describe("TopNavbar", () => {
     await user.click(screen.getByTestId("navigation-button-next"));
     expect(await screen.findByText("Pokemon Details")).toBeInTheDocument();
   });
-
 });

@@ -1,4 +1,3 @@
-import TopNavbar from "../TopNavbar/TopNavbar";
 import PokemonCard from "../PokemonCard/PokemonCard";
 
 import { useParams } from "react-router";
