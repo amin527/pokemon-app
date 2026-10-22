@@ -1,0 +1,53 @@
+.not-found {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.not-found--dark {
+  background-color: var(--background-color-dark);
+}
+
+.not-found--light {
+  background-color: var(--background-color);
+}
+
+.not-found-message {
+  display: inline-block;
+  padding-top: 100px;
+  font-size: 2em;
+  font-weight: bolder;
+}
+
+.not-found-message--dark {
+  color: white;
+}
+
+.not-found-message--light {
+  color: black;
+}
+
+.back-to-home-button {
+  all: unset;
+  cursor: pointer;
+  display: inline-block;
+  padding-top: 10px;
+  font-weight: bolder;
+}
+
+.back-to-home-button--dark {
+  color: var(--secondary-color-dark);
+}
+
+.back-to-home-button--dark:hover {
+  color: var(--primary-accent-color-dark);
+}
+
+.back-to-home-button--light {
+  color: var(--secondary-color);
+}
+
+.back-to-home-button--light:hover {
+  color: var(--primary-accent-color);
+}

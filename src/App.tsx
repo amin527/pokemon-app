@@ -6,6 +6,7 @@ import { PokemonDetailsRoute } from "./components/PokemonDetailsRoute/PokemonDet
 import LandingDisplay from "./components/LandingDisplay/LandingDisplay";
 import "./App.css";
 import Layout from "./components/Layout/Layout";
+import NotFound from "./components/NotFound/NotFound";
 
 function App() {
   const [theme, setTheme] = useState<string>(() => {
@@ -19,6 +20,7 @@ function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<LandingDisplay />} />
             <Route path="/pokemon/:id" element={<PokemonDetailsRoute />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </ThemeContext.Provider>
