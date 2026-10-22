@@ -5,17 +5,20 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import ButtonWithText from "../ButtonWithText/ButtonWithText";
 import ButtonWithIcon from "../ButtonWithIcon/ButtonWithIcon";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useNavigate } from "react-router";
-import { NavigationContext } from "../../contexts/NavigationContext";
+import { useLocation, useNavigate, useNavigationType } from "react-router";
 
 function TopNavbar() {
   const [settingsDropDownIsVisible, setSettingsDropDownIsVisible] =
     useState(false);
   const settingsRef = useRef<HTMLDivElement>(null);
   const { theme } = useContext(ThemeContext);
-  const { navigationHistory, navigationIndex, setNavigationIndex } =
-    useContext(NavigationContext);
   const navigate = useNavigate();
+  const location = useLocation()
+  const navigationType = useNavigationType();
+  const idx: number = window.history.state?.idx ?? 0;
+  const [furthestIdx, setFurthestIdx] = useState(idx)
+  const isBackDisabled = idx === 0;
+  const isForwardDisabled = idx === furthestIdx;
 
   function handleDropDownVisibility() {
     if (settingsDropDownIsVisible) {
@@ -26,20 +29,24 @@ function TopNavbar() {
   }
 
   function handleBackClick() {
-    if (navigationIndex > 0) {
-      const newIndex = navigationIndex - 1;
-      setNavigationIndex(newIndex);
-      navigate(navigationHistory[newIndex]);
+    if (!isBackDisabled){
+      navigate(-1);
     }
   }
 
   function handleForwardClick() {
-    if (navigationIndex < navigationHistory.length - 1) {
-      const newIndex = navigationIndex + 1;
-      setNavigationIndex(newIndex);
-      navigate(navigationHistory[newIndex]);
+    if (!isForwardDisabled){
+      navigate(+1);
     }
   }
+
+  useEffect(() => {
+    if (navigationType === "PUSH"){
+      setFurthestIdx(idx);
+    } else {
+      setFurthestIdx((prev) => Math.max(idx, prev))
+    }
+  }, [location])
 
   useEffect(() => {
     function handleClickOnScreen(event: MouseEvent) {
@@ -64,13 +71,13 @@ function TopNavbar() {
       <div className="navigation-buttons">
         <ButtonWithIcon
           data-testid="navigation-button-previous"
-          className={`button-with-icon-nav ${navigationIndex == 0 ? "button-with-icon-gray" : ""}`}
+          className={`button-with-icon-nav ${isBackDisabled ? "button-with-icon-gray" : ""}`}
           icon={<ChevronLeft />}
           handleClick={handleBackClick}
         />
         <ButtonWithIcon
           data-testid="navigation-button-next"
-          className={`button-with-icon-nav ${navigationIndex == navigationHistory.length - 1 ? "button-with-icon-gray" : ""}`}
+          className={`button-with-icon-nav ${isForwardDisabled ? "button-with-icon-gray" : ""}`}
           icon={<ChevronRight />}
           handleClick={handleForwardClick}
         />
