@@ -53,7 +53,6 @@ function PokemonDetails() {
       data-testid="pokemon-details-component"
       className={`pokemon-details-component ${theme == "light" ? "" : "pokemon-details-component--dark"}`}
     >
-      <TopNavbar />
       {!isLoading ? (
         <>
           {pokemon && (

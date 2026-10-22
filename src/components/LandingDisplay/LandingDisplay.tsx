@@ -181,7 +181,6 @@ function LandingDisplay() {
       className={`landing-display ${theme == "light" ? "" : "landing-display--dark"}`}
       data-testid="landing-display"
     >
-      <TopNavbar />
       <PokemonSearch
         error={displayedError}
         searchTerm={searchTerm}

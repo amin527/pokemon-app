@@ -6,6 +6,8 @@ import { PokemonDetailsRoute } from "./components/PokemonDetailsRoute/PokemonDet
 
 import LandingDisplay from "./components/LandingDisplay/LandingDisplay";
 import "./App.css";
+import Layout from "./components/Layout/Layout";
+
 
 function App() {
   const [theme, setTheme] = useState<string>(() => {
@@ -27,8 +29,10 @@ function App() {
           }}
         >
           <Routes>
-            <Route path="/" element={<LandingDisplay />} />
-            <Route path="/pokemon/:id" element={<PokemonDetailsRoute />} />
+            <Route element={<Layout/>}>
+              <Route path="/" element={<LandingDisplay />} />
+              <Route path="/pokemon/:id" element={<PokemonDetailsRoute />} />
+            </Route>
           </Routes>
         </NavigationContext.Provider>
       </ThemeContext.Provider>
