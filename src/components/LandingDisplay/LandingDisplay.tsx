@@ -21,23 +21,38 @@ import { getPokemonCount } from "../../functions/API/getPokemonCount";
 import { parsePage } from "../../functions/parsePage";
 
 function LandingDisplay() {
-  const [pokemon, setPokemon] = useState<Pokemon[]>([]);
-  const [searchResult, setSearchResult] = useState<Pokemon | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [searchError, setSearchError] = useState<string | null>(null);
-  const [totalPokemon, setTotalPokemon] = useState<number | null>(null);
-
-  const { theme } = useContext(ThemeContext);
+  const [searchParams, setSearchParams] = useSearchParams();
   const pokemonGridComponent = useRef(null);
+  const { theme } = useContext(ThemeContext);
+
   const pokemonGridWidth = useComponentWidth({
     component: pokemonGridComponent,
   });
+  const pokemonFetchSize =
+    pokemonGridWidth > 0
+      ? calculatePokemonFetchSize(
+          pokemonGridWidth - 2 * POKEMON_GRID_HORIZONTAL_MARGIN,
+        )
+      : 0;
 
-  const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parsePage(searchParams.get("page"));
   const query = searchParams.get("query");
+
+  const requestKey = `${currentPage}-${pokemonFetchSize}`;
+  const [result, setResult] = useState<{
+    key: string;
+    pokemon: Pokemon[];
+    error: string | null;
+  } | null>(null);
+
+  const isLoading = result?.key !== requestKey;
+  const error = isLoading ? null : result.error;
+  const pokemon = result?.pokemon ?? [];
+  const [totalPokemon, setTotalPokemon] = useState<number | null>(null);
+
   const normalisedQuery = (query ?? "").trim().toLowerCase();
+  const [searchResult, setSearchResult] = useState<Pokemon | null>(null);
+  const [searchError, setSearchError] = useState<string | null>(null);
   const displayedResult = normalisedQuery ? searchResult : null;
   const displayedError = normalisedQuery ? searchError : error;
   const [searchTerm, setSearchTerm] = useState(query ?? "");
@@ -48,13 +63,6 @@ function LandingDisplay() {
     setSearchTerm(query ?? "");
   }
 
-  const pokemonFetchSize =
-    pokemonGridWidth > 0
-      ? calculatePokemonFetchSize(
-          pokemonGridWidth - 2 * POKEMON_GRID_HORIZONTAL_MARGIN,
-        )
-      : 0;
-
   const totalPages =
     totalPokemon !== null && pokemonFetchSize > 0
       ? Math.ceil(totalPokemon / pokemonFetchSize)
@@ -62,14 +70,12 @@ function LandingDisplay() {
 
   function handleNext() {
     if (totalPages !== null && currentPage < totalPages) {
-      setIsLoading(true);
       goToPage(currentPage + 1);
     }
   }
 
   function handlePrevious() {
     if (currentPage > 1) {
-      setIsLoading(true);
       goToPage(currentPage - 1);
     }
   }
@@ -140,13 +146,27 @@ function LandingDisplay() {
 
   useEffect(() => {
     if (pokemonFetchSize === 0) return;
-    loadPokemon({
-      pokemonFetchSize,
-      currentPage,
-      setError,
-      setPokemon,
-      setIsLoading,
-    });
+    const controller = new AbortController();
+    const { signal } = controller;
+    const key = `${currentPage}-${pokemonFetchSize}`;
+
+    const run = async () => {
+      try {
+        const pokemonSet = await loadPokemon({
+          pokemonFetchSize,
+          currentPage,
+          signal,
+        });
+        if (signal.aborted) return;
+        setResult({ key, pokemon: pokemonSet, error: null });
+      } catch {
+        if (signal.aborted) return;
+        setResult({ key, pokemon: [], error: "Failed to load Pokémon" });
+      }
+    };
+
+    run();
+    return () => controller.abort();
   }, [currentPage, pokemonFetchSize]);
 
   return (

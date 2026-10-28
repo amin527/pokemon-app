@@ -6,17 +6,23 @@ import { formatPokemon } from "./formatPokemon";
 type fetchPokemonProps = {
   pokemonFetchSize: number;
   offset: number;
+  signal?: AbortSignal;
 };
 
 export async function fetchPokemon({
   pokemonFetchSize,
   offset,
+  signal,
 }: fetchPokemonProps): Promise<Pokemon[]> {
-  const pokemonListBasic = await getPokemonList(pokemonFetchSize, offset);
+  const pokemonListBasic = await getPokemonList(
+    pokemonFetchSize,
+    offset,
+    signal,
+  );
 
   const pokemonListDetailed = await Promise.all(
     pokemonListBasic.results.map((pokemonBasic) =>
-      getPokemon(pokemonBasic.name),
+      getPokemon(pokemonBasic.name, signal),
     ),
   );
 
