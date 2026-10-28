@@ -15,9 +15,11 @@ type PokemonListItem = {
 export async function getPokemonList(
   limit: number,
   offset: number,
+  signal?: AbortSignal,
 ): Promise<pokemonListResponse> {
   const response = await fetch(
     `${POKEAPI_BASE_URL}/pokemon?limit=${limit}&offset=${offset}`,
+    { signal },
   );
 
   if (!response.ok) {

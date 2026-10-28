@@ -7,43 +7,32 @@ const MIN_LOADING_TIME = 600;
 type loadPokemonProps = {
   pokemonFetchSize: number;
   currentPage: number;
-  setError: (value: string) => void;
-  setPokemon: (value: Pokemon[]) => void;
-  setIsLoading: (value: boolean) => void;
+  signal?: AbortSignal;
 };
 
 export async function loadPokemon({
   pokemonFetchSize,
   currentPage,
-  setError,
-  setPokemon,
-  setIsLoading,
-}: loadPokemonProps) {
+  signal,
+}: loadPokemonProps): Promise<Pokemon[]> {
   const offset = (currentPage - 1) * pokemonFetchSize;
 
-  try {
-    const minimumDelay = new Promise((resolve) =>
-      setTimeout(resolve, MIN_LOADING_TIME),
+  const minimumDelay = new Promise((resolve) =>
+    setTimeout(resolve, MIN_LOADING_TIME),
+  );
+
+  const loadedPokemonSet = async () => {
+    const pokemonSet = await fetchPokemon({ pokemonFetchSize, offset, signal });
+
+    await Promise.all(
+      pokemonSet.map((pokemon) =>
+        pokemon.image ? preloadImage(pokemon.image) : Promise.resolve(),
+      ),
     );
 
-    const loadedPokemonSet = async () => {
-      const pokemonSet = await fetchPokemon({ pokemonFetchSize, offset });
+    return pokemonSet;
+  };
 
-      await Promise.all(
-        pokemonSet.map((pokemon) =>
-          pokemon.image ? preloadImage(pokemon.image) : Promise.resolve(),
-        ),
-      );
-
-      return pokemonSet;
-    };
-
-    const [pokemonSet] = await Promise.all([loadedPokemonSet(), minimumDelay]);
-
-    setPokemon(pokemonSet);
-  } catch {
-    setError("Failed to load Pokémon");
-  } finally {
-    setIsLoading(false);
-  }
+  const [pokemonSet] = await Promise.all([loadedPokemonSet(), minimumDelay]);
+  return pokemonSet;
 }
