@@ -1,4 +1,5 @@
 import type { getPokemonResponse } from "../../types/getPokemonResponse";
+import { HttpError } from "./HttpError";
 
 const POKEAPI_BASE_URL = "https://pokeapi.co/api/v2";
 
@@ -11,7 +12,7 @@ export async function getPokemon(
   });
 
   if (!response.ok) {
-    throw new Error("Failed to fetch Pokémon");
+    throw new HttpError(response.status, "Failed to fetch Pokémon");
   }
 
   const data = await response.json();
