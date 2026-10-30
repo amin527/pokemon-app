@@ -1,45 +1,26 @@
 import { cleanup, render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { MemoryRouter, Route, Routes } from "react-router";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import PokemonDetails from "./PokemonDetails";
-import { loadDetailedPokemon } from "../../functions/loadDetailedPokemon";
-import { loadSimilarPokemon } from "../../functions/loadSimilarPokemon";
-import { preloadImage } from "../../functions/preloadImage";
 import type { Pokemon } from "../../types/Pokemon";
 import type { DetailedPokemon } from "../../types/DetailedPokemon";
 import { NavigationContext } from "../../contexts/NavigationContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { loadDetailPage } from "../../functions/loadDetailPage";
 
-vi.mock("../../functions/loadDetailedPokemon");
-vi.mock("../../functions/loadSimilarPokemon");
-vi.mock("../../functions/preloadImage");
+vi.mock("../../functions/loadDetailPage");
 
 describe("PokemonDetails", () => {
+  beforeEach(() => {
+    vi.mocked(loadDetailPage).mockResolvedValue({ pokemon, similarPokemon });
+  });
+
   afterEach(() => {
     cleanup();
   });
 
-  const renderPokemonDetails = (
-    theme: string = "light",
-    loaded: boolean = true,
-  ) => {
-    if (loaded) {
-      vi.mocked(loadDetailedPokemon).mockImplementation(
-        async ({ setPokemon }) => {
-          setPokemon(pokemon);
-        },
-      );
-
-      vi.mocked(loadSimilarPokemon).mockImplementation(
-        async ({ setSimilarPokemon }) => {
-          setSimilarPokemon(similarPokemon);
-        },
-      );
-
-      vi.mocked(preloadImage).mockResolvedValue(undefined);
-    }
-
+  const renderPokemonDetails = (theme: string = "light") => {
     render(
       <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
         <NavigationContext.Provider
@@ -51,7 +32,9 @@ describe("PokemonDetails", () => {
           }}
         >
           <MemoryRouter initialEntries={["/pokemon/5"]}>
-            <PokemonDetails />
+            <Routes>
+              <Route path="/pokemon/:id" element={<PokemonDetails />} />
+            </Routes>
           </MemoryRouter>
         </NavigationContext.Provider>
       </ThemeContext.Provider>,
@@ -220,7 +203,7 @@ describe("PokemonDetails", () => {
   });
 
   it("applies the dark colour formatting to the loading state when the application theme is dark", () => {
-    renderPokemonDetails("dark", false);
+    renderPokemonDetails("dark");
 
     expect(screen.getByTestId("pokemon-details-component-content")).toHaveClass(
       "pokemon-details-component__content--dark",
@@ -228,7 +211,7 @@ describe("PokemonDetails", () => {
   });
 
   it("applies the light colour formatting to the loading state when the application theme is light", () => {
-    renderPokemonDetails("light", false);
+    renderPokemonDetails("light");
 
     expect(
       screen.getByTestId("pokemon-details-component-content"),
