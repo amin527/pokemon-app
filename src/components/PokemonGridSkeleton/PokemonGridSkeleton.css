@@ -4,6 +4,7 @@
   min-width: 0;
   box-sizing: border-box;
   overflow: hidden;
+  border-radius: 12px;
 }
 
 .pokemon-card-skeleton__artwork {
