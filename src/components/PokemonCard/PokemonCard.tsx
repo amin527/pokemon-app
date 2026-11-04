@@ -4,9 +4,17 @@ import { useThemeStore } from "../../stores/useThemeStore";
 import { Link } from "react-router";
 import type { Pokemon } from "../../types/Pokemon";
 import { NavigationContext } from "../../contexts/NavigationContext";
+import { Heart } from "lucide-react";
+import { useFavouritePokemon } from "../../stores/useFavouritePokemon";
 
 function PokemonCard({ id, name, image, types }: Pokemon) {
   const theme = useThemeStore((store) => store.theme);
+  const isFavouritePokemon = useFavouritePokemon((store) =>
+    store.favouritePokemon.includes(id),
+  );
+  const toggleFavouritePokemon = useFavouritePokemon(
+    (store) => store.toggleFavouritePokemon,
+  );
   const {
     navigationHistory,
     setNavigationHistory,
@@ -23,45 +31,60 @@ function PokemonCard({ id, name, image, types }: Pokemon) {
   }
 
   return (
-    <Link
-      to={`/pokemon/${id}`}
-      onClick={handleClick}
-      className="pokemon-card-link"
-    >
-      <div
-        className={`pokemon-card ${theme == "light" ? "" : "pokemon-card--dark"}`}
-        data-testid="pokemon-card"
+    <div className="pokemon-card-component">
+      <Link
+        to={`/pokemon/${id}`}
+        onClick={handleClick}
+        className="pokemon-card-link"
       >
-        <img className="pokemon-card__artwork" src={image} alt={name} />
         <div
-          data-testid="pokemon-card-display"
-          className="pokemon-card-display"
+          className={`pokemon-card ${theme == "light" ? "" : "pokemon-card--dark"}`}
+          data-testid="pokemon-card"
         >
-          <div className="pokemon-card-display__name">
-            {name.charAt(0).toUpperCase() + name.slice(1)}
-          </div>
-          {/* <div className="pokemon-card-display__id">#{id}</div> */}
-        </div>
-        <div className="pokemon-card__info" data-testid="pokemon-card-info">
-          <div className="pokemon-card__name-and-id">
-            <div className="pokemon-card-info__name">
-              <strong>Name: </strong>
+          <img className="pokemon-card__artwork" src={image} alt={name} />
+          <div
+            data-testid="pokemon-card-display"
+            className="pokemon-card-display"
+          >
+            <div className="pokemon-card-display__name">
               {name.charAt(0).toUpperCase() + name.slice(1)}
             </div>
-            <div className="pokemon-card-info__id">ID: {id}</div>
+            {/* <div className="pokemon-card-display__id">#{id}</div> */}
           </div>
-          <div className="pokemon-card-info__types">
-            <strong>Types:</strong>{" "}
-            {types.map((type, index) => (
-              <span key={type}>
-                {type.charAt(0).toUpperCase() + type.slice(1)}
-                {index < types.length - 1 ? ", " : ""}
-              </span>
-            ))}
+          <div className="pokemon-card__info" data-testid="pokemon-card-info">
+            <div className="pokemon-card__name-and-id">
+              <div className="pokemon-card-info__name">
+                <strong>Name: </strong>
+                {name.charAt(0).toUpperCase() + name.slice(1)}
+              </div>
+              <div className="pokemon-card-info__id">ID: {id}</div>
+            </div>
+            <div className="pokemon-card-info__types">
+              <strong>Types:</strong>{" "}
+              {types.map((type, index) => (
+                <span key={type}>
+                  {type.charAt(0).toUpperCase() + type.slice(1)}
+                  {index < types.length - 1 ? ", " : ""}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+      <button
+        type="button"
+        className={`pokemon-card-favourite ${theme == "light" ? "" : "pokemon-card-favourite--dark"} ${isFavouritePokemon ? "pokemon-card-favourite--active" : ""}`}
+        aria-label={
+          isFavouritePokemon
+            ? `Remove ${name} from favourites`
+            : `Add ${name} to favourites`
+        }
+        aria-pressed={isFavouritePokemon}
+        onClick={() => toggleFavouritePokemon(id)}
+      >
+        <Heart size={20} aria-hidden="true" />
+      </button>
+    </div>
   );
 }
 export default PokemonCard;
