@@ -19,7 +19,42 @@ describe("Pagination", () => {
         onNext={vi.fn()}
       />,
     );
-    expect(screen.getByText("2 of 10")).toBeInTheDocument();
+    expect(screen.getByText("Page 2 of 10")).toBeInTheDocument();
+  });
+
+  it("gives the page buttons accessible names", () => {
+    render(
+      <Pagination
+        currentPage={2}
+        totalPages={10}
+        onPrevious={vi.fn()}
+        onNext={vi.fn()}
+      />,
+    );
+    expect(
+      screen.getByRole("button", { name: "Previous page" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Next page" }),
+    ).toBeInTheDocument();
+  });
+
+  it("marks the previous button as disabled on the first page", () => {
+    render(
+      <Pagination
+        currentPage={1}
+        totalPages={10}
+        onPrevious={vi.fn()}
+        onNext={vi.fn()}
+      />,
+    );
+    expect(
+      screen.getByRole("button", { name: "Previous page" }),
+    ).toHaveAttribute("aria-disabled", "true");
+    expect(screen.getByRole("button", { name: "Next page" })).toHaveAttribute(
+      "aria-disabled",
+      "false",
+    );
   });
 
   it("calls onNext when the next button is clicked", () => {

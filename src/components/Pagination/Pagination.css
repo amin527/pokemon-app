@@ -1,52 +1,17 @@
 .pagination {
-  position: absolute;
-  bottom: 15px;
-  background-color: var(--primary-color);
-  border-radius: 15px;
   display: flex;
-  justify-self: center;
-  margin-top: 20px;
+  align-items: center;
+  gap: 8px;
 }
-.pagination--dark {
-  background-color: var(--primary-color-dark);
-}
-/* ----------------------------------- */
-.pagination__button {
-  all: unset;
-  display: flex;
-  border-radius: 15px;
-  background-color: var(--secondary-color);
-  padding: 2px 6px;
-}
-.pagination__button--dark {
-  background-color: var(--secondary-color-dark);
-}
-.pagination__button:hover {
-  background-color: var(--primary-accent-color);
-  cursor: pointer;
-}
-.pagination__button--dark:hover {
-  background-color: var(--primary-accent-color-dark);
-  cursor: pointer;
-}
-.pagination__button--next {
-  margin-left: 10px;
-}
-.pagination__button--previous {
-  margin-right: 10px;
-}
-/* ----------------------------------- */
-.pagination__icon {
-  border-radius: 50%;
-}
-.pagination__icon--previous {
-  padding-right: 2px;
-}
-.pagination__icon--next {
-  padding-left: 2px;
-}
-/* ----------------------------------- */
+
 .pagination__text {
-  padding-top: 3px;
-  margin: 0px 5px;
+  /* Fixed-width digits and a minimum width stop the arrows
+     shifting when the page number changes length */
+  min-width: 7.5em;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.pagination--dark .pagination__text {
+  color: white;
 }

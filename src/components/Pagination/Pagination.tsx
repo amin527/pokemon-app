@@ -17,33 +17,35 @@ function Pagination({
   onNext,
 }: PaginationProps) {
   const theme = useThemeStore((store) => store.theme);
+  const isFirstPage = currentPage == 1;
+  const isLastPage = currentPage == totalPages;
 
   return (
-    <div
+    <nav
       className={`pagination ${theme == "light" ? "" : "pagination--dark"}`}
       data-testid="pagination"
+      aria-label="Pagination"
     >
       <ButtonWithIcon
         data-testid="pagination-button-previous"
-        icon={
-          <ChevronLeft className="pagination__icon pagination__icon--previous" />
-        }
+        aria-label="Previous page"
+        aria-disabled={isFirstPage}
+        icon={<ChevronLeft aria-hidden="true" />}
         handleClick={onPrevious}
-        className={currentPage == 1 ? "button-with-icon-gray" : ""}
+        className={`button-with-icon-nav ${isFirstPage ? "button-with-icon-gray" : ""}`}
       />
-
-      <span className="pagination__text">
-        {currentPage} of {totalPages}
+      <span className="pagination__text" aria-live="polite">
+        Page {currentPage} of {totalPages}
       </span>
       <ButtonWithIcon
         data-testid="pagination-button-next"
-        icon={
-          <ChevronRight className="pagination__icon pagination__icon--next" />
-        }
+        aria-label="Next page"
+        aria-disabled={isLastPage}
+        icon={<ChevronRight aria-hidden="true" />}
         handleClick={onNext}
-        className={currentPage == totalPages ? "button-with-icon-gray" : ""}
+        className={`button-with-icon-nav ${isLastPage ? "button-with-icon-gray" : ""}`}
       />
-    </div>
+    </nav>
   );
 }
 export default Pagination;
