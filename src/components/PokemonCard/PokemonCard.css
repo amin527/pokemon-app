@@ -60,6 +60,68 @@
   all: unset;
 }
 
+.pokemon-card-component {
+  position: relative;
+}
+
+.pokemon-card-favourite {
+  all: unset;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  cursor: pointer;
+  color: black;
+  background-color: color-mix(in srgb, var(--primary-color) 85%, transparent);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.15);
+}
+
+.pokemon-card-favourite svg {
+  display: block;
+}
+
+.pokemon-card-favourite:hover {
+  background-color: var(--secondary-color);
+}
+
+.pokemon-card-favourite:focus-visible {
+  outline: 3px solid black;
+  outline-offset: 2px;
+}
+
+.pokemon-card-favourite--dark {
+  color: white;
+  background-color: color-mix(
+    in srgb,
+    var(--primary-color-dark) 85%,
+    transparent
+  );
+}
+
+.pokemon-card-favourite--dark:hover {
+  background-color: var(--secondary-color-dark);
+}
+
+.pokemon-card-favourite--dark:focus-visible {
+  outline-color: white;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pokemon-card-favourite {
+    transition: transform 0.1s ease;
+  }
+
+  .pokemon-card-favourite:active {
+    transform: scale(0.9);
+  }
+}
+
 .pokemon-card__name-and-id {
   width: 100%;
   display: flex;
