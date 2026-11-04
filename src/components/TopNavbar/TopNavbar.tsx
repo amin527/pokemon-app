@@ -57,34 +57,46 @@ function TopNavbar() {
         setSettingsDropDownIsVisible(false);
       }
     }
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setSettingsDropDownIsVisible(false);
+      }
+    }
     window.addEventListener("click", handleClickOnScreen);
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("click", handleClickOnScreen);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
   return (
-    <div
+    <header
       className={`top-navbar ${theme == "light" ? "" : "top-navbar--dark"}`}
       data-testid="top-navbar"
     >
-      <div className="navigation-buttons">
+      <nav className="navigation-buttons" aria-label="Page history">
         <ButtonWithIcon
           data-testid="navigation-button-previous"
+          aria-label="Go back"
+          aria-disabled={isBackDisabled}
           className={`button-with-icon-nav ${isBackDisabled ? "button-with-icon-gray" : ""}`}
-          icon={<ChevronLeft />}
+          icon={<ChevronLeft aria-hidden="true" />}
           handleClick={handleBackClick}
         />
         <ButtonWithIcon
           data-testid="navigation-button-next"
+          aria-label="Go forward"
+          aria-disabled={isForwardDisabled}
           className={`button-with-icon-nav ${isForwardDisabled ? "button-with-icon-gray" : ""}`}
-          icon={<ChevronRight />}
+          icon={<ChevronRight aria-hidden="true" />}
           handleClick={handleForwardClick}
         />
-      </div>
+      </nav>
       <div className="settings-container" ref={settingsRef}>
         <ButtonWithText
           text="Settings"
+          aria-expanded={settingsDropDownIsVisible}
           handleClick={() => {
             handleDropDownVisibility();
           }}
@@ -93,7 +105,7 @@ function TopNavbar() {
           <DropDown setDropDownIsVisible={setSettingsDropDownIsVisible} />
         )}
       </div>
-    </div>
+    </header>
   );
 }
 export default TopNavbar;

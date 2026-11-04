@@ -54,6 +54,43 @@ describe("TopNavbar", () => {
     expect(screen.queryByTestId("drop-down")).not.toBeInTheDocument();
   });
 
+  it("gives the history buttons accessible names", () => {
+    render(
+      <MemoryRouter>
+        <TopNavbar />
+      </MemoryRouter>,
+    );
+    expect(screen.getByRole("button", { name: "Go back" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Go forward" }),
+    ).toBeInTheDocument();
+  });
+
+  it("reports whether the settings menu is open", async () => {
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter>
+        <TopNavbar />
+      </MemoryRouter>,
+    );
+    const settingsButton = screen.getByRole("button", { name: "Settings" });
+    expect(settingsButton).toHaveAttribute("aria-expanded", "false");
+    await user.click(settingsButton);
+    expect(settingsButton).toHaveAttribute("aria-expanded", "true");
+  });
+
+  it("hides the drop down menu when Escape is pressed", async () => {
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter>
+        <TopNavbar />
+      </MemoryRouter>,
+    );
+    await user.click(screen.getByRole("button", { name: "Settings" }));
+    await user.keyboard("{Escape}");
+    expect(screen.queryByTestId("drop-down")).not.toBeInTheDocument();
+  });
+
   it("applies the dark color formatting when the application theme is dark", () => {
     useThemeStore.setState({ theme: "dark" });
     render(

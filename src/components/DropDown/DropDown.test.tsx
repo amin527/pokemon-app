@@ -52,4 +52,17 @@ describe("DropDown", () => {
     const saved = JSON.parse(localStorage.getItem("theme-storage") ?? "{}");
     expect(saved.state.theme).toBe("dark");
   });
+
+  it("marks the current theme as selected", () => {
+    useThemeStore.setState({ theme: "dark" });
+    render(<DropDown setDropDownIsVisible={() => {}} />);
+    expect(screen.getByRole("button", { name: "Dark" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    expect(screen.getByRole("button", { name: "Light" })).toHaveAttribute(
+      "aria-pressed",
+      "false",
+    );
+  });
 });
