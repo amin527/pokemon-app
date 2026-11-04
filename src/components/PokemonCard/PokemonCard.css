@@ -112,6 +112,16 @@
   outline-color: white;
 }
 
+.pokemon-card-favourite--active svg {
+  fill: var(--primary-accent-color);
+  stroke: var(--primary-accent-color);
+}
+
+.pokemon-card-favourite--dark.pokemon-card-favourite--active svg {
+  fill: var(--primary-accent-color-dark);
+  stroke: var(--primary-accent-color-dark);
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .pokemon-card-favourite {
     transition: transform 0.1s ease;

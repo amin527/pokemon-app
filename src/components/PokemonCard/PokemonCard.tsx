@@ -5,9 +5,16 @@ import { Link } from "react-router";
 import type { Pokemon } from "../../types/Pokemon";
 import { NavigationContext } from "../../contexts/NavigationContext";
 import { Heart } from "lucide-react";
+import { useFavouritePokemon } from "../../stores/useFavouritePokemon";
 
 function PokemonCard({ id, name, image, types }: Pokemon) {
   const theme = useThemeStore((store) => store.theme);
+  const isFavouritePokemon = useFavouritePokemon((store) =>
+    store.favouritePokemon.includes(id),
+  );
+  const toggleFavouritePokemon = useFavouritePokemon(
+    (store) => store.toggleFavouritePokemon,
+  );
   const {
     navigationHistory,
     setNavigationHistory,
@@ -66,8 +73,14 @@ function PokemonCard({ id, name, image, types }: Pokemon) {
       </Link>
       <button
         type="button"
-        className={`pokemon-card-favourite ${theme == "light" ? "" : "pokemon-card-favourite--dark"}`}
-        aria-label={`Add ${name} to favourites`}
+        className={`pokemon-card-favourite ${theme == "light" ? "" : "pokemon-card-favourite--dark"} ${isFavouritePokemon ? "pokemon-card-favourite--active" : ""}`}
+        aria-label={
+          isFavouritePokemon
+            ? `Remove ${name} from favourites`
+            : `Add ${name} to favourites`
+        }
+        aria-pressed={isFavouritePokemon}
+        onClick={() => toggleFavouritePokemon(id)}
       >
         <Heart size={20} aria-hidden="true" />
       </button>
