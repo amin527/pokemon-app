@@ -164,13 +164,13 @@
 .pokemon-card__name {
   min-width: 0;
   overflow-wrap: anywhere;
-  font-size: 1rem;
+  font-size: var(--text-base);
   font-weight: 700;
 }
 
 .pokemon-card__id {
   flex-shrink: 0;
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   font-variant-numeric: tabular-nums;
   opacity: 0.75;
 }
@@ -185,7 +185,7 @@
 .pokemon-card__type {
   padding: 2px 8px;
   border-radius: 999px;
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   background-color: rgb(255 255 255 / 0.55);
 }
 

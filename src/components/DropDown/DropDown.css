@@ -16,7 +16,7 @@
 }
 
 .drop-down__label {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -51,7 +51,7 @@
   min-height: 40px;
   padding: 0 12px;
   border-radius: 8px;
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   color: black;
   cursor: pointer;
 }
