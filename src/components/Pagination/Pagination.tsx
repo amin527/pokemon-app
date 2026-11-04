@@ -1,7 +1,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import "./Pagination.css";
-import { useContext } from "react";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { useThemeStore } from "../../stores/useThemeStore";
 import ButtonWithIcon from "../ButtonWithIcon/ButtonWithIcon";
 
 type PaginationProps = {
@@ -17,7 +16,7 @@ function Pagination({
   onPrevious,
   onNext,
 }: PaginationProps) {
-  const { theme } = useContext(ThemeContext);
+  const theme = useThemeStore((store) => store.theme);
 
   return (
     <div

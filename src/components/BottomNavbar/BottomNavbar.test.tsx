@@ -1,7 +1,7 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import BottomNavbar from "./BottomNavbar";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { useThemeStore } from "../../stores/useThemeStore";
 
 describe("BottomNavbar", () => {
   afterEach(() => {
@@ -18,13 +18,11 @@ describe("BottomNavbar", () => {
   });
 
   it("applies the light color formatting when the application theme is light", () => {
-    const theme: string = "light";
+    useThemeStore.setState({ theme: "light" });
     render(
-      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-        <BottomNavbar>
-          <div>Child Component</div>
-        </BottomNavbar>
-      </ThemeContext.Provider>,
+      <BottomNavbar>
+        <div>Child Component</div>
+      </BottomNavbar>,
     );
     expect(screen.getByTestId("bottom-navbar")).not.toHaveClass(
       "bottom-navbar--dark",
@@ -32,13 +30,11 @@ describe("BottomNavbar", () => {
   });
 
   it("applies the light color formatting when the application theme is light", () => {
-    const theme: string = "light";
+    useThemeStore.setState({ theme: "light" });
     render(
-      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-        <BottomNavbar>
-          <div>Child Component</div>
-        </BottomNavbar>
-      </ThemeContext.Provider>,
+      <BottomNavbar>
+        <div>Child Component</div>
+      </BottomNavbar>,
     );
     expect(screen.getByTestId("bottom-navbar")).not.toHaveClass(
       "bottom-navbar--dark",

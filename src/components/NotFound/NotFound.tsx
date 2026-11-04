@@ -1,10 +1,9 @@
-import { useContext } from "react";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { useThemeStore } from "../../stores/useThemeStore";
 import "./NotFound.css";
 import { Link } from "react-router";
 
 function NotFound() {
-  const { theme } = useContext(ThemeContext);
+  const theme = useThemeStore((store) => store.theme);
   const notFoundClassName =
     theme === "dark"
       ? "not-found not-found--dark"

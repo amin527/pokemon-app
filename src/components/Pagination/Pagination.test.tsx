@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
 import { fireEvent, render, screen, cleanup } from "@testing-library/react";
 import Pagination from "./Pagination";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { useThemeStore } from "../../stores/useThemeStore";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 
@@ -114,16 +114,14 @@ describe("Pagination", () => {
   });
 
   it("applies the light colour formatting when the application theme is light", () => {
-    const theme: string = "light";
+    useThemeStore.setState({ theme: "light" });
     render(
-      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-        <Pagination
-          currentPage={10}
-          totalPages={10}
-          onPrevious={vi.fn()}
-          onNext={vi.fn()}
-        />
-      </ThemeContext.Provider>,
+      <Pagination
+        currentPage={10}
+        totalPages={10}
+        onPrevious={vi.fn()}
+        onNext={vi.fn()}
+      />,
     );
     expect(screen.getByTestId("pagination")).not.toHaveClass(
       "pagination--dark",
@@ -131,31 +129,27 @@ describe("Pagination", () => {
   });
 
   it("applies the dark colour formatting when the application theme is dark", () => {
-    const theme: string = "dark";
+    useThemeStore.setState({ theme: "dark" });
     render(
-      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-        <Pagination
-          currentPage={10}
-          totalPages={10}
-          onPrevious={vi.fn()}
-          onNext={vi.fn()}
-        />
-      </ThemeContext.Provider>,
+      <Pagination
+        currentPage={10}
+        totalPages={10}
+        onPrevious={vi.fn()}
+        onNext={vi.fn()}
+      />,
     );
     expect(screen.getByTestId("pagination")).toHaveClass("pagination--dark");
   });
 
   it("applies the dark colour formatting when the application theme is dark", () => {
-    const theme: string = "dark";
+    useThemeStore.setState({ theme: "dark" });
     render(
-      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-        <Pagination
-          currentPage={10}
-          totalPages={10}
-          onPrevious={vi.fn()}
-          onNext={vi.fn()}
-        />
-      </ThemeContext.Provider>,
+      <Pagination
+        currentPage={10}
+        totalPages={10}
+        onPrevious={vi.fn()}
+        onNext={vi.fn()}
+      />,
     );
     expect(screen.getByTestId("pagination-button-next")).toHaveClass(
       "button-with-icon--dark",
@@ -166,16 +160,14 @@ describe("Pagination", () => {
   });
 
   it("applies the dark colour formatting when the application theme is light", () => {
-    const theme: string = "light";
+    useThemeStore.setState({ theme: "light" });
     render(
-      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-        <Pagination
-          currentPage={10}
-          totalPages={10}
-          onPrevious={vi.fn()}
-          onNext={vi.fn()}
-        />
-      </ThemeContext.Provider>,
+      <Pagination
+        currentPage={10}
+        totalPages={10}
+        onPrevious={vi.fn()}
+        onNext={vi.fn()}
+      />,
     );
     expect(screen.getByTestId("pagination-button-next")).not.toHaveClass(
       "button-with-icon--dark",

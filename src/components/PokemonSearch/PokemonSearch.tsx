@@ -1,6 +1,5 @@
-import { useContext } from "react";
 import "./PokemonSearch.css";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { useThemeStore } from "../../stores/useThemeStore";
 
 interface PokemonSearchProps {
   searchTerm: string;
@@ -13,7 +12,7 @@ function PokemonSearch({
   onSearchTermChange,
   error,
 }: PokemonSearchProps) {
-  const { theme } = useContext(ThemeContext);
+  const theme = useThemeStore((store) => store.theme);
 
   return (
     <div className="pokemon-search">

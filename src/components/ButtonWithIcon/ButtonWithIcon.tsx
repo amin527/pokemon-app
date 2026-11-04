@@ -1,6 +1,5 @@
-import { useContext } from "react";
-import { ThemeContext } from "../../contexts/ThemeContext";
 import "./ButtonWithIcon.css";
+import { useThemeStore } from "../../stores/useThemeStore";
 
 type ButtonProps = {
   icon: React.ReactNode;
@@ -14,7 +13,7 @@ function ButtonWithIcon({
   className,
   ...props
 }: ButtonProps) {
-  const { theme } = useContext(ThemeContext);
+  const theme = useThemeStore((store) => store.theme);
 
   return (
     <button

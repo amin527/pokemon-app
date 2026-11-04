@@ -1,6 +1,5 @@
-import { useContext } from "react";
 import "./ButtonWithText.css";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { useThemeStore } from "../../stores/useThemeStore";
 
 type ButtonProps = {
   text: string;
@@ -8,7 +7,7 @@ type ButtonProps = {
 };
 
 function ButtonWithText({ text, handleClick }: ButtonProps) {
-  const { theme } = useContext(ThemeContext);
+  const theme = useThemeStore((store) => store.theme);
   return (
     <button
       className={`button-with-text ${theme == "light" ? "" : "button-with-text--dark"}`}
