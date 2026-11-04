@@ -2,7 +2,7 @@ import { cleanup, render, screen } from "@testing-library/react";
 import Button from "./ButtonWithText";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { useThemeStore } from "../../stores/useThemeStore";
 
 describe("ButtonWithText", () => {
   afterEach(() => {
@@ -23,24 +23,16 @@ describe("ButtonWithText", () => {
   });
 
   it("applies the light color formatting when the application theme is light", () => {
-    const theme: string = "light";
-    render(
-      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-        <Button text="" handleClick={() => {}}></Button>
-      </ThemeContext.Provider>,
-    );
+    useThemeStore.setState({ theme: "light" });
+    render(<Button text="" handleClick={() => {}}></Button>);
     expect(screen.getByRole("button")).not.toHaveClass(
       "button-with-text--dark",
     );
   });
 
   it("applies the dark color formatting when the application theme is dark", () => {
-    const theme: string = "dark";
-    render(
-      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-        <Button text="" handleClick={() => {}}></Button>
-      </ThemeContext.Provider>,
-    );
+    useThemeStore.setState({ theme: "dark" });
+    render(<Button text="" handleClick={() => {}}></Button>);
     expect(screen.getByRole("button")).toHaveClass("button-with-text--dark");
   });
 });

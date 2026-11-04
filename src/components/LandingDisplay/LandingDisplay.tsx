@@ -4,13 +4,13 @@ import PokemonSearch from "../PokemonSearch/PokemonSearch";
 import PokemonGridSkeleton from "../PokemonGridSkeleton/PokemonGridSkeleton";
 import BottomNavbar from "../BottomNavbar/BottomNavbar";
 
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { searchPokemon } from "../../functions/searchPokemon";
 import { loadPokemon } from "../../functions/loadPokemon";
 import { calculatePokemonFetchSize } from "../../functions/calculatePokemonFetchSize";
 import { useComponentWidth } from "../../hooks/useComponentWidth";
 import { POKEMON_GRID_HORIZONTAL_MARGIN } from "../../constants/PokemonGridConstants";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { useThemeStore } from "../../stores/useThemeStore";
 import type { Pokemon } from "../../types/Pokemon";
 import { useSearchParams } from "react-router";
 
@@ -23,7 +23,7 @@ import { parsePage } from "../../functions/parsePage";
 function LandingDisplay() {
   const [searchParams, setSearchParams] = useSearchParams();
   const pokemonGridComponent = useRef(null);
-  const { theme } = useContext(ThemeContext);
+  const theme = useThemeStore((store) => store.theme);
 
   const pokemonGridWidth = useComponentWidth({
     component: pokemonGridComponent,

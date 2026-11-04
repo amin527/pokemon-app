@@ -6,7 +6,7 @@ import PokemonDetails from "./PokemonDetails";
 import type { Pokemon } from "../../types/Pokemon";
 import type { DetailedPokemon } from "../../types/DetailedPokemon";
 import { NavigationContext } from "../../contexts/NavigationContext";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { useThemeStore } from "../../stores/useThemeStore";
 import { loadDetailPage } from "../../functions/loadDetailPage";
 
 vi.mock("../../functions/loadDetailPage");
@@ -20,24 +20,23 @@ describe("PokemonDetails", () => {
     cleanup();
   });
 
-  const renderPokemonDetails = (theme: string = "light") => {
+  const renderPokemonDetails = (theme: "light" | "dark" = "light") => {
+    useThemeStore.setState({ theme });
     render(
-      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-        <NavigationContext.Provider
-          value={{
-            navigationHistory: [],
-            setNavigationHistory: vi.fn(),
-            navigationIndex: 0,
-            setNavigationIndex: vi.fn(),
-          }}
-        >
-          <MemoryRouter initialEntries={["/pokemon/5"]}>
-            <Routes>
-              <Route path="/pokemon/:id" element={<PokemonDetails />} />
-            </Routes>
-          </MemoryRouter>
-        </NavigationContext.Provider>
-      </ThemeContext.Provider>,
+      <NavigationContext.Provider
+        value={{
+          navigationHistory: [],
+          setNavigationHistory: vi.fn(),
+          navigationIndex: 0,
+          setNavigationIndex: vi.fn(),
+        }}
+      >
+        <MemoryRouter initialEntries={["/pokemon/5"]}>
+          <Routes>
+            <Route path="/pokemon/:id" element={<PokemonDetails />} />
+          </Routes>
+        </MemoryRouter>
+      </NavigationContext.Provider>,
     );
   };
   const pokemon: DetailedPokemon = {

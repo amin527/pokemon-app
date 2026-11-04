@@ -1,7 +1,7 @@
 import "./TopNavbar.css";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import DropDown from "../DropDown/DropDown";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { useThemeStore } from "../../stores/useThemeStore";
 import ButtonWithText from "../ButtonWithText/ButtonWithText";
 import ButtonWithIcon from "../ButtonWithIcon/ButtonWithIcon";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -11,7 +11,7 @@ function TopNavbar() {
   const [settingsDropDownIsVisible, setSettingsDropDownIsVisible] =
     useState(false);
   const settingsRef = useRef<HTMLDivElement>(null);
-  const { theme } = useContext(ThemeContext);
+  const theme = useThemeStore((store) => store.theme);
   const navigate = useNavigate();
   const idx: number = window.history.state?.idx ?? 0;
   const [furthestIdx, setFurthestIdx] = useState(idx);

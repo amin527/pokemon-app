@@ -1,23 +1,22 @@
-import { useContext } from "react";
+import { useThemeStore } from "../../stores/useThemeStore";
 import ButtonWithText from "../ButtonWithText/ButtonWithText";
 import "./DropDown.css";
-import { ThemeContext } from "../../contexts/ThemeContext";
 
 type DropDownProps = {
   setDropDownIsVisible: (value: boolean) => void;
 };
 
 function DropDown({ setDropDownIsVisible }: DropDownProps) {
-  const { theme, setTheme } = useContext(ThemeContext);
+  const theme = useThemeStore((store) => store.theme);
+  const setTheme = useThemeStore((store) => store.setTheme);
+
   function applyDarkTheme() {
     setTheme("dark");
     setDropDownIsVisible(false);
-    localStorage.setItem("theme", "dark");
   }
   function applyLightTheme() {
     setTheme("light");
     setDropDownIsVisible(false);
-    localStorage.setItem("theme", "light");
   }
   return (
     <div

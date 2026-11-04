@@ -1,13 +1,12 @@
-import { useContext } from "react";
 import "./BottomNavbar.css";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { useThemeStore } from "../../stores/useThemeStore";
 
 type BottomNavbarProps = {
   children: React.ReactNode;
 };
 
 function BottomNavbar({ children }: BottomNavbarProps) {
-  const { theme } = useContext(ThemeContext);
+  const theme = useThemeStore((store) => store.theme);
 
   return (
     <div

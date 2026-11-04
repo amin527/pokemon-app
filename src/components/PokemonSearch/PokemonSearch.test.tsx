@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, cleanup } from "@testing-library/react";
 import { describe, expect, it, vi, afterEach } from "vitest";
 import PokemonSearch from "./PokemonSearch";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { useThemeStore } from "../../stores/useThemeStore";
 
 describe("PokemonSearch", () => {
   afterEach(() => {
@@ -45,11 +45,9 @@ describe("PokemonSearch", () => {
   });
 
   it("applies the light color formatting when the application theme is light", () => {
-    const theme: string = "light";
+    useThemeStore.setState({ theme: "light" });
     render(
-      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-        <PokemonSearch error={""} searchTerm="" onSearchTermChange={vi.fn()} />
-      </ThemeContext.Provider>,
+      <PokemonSearch error={""} searchTerm="" onSearchTermChange={vi.fn()} />,
     );
     expect(screen.getByTestId("pokemon-search-input-field")).not.toHaveClass(
       "pokemon-search__input-field--dark",
@@ -57,11 +55,9 @@ describe("PokemonSearch", () => {
   });
 
   it("applies the light color formatting when the application theme is light", () => {
-    const theme: string = "dark";
+    useThemeStore.setState({ theme: "dark" });
     render(
-      <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-        <PokemonSearch error={""} searchTerm="" onSearchTermChange={vi.fn()} />
-      </ThemeContext.Provider>,
+      <PokemonSearch error={""} searchTerm="" onSearchTermChange={vi.fn()} />,
     );
     expect(screen.getByTestId("pokemon-search-input-field")).toHaveClass(
       "pokemon-search__input-field--dark",

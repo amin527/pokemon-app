@@ -4,7 +4,7 @@ import LandingDisplay from "./LandingDisplay";
 import { fetchPokemon } from "../../functions/fetchPokemon";
 import { calculatePokemonFetchSize } from "../../functions/calculatePokemonFetchSize";
 import { useComponentWidth } from "../../hooks/useComponentWidth";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { useThemeStore } from "../../stores/useThemeStore";
 import { MemoryRouter, useSearchParams } from "react-router";
 import { getPokemonCount } from "../../functions/API/getPokemonCount";
 import userEvent from "@testing-library/user-event";
@@ -103,12 +103,10 @@ describe("LandingDisplay", () => {
   });
 
   it("applies the dark color formatting when the application theme is dark", () => {
-    const theme: string = "dark";
+    useThemeStore.setState({ theme: "dark" });
     render(
       <MemoryRouter>
-        <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-          <LandingDisplay />
-        </ThemeContext.Provider>
+        <LandingDisplay />
       </MemoryRouter>,
     );
     expect(screen.getByTestId("landing-display")).toHaveClass(
@@ -117,12 +115,10 @@ describe("LandingDisplay", () => {
   });
 
   it("applies the light color formatting when the application theme is light", () => {
-    const theme: string = "light";
+    useThemeStore.setState({ theme: "light" });
     render(
       <MemoryRouter>
-        <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-          <LandingDisplay />
-        </ThemeContext.Provider>
+        <LandingDisplay />
       </MemoryRouter>,
     );
     expect(screen.getByTestId("landing-display")).not.toHaveClass(

@@ -1,9 +1,9 @@
 import PokemonCard from "../PokemonCard/PokemonCard";
 
 import { useParams } from "react-router";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useElementHeight } from "../../hooks/useElementHeight";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { useThemeStore } from "../../stores/useThemeStore";
 
 import type { Pokemon } from "../../types/Pokemon";
 import type { DetailedPokemon } from "../../types/DetailedPokemon";
@@ -25,7 +25,7 @@ type PageResult =
 
 function PokemonDetails() {
   const { id } = useParams();
-  const { theme } = useContext(ThemeContext);
+  const theme = useThemeStore((store) => store.theme);
   const { ref: detailsRef, height: detailsHeight } =
     useElementHeight<HTMLDivElement>();
 

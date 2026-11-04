@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import "./PokemonCard.css";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { useThemeStore } from "../../stores/useThemeStore";
 import { Link } from "react-router";
 import type { Pokemon } from "../../types/Pokemon";
 import { NavigationContext } from "../../contexts/NavigationContext";
 
 function PokemonCard({ id, name, image, types }: Pokemon) {
-  const { theme } = useContext(ThemeContext);
+  const theme = useThemeStore((store) => store.theme);
   const {
     navigationHistory,
     setNavigationHistory,

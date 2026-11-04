@@ -1,14 +1,13 @@
-import { useContext } from "react";
 import "../PokemonGrid/PokemonGrid.css";
 import "./PokemonGridSkeleton.css";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { useThemeStore } from "../../stores/useThemeStore";
 
 type PokemonGridSkeletonProps = {
   pokemonFetchSize: number;
 };
 
 function PokemonGridSkeleton({ pokemonFetchSize }: PokemonGridSkeletonProps) {
-  const { theme } = useContext(ThemeContext);
+  const theme = useThemeStore((store) => store.theme);
 
   return (
     <div className="pokemon-grid pokemon-grid--large-scale">

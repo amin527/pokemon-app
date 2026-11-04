@@ -1,7 +1,7 @@
 import { describe, expect, it, afterEach } from "vitest";
 import { render, screen, cleanup } from "@testing-library/react";
 import PokemonCard from "./PokemonCard";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { useThemeStore } from "../../stores/useThemeStore";
 import { MemoryRouter, useLocation } from "react-router";
 import userEvent from "@testing-library/user-event";
 
@@ -82,13 +82,10 @@ describe("PokemonCard", () => {
   });
 
   it("applies the dark colour formatting to the pokemon card when the application theme is dark", () => {
-    const theme: string = "dark";
+    useThemeStore.setState({ theme: "dark" });
     render(
       <MemoryRouter>
-        <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-          <PokemonCard {...pokemon} />
-        </ThemeContext.Provider>
-        ,
+        <PokemonCard {...pokemon} />,
       </MemoryRouter>,
     );
     expect(screen.getByTestId("pokemon-card")).toHaveClass(
@@ -97,13 +94,10 @@ describe("PokemonCard", () => {
   });
 
   it("applies the light colour formatting to the pokemon card when the application theme is light", () => {
-    const theme: string = "light";
+    useThemeStore.setState({ theme: "light" });
     render(
       <MemoryRouter>
-        <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
-          <PokemonCard {...pokemon} />
-        </ThemeContext.Provider>
-        ,
+        <PokemonCard {...pokemon} />,
       </MemoryRouter>,
     );
     expect(screen.getByTestId("pokemon-card")).not.toHaveClass(
