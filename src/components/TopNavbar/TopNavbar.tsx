@@ -5,7 +5,12 @@ import { useThemeStore } from "../../stores/useThemeStore";
 import ButtonWithText from "../ButtonWithText/ButtonWithText";
 import ButtonWithIcon from "../ButtonWithIcon/ButtonWithIcon";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useLocation, useNavigate, useNavigationType } from "react-router";
+import {
+  NavLink,
+  useLocation,
+  useNavigate,
+  useNavigationType,
+} from "react-router";
 
 function TopNavbar() {
   const [settingsDropDownIsVisible, setSettingsDropDownIsVisible] =
@@ -75,7 +80,15 @@ function TopNavbar() {
       className={`top-navbar ${theme == "light" ? "" : "top-navbar--dark"}`}
       data-testid="top-navbar"
     >
-      <nav className="navigation-buttons" aria-label="Page history">
+      <nav className="navigation-buttons" aria-label="Main navigation">
+        <NavLink
+          to="/"
+          end
+          aria-label="Pokédex home"
+          className={`top-navbar__brand ${theme == "light" ? "" : "top-navbar__brand--dark"}`}
+        >
+          Pokédex
+        </NavLink>
         <ButtonWithIcon
           data-testid="navigation-button-previous"
           aria-label="Go back"

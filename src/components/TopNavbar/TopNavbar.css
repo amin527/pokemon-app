@@ -21,6 +21,27 @@
 }
 .navigation-buttons {
   display: flex;
+  align-items: center;
   gap: 4px;
   margin-left: var(--horizontal-margin);
+}
+.top-navbar__brand {
+  margin-right: 16px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  color: black;
+  font-size: 1.375rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+.top-navbar__brand:focus-visible {
+  outline: 3px solid black;
+  outline-offset: 2px;
+}
+.top-navbar__brand--dark {
+  color: white;
+}
+.top-navbar__brand--dark:focus-visible {
+  outline-color: white;
 }

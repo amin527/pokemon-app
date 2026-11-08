@@ -154,4 +154,34 @@ describe("TopNavbar", () => {
     await user.click(screen.getByTestId("navigation-button-next"));
     expect(await screen.findByText("Pokemon Details")).toBeInTheDocument();
   });
+
+  it("goes to the landing page when the Pokédex title is clicked", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter initialEntries={["/pokemon/5"]}>
+        <TopNavbar />
+        <Routes>
+          <Route path="/" element={<div>Landing Page</div>} />
+          <Route path="/pokemon/:id" element={<div>Pokemon Details</div>} />
+        </Routes>
+      </MemoryRouter>,
+    );
+
+    await user.click(screen.getByRole("link", { name: "Pokédex home" }));
+    expect(await screen.findByText("Landing Page")).toBeInTheDocument();
+  });
+
+  it("marks the Pokédex title as the current page on the landing page", () => {
+    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <TopNavbar />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByRole("link", { name: "Pokédex home" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
+  });
 });
