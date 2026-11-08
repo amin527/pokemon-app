@@ -5,11 +5,17 @@
   border: 1px solid rgb(0 0 0 / 0.06);
   border-radius: 12px;
   background-color: var(--primary-color);
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.06),
+    0 4px 12px rgb(0 0 0 / 0.08);
 }
 
 .pokemon-details-component__content--dark .skeleton {
   border-color: rgb(255 255 255 / 0.08);
   background-color: var(--primary-color-dark);
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.3),
+    0 4px 12px rgb(0 0 0 / 0.4);
 }
 
 .skeleton--title {
@@ -28,6 +34,13 @@
   border: none;
   border-radius: 6px;
   background-color: rgb(0 0 0 / 0.08);
+}
+
+.skeleton--title,
+.skeleton--subtitle,
+.pokemon-details-component__content--dark .skeleton--title,
+.pokemon-details-component__content--dark .skeleton--subtitle {
+  box-shadow: none;
 }
 
 .pokemon-details-component__content--dark .skeleton--title,

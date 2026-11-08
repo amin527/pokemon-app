@@ -23,10 +23,10 @@ html::-webkit-scrollbar {
 }
 
 :root {
-  --background-color: rgb(255, 238, 238);
-  --primary-color: #dfdfff;
-  --secondary-color: rgb(167, 164, 255);
-  --primary-accent-color: rgb(240, 141, 255);
+  --background-color: #eceef2;
+  --primary-color: #ffffff;
+  --secondary-color: #c7c2ff;
+  --primary-accent-color: #ffb8a8;
 
   --horizontal-margin: 30px;
   --top-navbar-height: 56px;

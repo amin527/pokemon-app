@@ -7,6 +7,7 @@
   flex-direction: column;
   min-height: var(--available-height);
   justify-content: center;
+  background-color: var(--background-color);
 }
 
 .pokemon-details-component__content {
