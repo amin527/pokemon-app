@@ -181,7 +181,10 @@ function LandingDisplay() {
       />
       <div ref={pokemonGridComponent}>
         {isLoading ? (
-          <PokemonGridSkeleton pokemonFetchSize={pokemonFetchSize} />
+          <PokemonGridSkeleton
+            pokemonFetchSize={pokemonFetchSize}
+            pokemonGridWidth={pokemonGridWidth}
+          />
         ) : (
           <PokemonGrid
             pokemonGridWidth={pokemonGridWidth}
