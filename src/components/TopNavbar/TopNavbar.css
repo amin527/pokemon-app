@@ -1,14 +1,18 @@
 .top-navbar {
   display: flex;
+  align-items: center;
   background-color: var(--primary-color);
-  padding: 10px 0px;
+  height: var(--top-navbar-height);
+  box-sizing: border-box;
+  padding: 8px 0px;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.15);
 }
 .top-navbar--dark {
   background-color: var(--primary-color-dark);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.5);
 }
 .settings-container {
   position: relative;
@@ -17,6 +21,27 @@
 }
 .navigation-buttons {
   display: flex;
-  gap: 5px;
+  align-items: center;
+  gap: 4px;
   margin-left: var(--horizontal-margin);
+}
+.top-navbar__brand {
+  margin-right: 16px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  color: black;
+  font-size: 1.375rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+.top-navbar__brand:focus-visible {
+  outline: 3px solid black;
+  outline-offset: 2px;
+}
+.top-navbar__brand--dark {
+  color: white;
+}
+.top-navbar__brand--dark:focus-visible {
+  outline-color: white;
 }

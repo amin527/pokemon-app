@@ -3,24 +3,76 @@
   margin-top: 20px;
 }
 
+.pokemon-search__field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .pokemon-search__input-field {
   all: unset;
   width: 100%;
+  min-height: 44px;
   box-sizing: border-box;
-  padding: 8px 5px;
+  padding: 10px 48px 10px 14px;
+  border-radius: 12px;
+  font-size: var(--text-base);
   color: black;
   background-color: var(--primary-accent-color);
 }
 
 .pokemon-search__input-field::placeholder {
   color: black;
+  opacity: 0.65;
+}
+
+/* all: unset removes the browser's focus outline, so add one back */
+.pokemon-search__input-field:focus-visible {
+  outline: 3px solid black;
+  outline-offset: 2px;
 }
 
 .pokemon-search__input-field--dark {
   background-color: var(--primary-accent-color-dark);
 }
 
+/* Hide the browser's built-in clear button; we render our own */
+.pokemon-search__input-field::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.pokemon-search__clear {
+  all: unset;
+  position: absolute;
+  right: 4px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: black;
+  cursor: pointer;
+}
+
+.pokemon-search__clear:hover {
+  background-color: rgb(0 0 0 / 0.08);
+}
+
+.pokemon-search__clear:focus-visible {
+  outline: 3px solid black;
+  outline-offset: 0;
+}
+
 .error-message {
+  margin-top: 8px;
+  padding: 6px 12px;
+  border-radius: 8px;
   background-color: var(--secondary-color);
-  padding: 3px 8px;
+}
+
+/* Collapse when empty but stay in the page, so screen readers
+   still announce the message when it appears */
+.error-message:empty {
+  margin: 0;
+  padding: 0;
 }

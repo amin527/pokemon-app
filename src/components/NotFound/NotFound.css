@@ -16,8 +16,8 @@
 .not-found-message {
   display: inline-block;
   padding-top: 100px;
-  font-size: 2em;
-  font-weight: bolder;
+  font-size: var(--text-2xl);
+  font-weight: 800;
 }
 
 .not-found-message--dark {
@@ -33,7 +33,7 @@
   cursor: pointer;
   display: inline-block;
   padding-top: 10px;
-  font-weight: bolder;
+  font-weight: 800;
 }
 
 .back-to-home-button--dark {

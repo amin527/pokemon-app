@@ -25,11 +25,34 @@
   color: gray;
 }
 
+/* all: unset removes the browser's focus outline, so add one back */
+.button-with-icon:focus-visible {
+  outline: 3px solid black;
+  outline-offset: 2px;
+}
+
+.button-with-icon--dark:focus-visible {
+  outline-color: white;
+}
+
 .button-with-icon-nav {
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  box-sizing: border-box;
+  border-radius: 50%;
   background-color: unset;
 }
 
-.button-with-icon-gray:hover {
+/* Black arrows are almost invisible on the dark navbar */
+.button-with-icon--dark.button-with-icon-nav {
+  color: white;
+}
+
+.button-with-icon.button-with-icon-gray,
+.button-with-icon.button-with-icon-gray:hover {
   background-color: unset;
   color: gray;
   cursor: unset;

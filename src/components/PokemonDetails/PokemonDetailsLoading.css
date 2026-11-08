@@ -1,89 +1,101 @@
-.pokemon-details-component__content--loading {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-
-  padding: 50px 0;
-  gap: 10px;
-
-  overflow: hidden;
-}
-
-.pokemon-details--loading {
-  min-width: clamp(320px, 60vw, 60vh);
-  align-self: stretch;
-}
-
-.pokemon-details__image--loading {
-  width: 100%;
-  aspect-ratio: 1/1;
-
+.skeleton {
   position: relative;
   overflow: hidden;
-
-  background-color: var(--primary-color);
-}
-
-.pokemon-details__info--loading {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-
-  height: 150px;
-  margin-top: 10px;
-
   box-sizing: border-box;
-}
-
-.pokemon-details__basic-info--loading,
-.pokemon-details__stats--loading,
-.pokemon-details__abilities--loading {
+  border: 1px solid rgb(0 0 0 / 0.06);
+  border-radius: 12px;
   background-color: var(--primary-color);
-  position: relative;
-  overflow: hidden;
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.06),
+    0 4px 12px rgb(0 0 0 / 0.08);
 }
 
-.similar-pokemon--loading {
-  display: grid;
-  grid-template-rows: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-
-  min-width: clamp(140px, 20vw, 215px);
-  align-self: stretch;
+.pokemon-details-component__content--dark .skeleton {
+  border-color: rgb(255 255 255 / 0.08);
+  background-color: var(--primary-color-dark);
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.3),
+    0 4px 12px rgb(0 0 0 / 0.4);
 }
 
-.pokemon-card--loading {
-  background-color: var(--primary-color);
+.skeleton--title {
+  width: 220px;
+  max-width: 100%;
+  height: calc(var(--text-2xl) * 1.2);
+  border: none;
+  border-radius: 8px;
+  background-color: rgb(0 0 0 / 0.08);
+}
+
+.skeleton--subtitle {
+  width: 130px;
+  max-width: 100%;
+  height: 1.25em;
+  border: none;
+  border-radius: 6px;
+  background-color: rgb(0 0 0 / 0.08);
+}
+
+.skeleton--title,
+.skeleton--subtitle,
+.pokemon-details-component__content--dark .skeleton--title,
+.pokemon-details-component__content--dark .skeleton--subtitle {
+  box-shadow: none;
+}
+
+.pokemon-details-component__content--dark .skeleton--title,
+.pokemon-details-component__content--dark .skeleton--subtitle {
+  background-color: rgb(255 255 255 / 0.08);
+}
+
+.skeleton--image {
   width: 100%;
-  position: relative;
-  overflow: hidden;
+  height: 100%;
+  aspect-ratio: 1 / 1;
 }
 
-.pokemon-details__image--loading::after,
-.pokemon-details__basic-info--loading::after,
-.pokemon-details__stats--loading::after,
-.pokemon-details__abilities--loading::after,
-.pokemon-card--loading::after {
+.skeleton--about {
+  min-height: 136px;
+}
+
+.skeleton--stats {
+  min-height: 267px;
+}
+
+.skeleton--abilities {
+  min-height: 120px;
+}
+
+.skeleton--card {
+  min-height: 0;
+}
+
+.pokemon-details-component__content--loading .similar-pokemon {
+  align-self: stretch;
+  height: auto;
+}
+
+.skeleton::after {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(
     90deg,
     transparent 20%,
-    rgba(255, 255, 255, 0.45) 50%,
+    rgb(255 255 255 / 0.45) 50%,
     transparent 80%
   );
   transform: translateX(-100%);
   animation: shimmer 1.2s linear infinite;
-  animation-delay: -0.6s;
 }
 
-.pokemon-details-component__content--dark .pokemon-details__image--loading,
-.pokemon-details-component__content--dark .pokemon-details__basic-info--loading,
-.pokemon-details-component__content--dark .pokemon-details__stats--loading,
-.pokemon-details-component__content--dark .pokemon-details__abilities--loading,
-.pokemon-details-component__content--dark .pokemon-card--loading {
-  background-color: var(--primary-color-dark);
+.pokemon-details-component__content--dark .skeleton::after {
+  background: linear-gradient(
+    90deg,
+    transparent 20%,
+    rgb(255 255 255 / 0.06) 50%,
+    transparent 80%
+  );
 }
 
 @keyframes shimmer {
@@ -92,37 +104,20 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::after {
+    animation: none;
+  }
+}
+
+@media (min-width: 1100px) {
+  .skeleton--image {
+    aspect-ratio: auto;
+  }
+}
+
 @media (max-width: 625px) {
-  .pokemon-details-component__content--loading {
-    flex-direction: column;
-    align-items: center;
-
-    height: auto;
-    margin: 0px var(--horizontal-margin);
-
-    overflow: unset;
-    gap: 10px;
-  }
-
-  .pokemon-details--loading {
-    width: 100%;
-    min-width: 0;
-    align-self: unset;
-  }
-
-  .similar-pokemon--loading {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: none;
-
-    width: 100%;
-    height: auto !important;
-    align-self: unset;
-
-    overflow-x: auto;
-  }
-
-  .similar-pokemon--loading .pokemon-card--loading {
-    height: auto;
-    aspect-ratio: 1/1;
+  .skeleton--card {
+    aspect-ratio: 3 / 4;
   }
 }

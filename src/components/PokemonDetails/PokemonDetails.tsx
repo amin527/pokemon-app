@@ -23,6 +23,15 @@ type PageResult =
     }
   | { id: number; status: "not-found" | "error" };
 
+const MAX_BASE_STAT = 255;
+
+function formatName(slug: string) {
+  return slug
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
 function PokemonDetails() {
   const { id } = useParams();
   const theme = useThemeStore((store) => store.theme);
@@ -79,20 +88,30 @@ function PokemonDetails() {
       {!current ? (
         <div
           data-testid="pokemon-details-component-content"
-          className={`pokemon-details-component__content--loading ${theme == "light" ? "" : "pokemon-details-component__content--dark"}`}
+          className={`pokemon-details-component__content pokemon-details-component__content--loading ${theme == "light" ? "" : "pokemon-details-component__content--dark"}`}
+          aria-busy="true"
+          aria-label="Loading Pokémon"
         >
-          <div className="pokemon-details--loading">
-            <div className="pokemon-details__image--loading"></div>
-            <div className="pokemon-details__info--loading">
-              <div className="pokemon-details__basic-info--loading"></div>
-              <div className="pokemon-details__stats--loading"></div>
-              <div className="pokemon-details__abilities--loading"></div>
+          <div className="pokemon-details">
+            <div className="pokemon-details__header">
+              <div className="skeleton skeleton--title"></div>
+            </div>
+            <div className="pokemon-details__image">
+              <div className="skeleton skeleton--image"></div>
+            </div>
+            <div className="pokemon-details__info">
+              <div className="pokemon-details__basic-info skeleton skeleton--about"></div>
+              <div className="pokemon-details__stats skeleton skeleton--stats"></div>
+              <div className="pokemon-details__abilities skeleton skeleton--abilities"></div>
             </div>
           </div>
-          <div className="similar-pokemon--loading">
-            <div className="pokemon-card--loading"></div>
-            <div className="pokemon-card--loading"></div>
-            <div className="pokemon-card--loading"></div>
+          <div className="similar-pokemon">
+            <div className="similar-pokemon__title">
+              <div className="skeleton skeleton--subtitle"></div>
+            </div>
+            <div className="skeleton skeleton--card"></div>
+            <div className="skeleton skeleton--card"></div>
+            <div className="skeleton skeleton--card"></div>
           </div>
         </div>
       ) : current.status !== "success" ? (
@@ -108,59 +127,90 @@ function PokemonDetails() {
       ) : (
         <div className="pokemon-details-component__content">
           <div className="pokemon-details" ref={detailsRef}>
+            <div className="pokemon-details__header">
+              <h1 className="pokemon-details__name">
+                {formatName(current.pokemon.name)}
+              </h1>
+              <span className="pokemon-details__id">
+                #{String(current.pokemon.id).padStart(3, "0")}
+              </span>
+            </div>
             <div
               data-testid="pokemon-details-image"
               className={`pokemon-details__image ${theme == "light" ? "" : "pokemon-details__image--dark"}`}
             >
-              <img src={current.pokemon.image} />
+              <img
+                src={current.pokemon.image}
+                alt={formatName(current.pokemon.name)}
+              />
             </div>
             <div className="pokemon-details__info">
-              <div className="pokemon-details__basic-info">
-                <div className="pokemon-details__title">Base Info</div>
-                <div className="pokemon-details__id">
-                  ID: {current.pokemon.id}
-                </div>
-                <div className="pokemon-details__name">
-                  Name: {current.pokemon.name}
-                </div>
-                <div className="pokemon-details__height">
-                  Height: {current.pokemon.height}
-                </div>
-                <div className="pokemon-details__weight">
-                  Weight: {current.pokemon.weight}
-                </div>
+              <section className="pokemon-details__basic-info">
+                <h2 className="pokemon-details__title">About</h2>
+                <dl className="pokemon-details__facts">
+                  <div>
+                    <dt>Height</dt>
+                    <dd>{current.pokemon.height / 10} m</dd>
+                  </div>
+                  <div>
+                    <dt>Weight</dt>
+                    <dd>{current.pokemon.weight / 10} kg</dd>
+                  </div>
+                </dl>
                 <div className="pokemon-details__types">
-                  Types:{" "}
-                  {current.pokemon.types.map((type, index) => (
-                    <span key={index}>
-                      {type}
-                      {index < current.pokemon.types.length - 1 ? ", " : ""}
+                  {current.pokemon.types.map((type) => (
+                    <span key={type} className="pokemon-details__type">
+                      {formatName(type)}
                     </span>
                   ))}
                 </div>
-              </div>
-              <div className="pokemon-details__stats">
-                <div className="pokemon-details__title">Stats</div>
+              </section>
+              <section className="pokemon-details__stats">
+                <h2 className="pokemon-details__title">Base stats</h2>
                 {current.pokemon.stats.map((stat) => (
-                  <div key={stat.name}>
-                    {" "}
-                    {stat.name}: {stat.baseValue}
+                  <div
+                    key={stat.name}
+                    className="pokemon-details__stat"
+                    data-testid="pokemon-details-stat"
+                  >
+                    <div className="pokemon-details__stat-label">
+                      <span>{stat.name}</span>
+                      <span className="pokemon-details__stat-value">
+                        {stat.baseValue}
+                      </span>
+                    </div>
+                    <div
+                      className="pokemon-details__stat-bar"
+                      aria-hidden="true"
+                    >
+                      <div
+                        className="pokemon-details__stat-fill"
+                        style={{
+                          width: `${Math.min(stat.baseValue / MAX_BASE_STAT, 1) * 100}%`,
+                        }}
+                      />
+                    </div>
                   </div>
                 ))}
-              </div>
-              <div className="pokemon-details__abilities">
-                <div className="pokemon-details__title">Abilities</div>
-                {current.pokemon.abilities.map((ability, index) => (
-                  <div key={index}>{ability}</div>
-                ))}
-              </div>
+              </section>
+              <section className="pokemon-details__abilities">
+                <h2 className="pokemon-details__title">Abilities</h2>
+                <ul className="pokemon-details__ability-list">
+                  {current.pokemon.abilities.map((ability) => (
+                    <li key={ability}>{formatName(ability)}</li>
+                  ))}
+                </ul>
+              </section>
             </div>
           </div>
-          {/* <div className="similar-pokemon"> */}
-          <div
+          <section
             className="similar-pokemon"
+            aria-labelledby="similar-pokemon-title"
             style={detailsHeight ? { height: detailsHeight } : undefined}
           >
+            <h2 id="similar-pokemon-title" className="similar-pokemon__title">
+              Similar Pokémon
+            </h2>
             {current.similarPokemon === null ? (
               <p className="similar-pokemon__error">
                 Couldn't load similar Pokémon
@@ -176,7 +226,7 @@ function PokemonDetails() {
                 />
               ))
             )}
-          </div>
+          </section>
         </div>
       )}
     </div>

@@ -1,9 +1,19 @@
 .button-with-text {
   all: unset;
-  padding: 5px 10px;
+  padding: 8px 14px;
   background-color: var(--secondary-color);
   color: black;
-  border-radius: 3px;
+  border-radius: 8px;
+}
+
+/* all: unset removes the browser's focus outline, so add one back */
+.button-with-text:focus-visible {
+  outline: 3px solid black;
+  outline-offset: 2px;
+}
+
+.button-with-text--dark:focus-visible {
+  outline-color: white;
 }
 
 .button-with-text--dark {
