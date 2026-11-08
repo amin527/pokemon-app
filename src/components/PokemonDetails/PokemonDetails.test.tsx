@@ -81,25 +81,35 @@ describe("PokemonDetails", () => {
   it("displays the Pokemon ID", async () => {
     renderPokemonDetails();
 
-    expect(await screen.findByText("ID: 5")).toBeInTheDocument();
+    expect(await screen.findByText("#005")).toBeInTheDocument();
   });
 
-  it("displays the Pokemon name", async () => {
+  it("displays the Pokemon name as the page heading", async () => {
     renderPokemonDetails();
 
-    expect(await screen.findByText("Name: charmeleon")).toBeInTheDocument();
+    expect(
+      await screen.findByRole("heading", { level: 1, name: "Charmeleon" }),
+    ).toBeInTheDocument();
   });
 
-  it("displays the Pokemon height", async () => {
+  it("describes the Pokemon artwork for screen readers", async () => {
     renderPokemonDetails();
 
-    expect(await screen.findByText("Height: 11")).toBeInTheDocument();
+    expect(
+      await screen.findByRole("img", { name: "Charmeleon" }),
+    ).toBeInTheDocument();
   });
 
-  it("displays the Pokemon weight", async () => {
+  it("displays the Pokemon height in metres", async () => {
     renderPokemonDetails();
 
-    expect(await screen.findByText("Weight: 190")).toBeInTheDocument();
+    expect(await screen.findByText("1.1 m")).toBeInTheDocument();
+  });
+
+  it("displays the Pokemon weight in kilograms", async () => {
+    renderPokemonDetails();
+
+    expect(await screen.findByText("19 kg")).toBeInTheDocument();
   });
 
   it("displays the Pokemon types", async () => {
@@ -109,7 +119,7 @@ describe("PokemonDetails", () => {
       await screen.findByText((_, element) =>
         Boolean(
           element?.classList.contains("pokemon-details__types") &&
-          element.textContent?.trim() === "Types: fire",
+          element.textContent?.trim() === "Fire",
         ),
       ),
     ).toBeInTheDocument();
@@ -118,19 +128,20 @@ describe("PokemonDetails", () => {
   it("displays the Pokemon stats", async () => {
     renderPokemonDetails();
 
-    expect(await screen.findByText("HP: 58")).toBeInTheDocument();
-    expect(screen.getByText("Attack: 64")).toBeInTheDocument();
-    expect(screen.getByText("Defense: 58")).toBeInTheDocument();
-    expect(screen.getByText("Special Attack: 80")).toBeInTheDocument();
-    expect(screen.getByText("Special Defence: 65")).toBeInTheDocument();
-    expect(screen.getByText("Speed: 80")).toBeInTheDocument();
+    const rows = await screen.findAllByTestId("pokemon-details-stat");
+
+    expect(rows).toHaveLength(pokemon.stats.length);
+    pokemon.stats.forEach((stat, index) => {
+      expect(rows[index]).toHaveTextContent(stat.name);
+      expect(rows[index]).toHaveTextContent(String(stat.baseValue));
+    });
   });
 
   it("displays the Pokemon abilities", async () => {
     renderPokemonDetails();
 
-    expect(await screen.findByText("blaze")).toBeInTheDocument();
-    expect(screen.getByText("solar-power")).toBeInTheDocument();
+    expect(await screen.findByText("Blaze")).toBeInTheDocument();
+    expect(screen.getByText("Solar Power")).toBeInTheDocument();
   });
 
   it("displays the IDs of the similar Pokemon", async () => {

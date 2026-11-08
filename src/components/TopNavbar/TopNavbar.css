@@ -2,6 +2,8 @@
   display: flex;
   align-items: center;
   background-color: var(--primary-color);
+  height: var(--top-navbar-height);
+  box-sizing: border-box;
   padding: 8px 0px;
   position: sticky;
   top: 0;
